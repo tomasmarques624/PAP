@@ -1,0 +1,7 @@
+nav bar com tudo
+filtros nos equipamentos
+2 paginas diferentes (1 admins, outra utilizadores)
+se e feito uma denuncia num equipamento ele fica indisponivel
+(cada equip tem de ter id unico)
+denuncia estados - por ver, por resolver , resolvido
+prioridade das denuncias/reservas/etc

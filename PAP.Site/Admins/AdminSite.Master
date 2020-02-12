@@ -1,0 +1,56 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="AdminSite.Master.cs" Inherits="PAP.Site.Admins.AdminSite" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <link href="../Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../Content/CustomStyles/LoginRegisterStyles/loginregister.css" rel="stylesheet" />
+    <link href="../Content/CustomStyles/LibraryStyles/custom_style.css" rel="stylesheet" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/Games/GameLibraryPL/GameLibrary.aspx">Catálogo</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+             aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active" id="navLinkHome" runat="server">
+                        <a class="nav-link" href="/Home.aspx">Inventario</a>
+                    </li>
+                    <li class="nav-item active" id="navLinkDenuncias" runat="server">
+                        <a class="nav-link" href="/Denuncias.aspx">Denuncias</a>
+                    </li>
+                     <li class="nav-item active" id="navlinkRequisicoes" runat="server">
+                        <a class="nav-link" href="/Requisicoes.aspx">Requisicoes</a>
+                    </li>
+                     <li class="nav-item active" id="navLinkUsers" runat="server">
+                        <a class="nav-link" href="../../Users/Users.aspx">Utilizadores</a>
+                    </li>
+                </ul>
+                <span class="navbar-text">Bem vindo(a) <%= Session["username"].ToString() %>
+                </span>
+            </div>
+            <div style="padding-left: 1rem">
+                <asp:Button ID="buttonLogout" Text="Logout" CssClass="btn btn-secondary" runat="server" OnClick="buttonLogout_Click" />
+            </div>
+        </nav>
+        <div class="jumbotron">
+        <h2>Biblioteca dos meus Jogos</h2>
+        </div>
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+    <script src="../Scripts/bootstrap.min.js"></script>
+    <script src="../Scripts/jquery-3.4.1.min.js"></script>
+    <script src="../Scripts/popper.min.js"></script>
+</body>
+</html>
