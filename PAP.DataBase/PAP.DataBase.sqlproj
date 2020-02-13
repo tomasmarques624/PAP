@@ -61,6 +61,8 @@
     <Folder Include="SProcedures" />
     <Folder Include="SProcedures\Users" />
     <Folder Include="SProcedures\Passwords" />
+    <Folder Include="SProcedures\Categoria" />
+    <Folder Include="SProcedures\Denuncias" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\tblUsers.sql" />
@@ -83,6 +85,15 @@
     <Build Include="Tables\tblRequisicoes.sql" />
     <Build Include="Tables\tblDenuncias.sql" />
     <Build Include="Tables\tblSalas.sql" />
+    <Build Include="SProcedures\Categoria\sp_InsertCategoria.sql" />
+    <Build Include="SProcedures\Categoria\sp_GetCatByID.sql" />
+    <Build Include="SProcedures\Categoria\sp_DeleteGenreByID.sql" />
+    <Build Include="SProcedures\Categoria\sp_GetCats.sql" />
+    <Build Include="SProcedures\Categoria\sp_UpdateCatByID.sql" />
+    <Build Include="SProcedures\Denuncias\sp_InsertDenuncia.sql" />
+    <Build Include="SProcedures\Denuncias\sp_DeleteDenunciaByID.sql" />
+    <Build Include="SProcedures\Denuncias\sp_GetDenuncias.sql" />
+    <Build Include="SProcedures\Denuncias\sp_UpdateDenunciasByID.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="PAP.Database.refactorlog" />
