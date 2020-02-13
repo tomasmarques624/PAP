@@ -8,6 +8,9 @@
             <h3>Requisicoes</h3>
             <h5>Filtros</h5>
     </div>
+    <div>&nbsp&nbsp&nbsp
+        <asp:Button ID="btNovaReq" Text="Adicionar Requisicao" runat="server" CssClass="btn btn-primary" />
+    </div>
     <br />
         <div style="margin-left: 20px">
              <asp:GridView ID="gvReqList" AutoGenerateColumns="false" EmptyDataText="Sem registos" runat="server" ViewStateMode="Enabled"
@@ -49,6 +52,6 @@
             </asp:GridView>
             </div>
     <br />&nbsp&nbsp&nbsp
-    <asp:Button ID="btCancelar" Text="Cancelar as denuncias" runat="server" CssClass="btn btn-danger" />
+    <asp:Button ID="btCancelar" Text="Cancelar as requisicoes selecionadas" runat="server" CssClass="btn btn-danger" />
 
 </asp:Content>

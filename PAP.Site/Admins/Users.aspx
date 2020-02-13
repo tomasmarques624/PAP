@@ -35,20 +35,26 @@
                     </asp:TemplateField>
                 </Columns>
 
-            <Columns>
+                <Columns>
                     <asp:TemplateField HeaderText="Eliminar Utilizador">
                         <ItemTemplate>
                             <asp:CheckBox runat="server" id="chbxEliminar" Text=" Eliminar"/>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
-            <Columns>
+
+                <Columns>
                     <asp:TemplateField HeaderText="Desbloquear Utilizador">
                         <ItemTemplate>
                             <asp:CheckBox runat="server" id="chbxDesbloquear" Text=" Bloqueado"/>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
+
+                <Columns>
+                    <asp:CommandField ButtonType="Link" EditText="Editar" ShowEditButton="True" />
+                </Columns>
+
             </asp:GridView>
         </div>
         <br />&nbsp&nbsp&nbsp

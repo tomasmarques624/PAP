@@ -8,6 +8,9 @@
             <h3>Denuncias</h3>
             <h5>Filtros</h5>
     </div>
+    <div>&nbsp&nbsp&nbsp
+        <asp:Button ID="btNovaDenuncia" Text="Adicionar Denuncia" runat="server" CssClass="btn btn-primary" />
+    </div>
     <br />
         <div style="margin-left: 20px">
              <asp:GridView ID="gvDenuList" AutoGenerateColumns="false" EmptyDataText="Sem registos" runat="server" ViewStateMode="Enabled"
@@ -65,6 +68,6 @@
             </asp:GridView>
             </div>
     <br />&nbsp&nbsp&nbsp
-    <asp:Button ID="btRemover" Text="Remover as denuncias" runat="server"  CssClass="btn btn-danger" />
+    <asp:Button ID="btRemover" Text="Remover as denuncias selecionadas" runat="server"  CssClass="btn btn-danger" />
 
 </asp:Content>
