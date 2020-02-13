@@ -2,7 +2,7 @@
 (
 	[id_equip] INT NOT NULL PRIMARY KEY identity,
 	[descri] varchar(50) NOT NULL,
-	[disp] BIT not null,
+	[disp] CHAR not null,
 	[id_cat] int not null,
 	[id_sala] INT NULL, 
     constraint [FK_tblEquip_tblCat] foreign key ([id_cat]) references [tblCat]([id_cat]),

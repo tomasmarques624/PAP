@@ -13,11 +13,20 @@ BEGIN
 	ELSE
 	BEGIN
 	declare @count1 int
-	select @count1 = COUNT(*) from tblEquip where id_equip = @id_equip
+	select @count1 = COUNT(*) from tblRequisicoes where id_equip = @id_equip
 	if(@count1=0)
 	begin
-		delete from tblEquip where id_equip = @id_equip
-		SELECT 1 AS ReturnCode
+		declare @count2 int
+		select @count2 = COUNT(*) from tblDenuncias where id_equip = @id_equip
+		if(@count2=0)
+		begin
+			delete from tblEquip where id_equip = @id_equip
+			SELECT 1 AS ReturnCode
+		end
+		else
+		begin
+			select 3 as ReturnCode
+		end
 	end
 	else
 	begin

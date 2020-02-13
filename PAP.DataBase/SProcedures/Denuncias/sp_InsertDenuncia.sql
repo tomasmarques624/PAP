@@ -8,8 +8,6 @@
 	@id_equip int
 AS
 BEGIN
-	BEGIN
 		insert into tblDenuncias(problema,data_denuncia,qrcode,estado,prioridade,id_user,id_equip) values (@problema,@data_denuncia,@qrcode,@estado,@prioridade,@id_user,@id_equip)
 		SELECT 1 AS ReturnCode
-	END
 END

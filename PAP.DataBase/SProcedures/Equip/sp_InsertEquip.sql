@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[sp_InsertEquip]
 	@descri varchar(50),
-	@disp bit,
+	@disp char(1),
 	@id_cat int,
 	@id_sala int
 AS

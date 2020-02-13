@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[sp_DeleteGenreByID]
+﻿CREATE PROCEDURE [dbo].[sp_DeleteCatByID]
 	@id_cat int
 AS
 BEGIN
@@ -12,16 +12,7 @@ BEGIN
 	END
 	ELSE
 	BEGIN
-	declare @count1 int
-	select @count1 = COUNT(*) from tblCat where id_cat = @id_cat
-	if(@count1=0)
-	begin
 		delete from tblCat where id_cat = @id_cat
 		SELECT 1 AS ReturnCode
-	end
-	else
-	begin
-		select 2 as ReturnCode
-	end
 	END
 END

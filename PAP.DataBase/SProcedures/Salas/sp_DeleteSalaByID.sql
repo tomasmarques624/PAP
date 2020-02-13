@@ -12,16 +12,7 @@ BEGIN
 	END
 	ELSE
 	BEGIN
-	declare @count1 int
-	select @count1 = COUNT(*) from tblSalas where id_sala = @id_sala
-	if(@count1=0)
-	begin
 		delete from tblSalas where id_sala = @id_sala
 		SELECT 1 AS ReturnCode
-	end
-	else
-	begin
-		select 2 as ReturnCode
-	end
 	END
 END
