@@ -14,7 +14,7 @@
         <div style="margin-left: 20px">
         <asp:GridView ID="gvUsers" DataKeyNames="id_user" AutoGenerateColumns="false" EmptyDataText="Sem registos" runat="server" 
                     ViewStateMode="Enabled" 
-                    OnRowDataBound="gvUsers_RowDataBound" CssClass="mydatagrid" HeaderStyle-CssClass="header" RowStyle-CssClass="rows" >
+                    OnRowDataBound="gvUsers_RowDataBound" CssClass="mydatagrid" HeaderStyle-CssClass="header"  RowStyle-CssClass="rows" >
                 <Columns>
                     <asp:BoundField DataField ="id_user" ReadOnly="true" HeaderText="ID" />
                 </Columns>
