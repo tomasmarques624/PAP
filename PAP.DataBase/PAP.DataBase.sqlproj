@@ -65,6 +65,7 @@
     <Folder Include="SProcedures\Denuncias" />
     <Folder Include="SProcedures\Equip" />
     <Folder Include="SProcedures\Salas" />
+    <Folder Include="SProcedures\Requisicoes" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\tblUsers.sql" />
@@ -89,7 +90,7 @@
     <Build Include="Tables\tblSalas.sql" />
     <Build Include="SProcedures\Categoria\sp_InsertCategoria.sql" />
     <Build Include="SProcedures\Categoria\sp_GetCatByID.sql" />
-    <Build Include="SProcedures\Categoria\sp_DeleteGenreByID.sql" />
+    <Build Include="SProcedures\Categoria\sp_DeleteCatByID.sql" />
     <Build Include="SProcedures\Categoria\sp_GetCats.sql" />
     <Build Include="SProcedures\Categoria\sp_UpdateCatByID.sql" />
     <Build Include="SProcedures\Denuncias\sp_InsertDenuncia.sql" />
@@ -104,6 +105,10 @@
     <Build Include="SProcedures\Salas\sp_GetSalas.sql" />
     <Build Include="SProcedures\Salas\sp_InsertSala.sql" />
     <Build Include="SProcedures\Salas\sp_UpdateSalaByID.sql" />
+    <Build Include="SProcedures\Requisicoes\sp_DeleteRequisicaoByID.sql" />
+    <Build Include="SProcedures\Requisicoes\sp_GetRequisicoes.sql" />
+    <Build Include="SProcedures\Requisicoes\sp_InsertRequisicao.sql" />
+    <Build Include="SProcedures\Requisicoes\sp_UpdateRequisicaoByID.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="PAP.Database.refactorlog" />
