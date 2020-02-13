@@ -21,7 +21,7 @@
                 </Columns>
 
                  <Columns>
-                    <asp:BoundField DataField ="desc" HeaderText="Descricao" />
+                    <asp:BoundField DataField ="descri" HeaderText="Descricao" />
                 </Columns>
 
                  <Columns>
