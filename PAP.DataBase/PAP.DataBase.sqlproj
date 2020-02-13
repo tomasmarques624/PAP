@@ -82,5 +82,9 @@
     <Build Include="Tables\tblCat.sql" />
     <Build Include="Tables\tblReservas.sql" />
     <Build Include="Tables\tblDenuncias.sql" />
+    <Build Include="Tables\tblSalas.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="PAP.Database.refactorlog" />
   </ItemGroup>
 </Project>
