@@ -63,6 +63,8 @@
     <Folder Include="SProcedures\Passwords" />
     <Folder Include="SProcedures\Categoria" />
     <Folder Include="SProcedures\Denuncias" />
+    <Folder Include="SProcedures\Equip" />
+    <Folder Include="SProcedures\Salas" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\tblUsers.sql" />
@@ -94,6 +96,14 @@
     <Build Include="SProcedures\Denuncias\sp_DeleteDenunciaByID.sql" />
     <Build Include="SProcedures\Denuncias\sp_GetDenuncias.sql" />
     <Build Include="SProcedures\Denuncias\sp_UpdateDenunciasByID.sql" />
+    <Build Include="SProcedures\Equip\sp_InsertEquip.sql" />
+    <Build Include="SProcedures\Equip\sp_GetEquips.sql" />
+    <Build Include="SProcedures\Equip\sp_DeleteEquipByID.sql" />
+    <Build Include="SProcedures\Equip\sp_UpdateEquipByID.sql" />
+    <Build Include="SProcedures\Salas\sp_DeleteSalaByID.sql" />
+    <Build Include="SProcedures\Salas\sp_GetSalas.sql" />
+    <Build Include="SProcedures\Salas\sp_InsertSala.sql" />
+    <Build Include="SProcedures\Salas\sp_UpdateSalaByID.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="PAP.Database.refactorlog" />
