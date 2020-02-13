@@ -4,18 +4,15 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <div class="jumbotron">
-         <h2>Inventario</h2>
+    <div id="content-page">
+            <h3>Inventario</h3>
+            <h5>Filtros</h5>
     </div>
-    <div>
+    <div>&nbsp&nbsp&nbsp
         <asp:Button ID="btNovoEquip" Text="Adicionar Equipamento" runat="server" CssClass="btn btn-primary" />
     </div>
     <br />
-    <div>
-        <h5>Filtros</h5>
-    </div>
-    <br />
-        <div>
+        <div style="margin-left: 20px">
              <asp:GridView ID="gvEquipList" AutoGenerateColumns="false" EmptyDataText="Sem registos" runat="server" ViewStateMode="Enabled"
                     CssClass="mydatagrid" HeaderStyle-CssClass="header" RowStyle-CssClass="rows" >
 
@@ -26,17 +23,21 @@
                  <Columns>
                     <asp:BoundField DataField ="desc" HeaderText="Descricao" />
                 </Columns>
-                 
-                 <!--<Columns>
-                    <asp:BoundField DataField ="Quant" HeaderText="Quantidade" />
-                </Columns>-->
-
-                 <Columns>
-                    <asp:BoundField DataField ="disp" HeaderText="Disponivel" />
-                </Columns>
 
                  <Columns>
                     <asp:BoundField DataField ="nome_cat" HeaderText="Categoria" />
+                </Columns>
+
+                 <Columns>
+                    <asp:BoundField DataField ="nome_sala" HeaderText="Sala" />
+                </Columns>
+
+                  <Columns>
+                    <asp:TemplateField HeaderText="Disponivel">
+                        <ItemTemplate>
+                            <asp:CheckBox runat="server" id="chbxDisponivel" Text=" Disponivel"/>
+                        </ItemTemplate>
+                    </asp:TemplateField>
                 </Columns>
 
                  <Columns>
@@ -52,5 +53,6 @@
                 </Columns>
             </asp:GridView>
             </div>
-
+    <br />&nbsp&nbsp&nbsp
+    <asp:Button ID="btRemover" Text="Remover os equipamentos" runat="server" CssClass="btn btn-danger" />
 </asp:Content>

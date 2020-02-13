@@ -22,27 +22,27 @@
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active" id="navLinkHome" runat="server">
-                        <a class="nav-link" href="/Home.aspx">Inventario</a>
+                        <a class="nav-link" href="Home.aspx">Inventario</a>
                     </li>
                     <li class="nav-item active" id="navLinkDenuncias" runat="server">
-                        <a class="nav-link" href="/Denuncias.aspx">Denuncias</a>
+                        <a class="nav-link" href="Denuncias.aspx">Denuncias</a>
                     </li>
                      <li class="nav-item active" id="navlinkRequisicoes" runat="server">
-                        <a class="nav-link" href="/Requisicoes.aspx">Requisicoes</a>
+                        <a class="nav-link" href="Requisicoes.aspx">Requisicoes</a>
                     </li>
                      <li class="nav-item active" id="navLinkUsers" runat="server">
-                        <a class="nav-link" href="../../Users/Users.aspx">Utilizadores</a>
+                        <a class="nav-link" href="Users.aspx">Utilizadores</a>
                     </li>
                 </ul>
-                <span class="navbar-text">Bem vindo(a) <%= Session["username"].ToString() %>
-                </span>
+                <!--<span class="navbar-text">Bem vindo(a) <%//= Session["username"].ToString() %>
+                </span> -->
             </div>
             <div style="padding-left: 1rem">
                 <asp:Button ID="buttonLogout" Text="Logout" CssClass="btn btn-secondary" runat="server" OnClick="buttonLogout_Click" />
             </div>
         </nav>
         <div class="jumbotron">
-        <h2>Biblioteca dos meus Jogos</h2>
+        <h2>G.E.T - Gestor de Equipamento Informatico</h2>
         </div>
         <div>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">

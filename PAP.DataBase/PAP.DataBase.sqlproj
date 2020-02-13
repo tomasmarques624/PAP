@@ -80,7 +80,7 @@
     <Build Include="SProcedures\Passwords\sp_ResetPassword.sql" />
     <Build Include="Tables\tblEquip.sql" />
     <Build Include="Tables\tblCat.sql" />
-    <Build Include="Tables\tblReservas.sql" />
+    <Build Include="Tables\tblRequisicoes.sql" />
     <Build Include="Tables\tblDenuncias.sql" />
     <Build Include="Tables\tblSalas.sql" />
   </ItemGroup>

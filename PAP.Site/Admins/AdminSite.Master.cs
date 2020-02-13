@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 
 namespace PAP.Site.Admins
 {
-    public partial class AdminSite : System.Web.UI.Page
+    public partial class AdminSite : System.Web.UI.MasterPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

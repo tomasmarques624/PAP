@@ -11,34 +11,25 @@ namespace PAP.Site.Admins
 {
 
 
-    public partial class Home
+    public partial class Requisicoes
     {
 
         /// <summary>
-        /// btNovoEquip control.
+        /// gvReqList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btNovoEquip;
+        protected global::System.Web.UI.WebControls.GridView gvReqList;
 
         /// <summary>
-        /// gvEquipList control.
+        /// btCancelar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvEquipList;
-
-        /// <summary>
-        /// btRemover control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btRemover;
+        protected global::System.Web.UI.WebControls.Button btCancelar;
     }
 }

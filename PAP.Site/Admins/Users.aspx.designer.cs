@@ -7,38 +7,38 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PAP.Site.Admins
+namespace PAP.Site.Users
 {
 
 
-    public partial class Home
+    public partial class Users
     {
 
         /// <summary>
-        /// btNovoEquip control.
+        /// btNovoUser control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btNovoEquip;
+        protected global::System.Web.UI.WebControls.Button btNovoUser;
 
         /// <summary>
-        /// gvEquipList control.
+        /// gvUsers control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvEquipList;
+        protected global::System.Web.UI.WebControls.GridView gvUsers;
 
         /// <summary>
-        /// btRemover control.
+        /// btSalvar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btRemover;
+        protected global::System.Web.UI.WebControls.Button btSalvar;
     }
 }
