@@ -72,12 +72,11 @@ namespace PAP.Site.Users
                 }
                 UserDAO.UpdateUser(user);
             }
-            Response.Redirect("~/Admins/Home.aspx");
         }
 
         protected void btNovoUser_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Admins/NewUser.aspx");
+            Response.Redirect("~/Admins/Users/NewUser.aspx");
         }
     }
 }

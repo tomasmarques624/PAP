@@ -42,9 +42,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CatDA\CatDAO.cs" />
     <Compile Include="CryptoHelpers\PasswordEncryptSHA256.cs" />
+    <Compile Include="DenunciasDA\DenunciasDAO.cs" />
+    <Compile Include="EquipDA\EquipDAO.cs" />
     <Compile Include="PasswordDA\PasswordDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequisicoesDA\RequisicoesDAO.cs" />
+    <Compile Include="SalasDA\SalasDAO.cs" />
     <Compile Include="UserDA\UserDAO.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -10,6 +10,7 @@ namespace PAP.Models
     {
         public int id_requisicao { get; set; }
         public DateTime data_requisicao { get; set; }
+        public DateTime data_requisicao_final { get; set; }
         public bool estado { get; set; }
         public int id_user { get; set; }
         public int id_equip { get; set; }

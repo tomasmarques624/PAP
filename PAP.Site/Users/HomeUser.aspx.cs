@@ -7,19 +7,9 @@ using System.Web.UI.WebControls;
 
 namespace PAP.Site.Admins
 {
-    public partial class Denuncias : System.Web.UI.Page
+    public partial class HomeUser : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void lkQrCode_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void btRemover_Click(object sender, EventArgs e)
         {
 
         }

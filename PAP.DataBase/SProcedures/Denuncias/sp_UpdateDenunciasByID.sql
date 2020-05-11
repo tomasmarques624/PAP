@@ -2,7 +2,6 @@
 	@id_denuncia int,
 	@problema varchar(255),
 	@data_denuncia date,
-	@qrcode varchar(255),
 	@estado char(1),
 	@prioridade char(1),
 	@id_user int,
@@ -19,7 +18,7 @@ BEGIN
 	END
 	ELSE
 	BEGIN
-		update tblDenuncias set problema = @problema, data_denuncia = @data_denuncia, qrcode = @qrcode, estado = @estado, prioridade = @prioridade , id_user=@id_user, id_equip=@id_equip where id_denuncia = @id_denuncia
+		update tblDenuncias set problema = @problema, data_denuncia = @data_denuncia, estado = @estado, prioridade = @prioridade , id_user=@id_user, id_equip=@id_equip where id_denuncia = @id_denuncia
 		SELECT 1 AS ReturnCode
 	END
 END

@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AjaxControlToolkit, Version=19.1.0.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
+      <HintPath>..\packages\AjaxControlToolkit.19.1.0\lib\net40\AjaxControlToolkit.dll</HintPath>
+    </Reference>
     <Reference Include="IKVM.AWT.WinForms, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
       <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.AWT.WinForms.dll</HintPath>
     </Reference>
@@ -130,6 +133,11 @@
       <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.Runtime.JNI.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="QRCoder, Version=1.3.9.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\QRCoder.1.3.9\lib\net40\QRCoder.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -146,6 +154,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
@@ -153,12 +162,34 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Admins\Denuncias.aspx" />
+    <Content Include="Admins\Cat\NewCat.aspx" />
+    <Content Include="Admins\Denuncias\Denuncias.aspx" />
+    <Content Include="Admins\Cat\EquipCat.aspx" />
+    <Content Include="Admins\Equips\Home.aspx" />
+    <Content Include="Admins\Equips\NewEquip.aspx" />
     <Content Include="Admins\Home.aspx" />
-    <Content Include="Admins\NewUser.aspx" />
-    <Content Include="Admins\Requisicoes.aspx" />
+    <Content Include="Admins\Salas\NewSala.aspx" />
+    <Content Include="Admins\Users\NewUser.aspx" />
+    <Content Include="Admins\Requisicoes\RequisicoesGrid.aspx" />
+    <Content Include="Admins\Salas\SalasGrid.aspx" />
     <Content Include="Authentication\Login.aspx" />
     <Content Include="ContactUs\ContactUs.aspx" />
+    <Content Include="Content\alertifyjs\alertify.css" />
+    <Content Include="Content\alertifyjs\alertify.min.css" />
+    <Content Include="Content\alertifyjs\alertify.rtl.css" />
+    <Content Include="Content\alertifyjs\alertify.rtl.min.css" />
+    <Content Include="Content\alertifyjs\themes\bootstrap.css" />
+    <Content Include="Content\alertifyjs\themes\bootstrap.min.css" />
+    <Content Include="Content\alertifyjs\themes\bootstrap.rtl.css" />
+    <Content Include="Content\alertifyjs\themes\bootstrap.rtl.min.css" />
+    <Content Include="Content\alertifyjs\themes\default.css" />
+    <Content Include="Content\alertifyjs\themes\default.min.css" />
+    <Content Include="Content\alertifyjs\themes\default.rtl.css" />
+    <Content Include="Content\alertifyjs\themes\default.rtl.min.css" />
+    <Content Include="Content\alertifyjs\themes\semantic.css" />
+    <Content Include="Content\alertifyjs\themes\semantic.min.css" />
+    <Content Include="Content\alertifyjs\themes\semantic.rtl.css" />
+    <Content Include="Content\alertifyjs\themes\semantic.rtl.min.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -166,10 +197,13 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\CustomStyles\LibraryStyles\custom_style.css" />
+    <Content Include="Content\CustomStyles\LibraryStyles\styles.css" />
     <Content Include="Content\CustomStyles\LoginRegisterStyles\loginregister.css" />
     <Content Include="Global.asax" />
     <Content Include="PwdMgmt\NewPasswordRequest.aspx" />
     <Content Include="PwdMgmt\SetNewPassword.aspx" />
+    <Content Include="Scripts\alertify.js" />
+    <Content Include="Scripts\alertify.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -273,7 +307,10 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="Admins\Users.aspx" />
+    <Content Include="Admins\Users\Users.aspx" />
+    <Content Include="Users\EquipGrid.aspx" />
+    <Content Include="Users\HomeUser.aspx" />
+    <Content Include="Users\ResDenu.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -284,12 +321,40 @@
     <Compile Include="Admins\AdminSite.Master.designer.cs">
       <DependentUpon>AdminSite.Master</DependentUpon>
     </Compile>
-    <Compile Include="Admins\Denuncias.aspx.cs">
+    <Compile Include="Admins\Cat\NewCat.aspx.cs">
+      <DependentUpon>NewCat.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admins\Cat\NewCat.aspx.designer.cs">
+      <DependentUpon>NewCat.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admins\Denuncias\Denuncias.aspx.cs">
       <DependentUpon>Denuncias.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Admins\Denuncias.aspx.designer.cs">
+    <Compile Include="Admins\Denuncias\Denuncias.aspx.designer.cs">
       <DependentUpon>Denuncias.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admins\Cat\EquipCat.aspx.cs">
+      <DependentUpon>EquipCat.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admins\Cat\EquipCat.aspx.designer.cs">
+      <DependentUpon>EquipCat.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admins\Equips\Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admins\Equips\Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admins\Equips\NewEquip.aspx.cs">
+      <DependentUpon>NewEquip.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admins\Equips\NewEquip.aspx.designer.cs">
+      <DependentUpon>NewEquip.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admins\Home.aspx.cs">
       <DependentUpon>Home.aspx</DependentUpon>
@@ -298,19 +363,33 @@
     <Compile Include="Admins\Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Admins\NewUser.aspx.cs">
+    <Compile Include="Admins\Salas\NewSala.aspx.cs">
+      <DependentUpon>NewSala.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admins\Salas\NewSala.aspx.designer.cs">
+      <DependentUpon>NewSala.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admins\Users\NewUser.aspx.cs">
       <DependentUpon>NewUser.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Admins\NewUser.aspx.designer.cs">
+    <Compile Include="Admins\Users\NewUser.aspx.designer.cs">
       <DependentUpon>NewUser.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Admins\Requisicoes.aspx.cs">
-      <DependentUpon>Requisicoes.aspx</DependentUpon>
+    <Compile Include="Admins\Requisicoes\RequisicoesGrid.aspx.cs">
+      <DependentUpon>RequisicoesGrid.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Admins\Requisicoes.aspx.designer.cs">
-      <DependentUpon>Requisicoes.aspx</DependentUpon>
+    <Compile Include="Admins\Requisicoes\RequisicoesGrid.aspx.designer.cs">
+      <DependentUpon>RequisicoesGrid.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admins\Salas\SalasGrid.aspx.cs">
+      <DependentUpon>SalasGrid.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admins\Salas\SalasGrid.aspx.designer.cs">
+      <DependentUpon>SalasGrid.aspx</DependentUpon>
     </Compile>
     <Compile Include="Authentication\Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
@@ -344,12 +423,33 @@
     <Compile Include="PwdMgmt\SetNewPassword.aspx.designer.cs">
       <DependentUpon>SetNewPassword.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Admins\Users.aspx.cs">
+    <Compile Include="Admins\Users\Users.aspx.cs">
       <DependentUpon>Users.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Admins\Users.aspx.designer.cs">
+    <Compile Include="Admins\Users\Users.aspx.designer.cs">
       <DependentUpon>Users.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Users\EquipGrid.aspx.cs">
+      <DependentUpon>EquipGrid.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Users\EquipGrid.aspx.designer.cs">
+      <DependentUpon>EquipGrid.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Users\HomeUser.aspx.cs">
+      <DependentUpon>HomeUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Users\HomeUser.aspx.designer.cs">
+      <DependentUpon>HomeUser.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Users\ResDenu.aspx.cs">
+      <DependentUpon>ResDenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Users\ResDenu.aspx.designer.cs">
+      <DependentUpon>ResDenu.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -366,6 +466,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+    <Content Include="Users\Web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

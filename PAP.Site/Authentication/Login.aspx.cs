@@ -41,13 +41,14 @@ namespace PAP.Site.Authentication
                     Session["role"] = user.Role;
                     char a = user.Role;
                     Session["username"] = user.Username;
+                    Session["email"] = user.Email;
                     if(user.Role == 'A') { 
                         FormsAuthentication.RedirectFromLoginPage("~/Admins/Home.aspx", false);
                         Response.Redirect("~/Admins/Home.aspx");
                     }else if (user.Role == 'U')
                     {
-                        FormsAuthentication.RedirectFromLoginPage("", false);
-                        Response.Redirect("");
+                        FormsAuthentication.RedirectFromLoginPage("~/Users/HomeUser.aspx", false);
+                        Response.Redirect("~/Users/HomeUser.aspx");
                     }
                 }
             }

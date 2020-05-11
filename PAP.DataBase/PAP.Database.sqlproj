@@ -109,6 +109,19 @@
     <Build Include="SProcedures\Requisicoes\sp_GetRequisicoes.sql" />
     <Build Include="SProcedures\Requisicoes\sp_InsertRequisicao.sql" />
     <Build Include="SProcedures\Requisicoes\sp_UpdateRequisicaoByID.sql" />
+    <Build Include="SProcedures\Requisicoes\sp_GetRequisicaoByID.sql" />
+    <Build Include="SProcedures\Equip\sp_GetEquipByID.sql" />
+    <Build Include="SProcedures\Denuncias\sp_GetDenunciaByID.sql" />
+    <Build Include="SProcedures\Salas\sp_GetSalaByID.sql" />
+    <Build Include="SProcedures\Equip\sp_UpdateEquipCat.sql" />
+    <Build Include="SProcedures\Equip\sp_UpdateEquipSala.sql" />
+    <Build Include="SProcedures\Requisicoes\sp_UpdateReqEstado.sql" />
+    <Build Include="SProcedures\Denuncias\sp_UpdateDenuEstado.sql" />
+    <Build Include="SProcedures\Denuncias\sp_UpdateDenuPrio.sql" />
+    <Build Include="SProcedures\Equip\sp_GetDispEquips.sql" />
+    <Build Include="SProcedures\Requisicoes\sp_GetUserReq.sql" />
+    <Build Include="SProcedures\Denuncias\sp_GetUserDenu.sql" />
+    <Build Include="SProcedures\Equip\sp_UpdateEquipDisp.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="PAP.Database.refactorlog" />

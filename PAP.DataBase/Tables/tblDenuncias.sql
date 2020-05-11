@@ -3,7 +3,6 @@
 	[id_denuncia] INT NOT NULL PRIMARY KEY identity,
 	[problema] varchar(255) not null,
 	[data_denuncia] DATE not null,
-	[qrcode] varchar(255) not  null,
 	[estado] char(1) not null,
 	[prioridade] char(1) not null,
 	[id_user] int not null,

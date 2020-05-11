@@ -50,7 +50,7 @@ namespace PAP.Site.Admins
 
         protected void btCancelar_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Admins/Users.aspx");
+            Response.Redirect("~/Admins/Users/Users.aspx");
         }
     }
 }

@@ -7,30 +7,39 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PAP.Site.Admins
+namespace PAP.Site.Admins.Cat
 {
 
 
-    public partial class Requisicoes
+    public partial class NewCat
     {
 
         /// <summary>
-        /// btNovaReq control.
+        /// tbxNome control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btNovaReq;
+        protected global::System.Web.UI.WebControls.TextBox tbxNome;
 
         /// <summary>
-        /// gvReqList control.
+        /// lbMensagem control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvReqList;
+        protected global::System.Web.UI.WebControls.Label lbMensagem;
+
+        /// <summary>
+        /// btInserir control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btInserir;
 
         /// <summary>
         /// btCancelar control.

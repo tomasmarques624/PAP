@@ -9,6 +9,6 @@ namespace PAP.Models
     public class Salas
     {
         public int id_sala { get; set; }
-        public DateTime nome_sala { get; set; }
+        public string nome_sala { get; set; }
     }
 }

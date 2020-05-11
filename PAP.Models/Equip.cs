@@ -9,9 +9,9 @@ namespace PAP.Models
     public class Equip
     {
         public int id_equip { get; set; }
-        public string desc { get; set; }
+        public string descri { get; set; }
         public bool disp { get; set; }
         public int id_cat { get; set; }
-        public int? id_sala { get; set; }
+        public int id_sala { get; set; }
     }
 }

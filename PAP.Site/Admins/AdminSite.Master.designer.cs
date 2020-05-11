@@ -60,6 +60,24 @@ namespace PAP.Site.Admins
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl navlinkRequisicoes;
 
         /// <summary>
+        /// navlinkCat control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl navlinkCat;
+
+        /// <summary>
+        /// navlinkSalas control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl navlinkSalas;
+
+        /// <summary>
         /// navLinkUsers control.
         /// </summary>
         /// <remarks>

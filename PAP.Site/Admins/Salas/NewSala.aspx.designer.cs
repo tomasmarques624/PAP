@@ -7,38 +7,47 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PAP.Site.Admins
+namespace PAP.Site.Admins.Salas
 {
 
 
-    public partial class Denuncias
+    public partial class NewSala
     {
 
         /// <summary>
-        /// btNovaDenuncia control.
+        /// tbxNome control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btNovaDenuncia;
+        protected global::System.Web.UI.WebControls.TextBox tbxNome;
 
         /// <summary>
-        /// gvDenuList control.
+        /// lbMensagem control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvDenuList;
+        protected global::System.Web.UI.WebControls.Label lbMensagem;
 
         /// <summary>
-        /// btRemover control.
+        /// btInserir control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btRemover;
+        protected global::System.Web.UI.WebControls.Button btInserir;
+
+        /// <summary>
+        /// btCancelar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btCancelar;
     }
 }
