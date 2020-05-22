@@ -171,5 +171,10 @@ namespace PAP.Site.Admins
         {
 
         }
+
+        protected void tbxPesq_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

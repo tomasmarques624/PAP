@@ -20,7 +20,7 @@
             <asp:ListItem Text="Problema" Value="1" Selected="True" />
             <asp:ListItem Text="Data" Value="2" />
             <asp:ListItem Text="Utilizador" Value="3" />
-            <asp:ListItem Text="Equipamento" Value="3" />
+            <asp:ListItem Text="Equipamento" Value="4" />
         </asp:RadioButtonList>
         <asp:TextBox ID="tbxPesq" runat="server" Text="" CssClass="form-control" Width="351px" OnTextChanged="tbxPesq_TextChanged" AutoPostBack="true" />
     </div>
@@ -78,7 +78,7 @@
                         <asp:Button Text="Utilizador" runat="server" ForeColor="White" CssClass="btn btn-link" ID="OrdUti" OnClick="OrdUti_Click" />
                     </HeaderTemplate>
                     <ItemTemplate>
-                        <asp:Button runat="server" ForeColor="White" CssClass="btn btn-link" ID="btUser"/>
+                        <asp:Button runat="server" CssClass="btn btn-link" ID="btUser"/>
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
@@ -89,7 +89,7 @@
                         <asp:Button Text="Equipamento" runat="server" ForeColor="White" CssClass="btn btn-link" ID="OrdEquip" OnClick="OrdEquip_Click" />
                     </HeaderTemplate>
                     <ItemTemplate>
-                         <asp:Button runat="server" ForeColor="White" CssClass="btn btn-link" ID="btEquip"/>
+                         <asp:Button runat="server" CssClass="btn btn-link" ID="btEquip"/>
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
