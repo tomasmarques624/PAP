@@ -2,23 +2,38 @@
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server"></asp:Content>
-   
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <script type="text/javascript">
-     $("#btSimDisp").on('click', function () {
-         alertify.success('Success message');
-         return false;
-     });
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script>
+        $(function () {
+            $("#btSimDisp").click(function () {
+                alertify.success('Success message');
+                return false;
+            });
+        })
     </script>
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:HiddenField ID="id_equip" runat="server" />
     <asp:HiddenField ID="disp" runat="server" />
     <asp:HiddenField ID="id_cat" runat="server" />
     <asp:HiddenField ID="id_sala" runat="server" />
+    <asp:HiddenField ID="ordcat" runat="server" Value="1" />
+    <asp:HiddenField ID="ordsala" runat="server" Value="1" />
+    <asp:HiddenField ID="orddisp" runat="server" Value="1" />
+    <asp:HiddenField ID="alerta" runat="server" Value="0" />
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
     <div id="content-page">
         <h3>Inventario</h3>
         <h5>Filtros</h5>
+        <asp:Label ID="lbPesq" runat="server" Text="Pesquisar por:"></asp:Label>
+        <asp:RadioButtonList ID="rblPesq" runat="server" >
+            <asp:ListItem Text="Descricao" Value="1" Selected="True" />
+            <asp:ListItem Text="Categoria" Value="2" />
+            <asp:ListItem Text="Sala" Value="3" />
+        </asp:RadioButtonList>
+        <asp:TextBox ID="tbxPesq" runat="server" Text="" CssClass="form-control" Width="351px" OnTextChanged="tbxPesq_TextChanged" AutoPostBack="true" />
+
     </div>
     <div>
         &nbsp&nbsp&nbsp
@@ -31,39 +46,56 @@
             <Columns>
                 <asp:BoundField DataField="id_equip" ReadOnly="true" HeaderText="ID" />
                 <asp:BoundField DataField="descri" HeaderText="Descricao" />
-                <asp:TemplateField HeaderText="Categoria">
+
+                <asp:TemplateField>
+                    <HeaderTemplate>
+                        <asp:Button Text="Categoria" runat="server" ForeColor="White" CssClass="btn btn-link" ID="OrdCat" OnClick="OrdCat_Click" />
+                    </HeaderTemplate>
                     <ItemTemplate>
                         <asp:DropDownList ID="ddlCat" runat="server" CssClass="form-control" OnSelectedIndexChanged="ddlCat_SelectedIndexChanged" AutoPostBack="true">
                         </asp:DropDownList>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="Sala">
+
+                <asp:TemplateField>
+                    <HeaderTemplate>
+                        <asp:Button Text="Sala" runat="server" ForeColor="White" CssClass="btn btn-link" ID="OrdSala" OnClick="OrdSala_Click" />
+                    </HeaderTemplate>
                     <ItemTemplate>
                         <asp:DropDownList ID="ddlSala" runat="server" CssClass="form-control" OnSelectedIndexChanged="ddlSala_SelectedIndexChanged" AutoPostBack="true">
                         </asp:DropDownList>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="Disponivel">
+
+                <asp:TemplateField>
+                    <HeaderTemplate>
+                        <asp:Button Text="Disponivel" runat="server" ForeColor="White" CssClass="btn btn-link" ID="OrdDisp" OnClick="OrdDisp_Click" />
+                    </HeaderTemplate>
                     <ItemTemplate>
                         <asp:CheckBox runat="server" ID="chbxDisponivel" Text=" Disponivel" OnCheckedChanged="chbxDisponivel_CheckedChanged" AutoPostBack="true" />
                     </ItemTemplate>
                 </asp:TemplateField>
+
                 <asp:TemplateField HeaderText="Remover Equipamentos">
                     <ItemTemplate>
                         <asp:CheckBox runat="server" ID="chbxEliminar" Text=" Eliminar" />
                     </ItemTemplate>
                 </asp:TemplateField>
+
                 <asp:CommandField ButtonType="Link" EditText="Editar" ShowEditButton="True" CancelText="Cancelar" UpdateText="Confirmar" CausesValidation="False" />
+
                 <asp:TemplateField HeaderText="Reservar">
                     <ItemTemplate>
                         <asp:LinkButton ID="lkReservar" runat="server" Text="Reservar" OnClick="lkReservar_Click" CausesValidation="False" />
                     </ItemTemplate>
                 </asp:TemplateField>
+
                 <asp:TemplateField HeaderText="Ver Denuncias">
                     <ItemTemplate>
                         <asp:LinkButton ID="lkDenuncias" runat="server" Text="Denunciar" OnClick="lkDenuncias_Click" CausesValidation="False" />
                     </ItemTemplate>
                 </asp:TemplateField>
+
             </Columns>
         </asp:GridView>
     </div>
@@ -108,7 +140,7 @@
         <asp:Label ID="Label1" runat="server" Text="Tem a certeza que pretende alterar a disponibilidade deste equipamento?"></asp:Label>
         <br />
         <asp:Button ID="btnao2" runat="server" Style="display: none;" />
-        <asp:Button ID="btSimDisp" Text="Sim" runat="server" OnClick="btSimDisp_Click" CssClass="btn btn-success" CausesValidation="False" />
+        <asp:Button ID="btSimDisp" Text="Sim" runat="server" OnClick="btSimDisp_Click" CssClass="btn btn-success" CausesValidation="False" ClientIDMode="Static" />
         <asp:Button ID="Button4" Text="Nao" runat="server" CssClass="btn btn-danger" CausesValidation="False" OnClick="Button4_Click" />
     </asp:Panel>
 

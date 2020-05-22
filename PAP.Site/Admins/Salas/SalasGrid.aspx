@@ -7,6 +7,7 @@
     <div id="content-page">
         <h3>Salas</h3>
         <h5>Filtros</h5>
+        <asp:TextBox ID="tbxPesq" runat="server" ForeColor="Silver" Text="Pesquisar..." CssClass="form-control" Width="351px" />
     </div>
     <div>
         &nbsp&nbsp&nbsp

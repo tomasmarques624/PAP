@@ -44,7 +44,15 @@ namespace PAP.Site.Admins
                     ((DropDownList)e.Row.FindControl("ddlEstado")).SelectedValue = "2";
                     ((DropDownList)e.Row.FindControl("ddlEstado")).ForeColor = System.Drawing.Color.Green;
                 }
+
+                Equip equip = EquipDAO.GetEquipByID(requisicoes.id_equip);
+                User user = UserDAO.GetUserByID(requisicoes.id_user);
+                Button btEquip = (Button)e.Row.FindControl("btEquip");
+                btEquip.Text = equip.descri;
+                Button btUser = (Button)e.Row.FindControl("btUser");
+                btUser.Text = user.Username;
             }
+
         }
 
         protected void btSimRe_Click(object sender, EventArgs e)
@@ -152,6 +160,16 @@ namespace PAP.Site.Admins
         protected void btNaoRe_Click(object sender, EventArgs e)
         {
             DataBindGrid();
+        }
+
+        protected void OrdEquip_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void OrdUti_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

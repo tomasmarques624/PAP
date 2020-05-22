@@ -1,4 +1,5 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="AdminSite.Master.cs" Inherits="PAP.Site.Admins.AdminSite" %>
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -8,6 +9,11 @@
     <link href="../Content/CustomStyles/LoginRegisterStyles/loginregister.css" rel="stylesheet" />
     <link href="../Content/CustomStyles/LibraryStyles/custom_style.css" rel="stylesheet" />
     <link href="../Content/alertifyjs/alertify.css" rel="stylesheet" />
+
+    <script src="../Scripts/jquery-3.4.1.min.js"></script>
+    <script src="../Scripts/bootstrap.min.js"></script>
+    <script src="../Scripts/popper.min.js"></script>
+    <script src="../Scripts/alertify.js"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -15,7 +21,7 @@
     <form id="form1" runat="server">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
-             aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
@@ -26,7 +32,7 @@
                     <li class="nav-item active" id="navLinkDenuncias" runat="server">
                         <a class="nav-link" href="../Denuncias/Denuncias.aspx">Denuncias</a>
                     </li>
-                     <li class="nav-item active" id="navlinkRequisicoes" runat="server">
+                    <li class="nav-item active" id="navlinkRequisicoes" runat="server">
                         <a class="nav-link" href="../Requisicoes/RequisicoesGrid.aspx">Reservas</a>
                     </li>
                     <li class="nav-item active" id="navlinkCat" runat="server">
@@ -35,19 +41,19 @@
                     <li class="nav-item active" id="navlinkSalas" runat="server">
                         <a class="nav-link" href="../Salas/SalasGrid.aspx">Salas</a>
                     </li>
-                     <li class="nav-item active" id="navLinkUsers" runat="server">
+                    <li class="nav-item active" id="navLinkUsers" runat="server">
                         <a class="nav-link" href="../Users/Users.aspx">Utilizadores</a>
                     </li>
                 </ul>
                 <span class="navbar-text">Bem vindo(a) <%= Session["username"].ToString() %>
-                </span> 
+                </span>
             </div>
             <div style="padding-left: 1rem">
-                <asp:Button ID="buttonLogout" Text="Logout" CssClass="btn btn-secondary" runat="server" OnClick="buttonLogout_Click" CausesValidation="False"/>
+                <asp:Button ID="buttonLogout" Text="Logout" CssClass="btn btn-secondary" runat="server" OnClick="buttonLogout_Click" CausesValidation="False" />
             </div>
         </nav>
         <div class="jumbotron">
-        <h2>G.E.T - Gestor de Equipamento Informatico</h2>
+            <h2>G.E.T - Gestor de Equipamento Informatico</h2>
         </div>
         <div>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
@@ -55,9 +61,5 @@
         </div>
 
     </form>
-    <script src="../Scripts/bootstrap.min.js"></script>
-    <script src="../Scripts/jquery-3.4.1.min.js"></script>
-    <script src="../Scripts/popper.min.js"></script>
-    <script src="../Scripts/alertify.js"></script>
 </body>
 </html>

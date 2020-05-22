@@ -99,6 +99,37 @@ namespace PAP.DataAccess.CatDA
             }
         }
 
+        public static Categoria GetCatByNome(string nome)
+        {
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandText = "SELECT * FROM tblCat WHERE Nome LIKE '" + nome + "%';";
+                    connection.Open();
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        if (dataReader.Read())
+                        {
+                            if (dataReader.NextResult())
+                            {
+                                dataReader.Read();
+                                Categoria cat = new Categoria()
+                                {
+                                    Nome = dataReader["Nome"].ToString(),
+                                    id_cat = Convert.ToInt32(dataReader["id_cat"])
+                                };
+                                return cat;
+                            }
+                        }
+                        return null;
+                    }
+                }
+            }
+        }
+
         public static int RemoveCat(int id_cat)
         {
             using (SqlConnection connection = new SqlConnection())

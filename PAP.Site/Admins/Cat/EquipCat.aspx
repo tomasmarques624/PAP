@@ -7,6 +7,8 @@
     <div id="content-page">
         <h3>Categorias </h3>
         <h5>Filtros</h5>
+        <asp:Label ID="lbPesq" runat="server" Text="Pesquisar :"></asp:Label>
+        <asp:TextBox ID="tbxPesq" runat="server" Text="" CssClass="form-control" Width="351px" OnTextChanged="tbxPesq_TextChanged" AutoPostBack="true" />
     </div>
     <div>
         &nbsp&nbsp&nbsp

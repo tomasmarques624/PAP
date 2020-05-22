@@ -216,6 +216,38 @@ namespace PAP.DataAccess.UserDA
             }
         }
 
+        public static User GetUserByNome(string username)
+        {
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandText = "SELECT * FROM tblUsers WHERE username LIKE '" + username + "%';";
+                    connection.Open();
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        if (dataReader.HasRows)
+                        {
+                            User user = new User();
+                            while (dataReader.Read())
+                            {
+                                user = new User()
+                                {
+                                    id_User = Convert.ToInt32(dataReader["id_user"]),
+                                    Username = dataReader["username"].ToString(),
+                                    Email = dataReader["email"].ToString()
+                                };
+                            }
+                            return user;
+                        }
+                        return null;
+                    }
+                }
+            }
+        }
+
         public static User GetUser(string username, string password)
         {
             using (SqlConnection connection = new SqlConnection())

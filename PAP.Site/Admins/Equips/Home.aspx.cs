@@ -7,7 +7,9 @@ using PAP.DataAccess.UserDA;
 using PAP.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -23,13 +25,21 @@ namespace PAP.Site.Admins
             {
                 DataBindGrid();
             }
+            /*if (alerta.Value == "1")
+            {
+                Response.Write("<script>alertify.success('Success message');</script>");
+            }*/
         }
 
         public void DataBindGrid()
         {
-            List<Equip> listRequisicoes = EquipDAO.GetEquips();
-            gvEquipList.DataSource = listRequisicoes;
+            List<Equip> listEquips = EquipDAO.GetEquips();
+            gvEquipList.DataSource = listEquips;
             gvEquipList.DataBind();
+            /*if (alerta.Value == "1")
+            {
+                Response.Write("<script>alertify.success('Success message');</script>");
+            }*/
         }
 
         protected void gvEquipList_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -63,7 +73,7 @@ namespace PAP.Site.Admins
         }
         protected void btNovoEquip_Click(object sender, EventArgs e)
         {
-            Response.Redirect("../Users/NewEquip.aspx");
+            Response.Redirect("../Equips/NewEquip.aspx");
         }
 
         protected void lkReservar_Click(object sender, EventArgs e)
@@ -143,7 +153,7 @@ namespace PAP.Site.Admins
 
         protected void btSimCat_Click(object sender, EventArgs e)
         {
-            
+
             int returncode = EquipDAO.UpdateEquipCat(Convert.ToInt32(id_equip.Value), Convert.ToInt32(id_cat.Value));
             MPE_CAT.Hide();
             if (returncode == -1)
@@ -158,7 +168,7 @@ namespace PAP.Site.Admins
 
         protected void btSimSala_Click(object sender, EventArgs e)
         {
-            
+
             int returncode = EquipDAO.UpdateEquipSala(Convert.ToInt32(id_equip.Value), Convert.ToInt32(id_sala.Value));
             MPE_Sala.Hide();
             if (returncode == -1)
@@ -223,28 +233,28 @@ namespace PAP.Site.Admins
             rfvDataFin.Enabled = false;
         }
 
-    protected void ddlNDias_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        if (ddlNDias.SelectedValue == "1")
+        protected void ddlNDias_SelectedIndexChanged(object sender, EventArgs e)
         {
-            lbTxtData.Visible = true;
-            tbxDataReserva.Visible = true;
+            if (ddlNDias.SelectedValue == "1")
+            {
+                lbTxtData.Visible = true;
+                tbxDataReserva.Visible = true;
 
-            lblTxtDataIni.Visible = false;
-            lblTxtDataFin.Visible = false;
-            tbxDataReqFin.Visible = false;
-            tbxDataReqIni.Visible = false;
+                lblTxtDataIni.Visible = false;
+                lblTxtDataFin.Visible = false;
+                tbxDataReqFin.Visible = false;
+                tbxDataReqIni.Visible = false;
+            }
+            else
+            {
+                lbTxtData.Visible = false;
+                tbxDataReserva.Visible = false;
+                lblTxtDataIni.Visible = true;
+                lblTxtDataFin.Visible = true;
+                tbxDataReqFin.Visible = true;
+                tbxDataReqIni.Visible = true;
+            }
         }
-        else
-        {
-            lbTxtData.Visible = false;
-            tbxDataReserva.Visible = false;
-            lblTxtDataIni.Visible = true;
-            lblTxtDataFin.Visible = true;
-            tbxDataReqFin.Visible = true;
-            tbxDataReqIni.Visible = true;
-        }
-    }
 
         protected void btNaoRe_Click(object sender, EventArgs e)
         {
@@ -349,7 +359,7 @@ namespace PAP.Site.Admins
 
             CheckBox chbxDisponivel = (CheckBox)gvEquipList.Rows[index].FindControl("chbxDisponivel");
             id_equip.Value = gvEquipList.Rows[index].Cells[0].Text;
-            if(chbxDisponivel.Checked == true)
+            if (chbxDisponivel.Checked == true)
             {
                 disp.Value = "1";
             }
@@ -370,7 +380,8 @@ namespace PAP.Site.Admins
             }
             else
             {
-                Response.Write("<script>alertify.success('Success message');</script>");
+
+                alerta.Value = "1";
             }
         }
 
@@ -383,6 +394,196 @@ namespace PAP.Site.Admins
         protected void btRemover_Click(object sender, EventArgs e)
         {
             MPE_Rem.Show();
+        }
+
+        protected void tbxPesq_TextChanged(object sender, EventArgs e)
+        {
+            List<Equip> listEquips = null;
+
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    if(rblPesq.SelectedValue == "1")
+                    {
+                        command.CommandText = "SELECT * FROM tblEquip WHERE descri LIKE '" + tbxPesq.Text + "%';";
+                    }else if (rblPesq.SelectedValue == "2")
+                    {
+                        Categoria cat = CatDAO.GetCatByNome(tbxPesq.Text);
+                        command.CommandText = "SELECT * FROM tblEquip WHERE id_cat = " + cat.id_cat;
+                    }
+                    else
+                    {
+                        Models.Salas sala = SalasDAO.GetSalaByNome(tbxPesq.Text);
+                        command.CommandText = "SELECT * FROM tblEquip WHERE id_sala = " + sala.id_sala;
+                    }
+                    
+                    connection.Open();
+
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        if (dataReader.HasRows)
+                        {
+                            listEquips = new List<Equip>();
+                            while (dataReader.Read())
+                            {
+                                listEquips.Add(new Equip()
+                                {
+                                    descri = dataReader["descri"].ToString(),
+                                    disp = Convert.ToBoolean(dataReader["disp"]),
+                                    id_cat = Convert.ToInt32(dataReader["id_cat"]),
+                                    id_sala = Convert.ToInt32(dataReader["id_sala"]),
+                                    id_equip = Convert.ToInt32(dataReader["id_equip"])
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            gvEquipList.DataSource = listEquips;
+            gvEquipList.DataBind();
+        }
+
+        protected void OrdCat_Click(object sender, EventArgs e)
+        {
+            List<Equip> listEquips = null;
+
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    if (Convert.ToInt32(ordcat.Value) == 1)
+                    {
+                        command.CommandText = "SELECT * FROM tblEquip ORDER BY id_cat;";
+                        ordcat.Value = "2";
+                    }
+                    else
+                    {
+                        command.CommandText = "SELECT * FROM tblEquip ORDER BY id_cat DESC;";
+                        ordcat.Value = "1";
+                    }
+                    
+                    connection.Open();
+
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        if (dataReader.HasRows)
+                        {
+                            listEquips = new List<Equip>();
+                            while (dataReader.Read())
+                            {
+                                listEquips.Add(new Equip()
+                                {
+                                    descri = dataReader["descri"].ToString(),
+                                    disp = Convert.ToBoolean(dataReader["disp"]),
+                                    id_cat = Convert.ToInt32(dataReader["id_cat"]),
+                                    id_sala = Convert.ToInt32(dataReader["id_sala"]),
+                                    id_equip = Convert.ToInt32(dataReader["id_equip"])
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            gvEquipList.DataSource = listEquips;
+            gvEquipList.DataBind();
+            
+        }
+
+        protected void OrdSala_Click(object sender, EventArgs e)
+        {
+            List<Equip> listEquips = null;
+
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    if (Convert.ToInt32(ordsala.Value) == 1)
+                    {
+                        command.CommandText = "SELECT * FROM tblEquip ORDER BY id_sala;";
+                        ordsala.Value = "2";
+                    }
+                    else
+                    {
+                        command.CommandText = "SELECT * FROM tblEquip ORDER BY id_sala DESC;";
+                        ordsala.Value = "1";
+                    }
+                    connection.Open();
+
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        if (dataReader.HasRows)
+                        {
+                            listEquips = new List<Equip>();
+                            while (dataReader.Read())
+                            {
+                                listEquips.Add(new Equip()
+                                {
+                                    descri = dataReader["descri"].ToString(),
+                                    disp = Convert.ToBoolean(dataReader["disp"]),
+                                    id_cat = Convert.ToInt32(dataReader["id_cat"]),
+                                    id_sala = Convert.ToInt32(dataReader["id_sala"]),
+                                    id_equip = Convert.ToInt32(dataReader["id_equip"])
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            gvEquipList.DataSource = listEquips;
+            gvEquipList.DataBind();
+        }
+
+        protected void OrdDisp_Click(object sender, EventArgs e)
+        {
+            List<Equip> listEquips = null;
+
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    if (Convert.ToInt32(orddisp.Value) == 1)
+                    {
+                        command.CommandText = "SELECT * FROM tblEquip ORDER BY disp DESC;";
+                        orddisp.Value = "2";
+                    }
+                    else
+                    {
+                        command.CommandText = "SELECT * FROM tblEquip ORDER BY disp;";
+                        orddisp.Value = "1";
+                    }
+                    connection.Open();
+
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        if (dataReader.HasRows)
+                        {
+                            listEquips = new List<Equip>();
+                            while (dataReader.Read())
+                            {
+                                listEquips.Add(new Equip()
+                                {
+                                    descri = dataReader["descri"].ToString(),
+                                    disp = Convert.ToBoolean(dataReader["disp"]),
+                                    id_cat = Convert.ToInt32(dataReader["id_cat"]),
+                                    id_sala = Convert.ToInt32(dataReader["id_sala"]),
+                                    id_equip = Convert.ToInt32(dataReader["id_equip"])
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            gvEquipList.DataSource = listEquips;
+            gvEquipList.DataBind();
         }
     }
 }

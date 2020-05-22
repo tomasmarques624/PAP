@@ -2,6 +2,8 @@
 using PAP.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -80,6 +82,41 @@ namespace PAP.Site.Admins
 
             gvCatList.EditIndex = -1;
             DataBindGrid();
+        }
+
+        protected void tbxPesq_TextChanged(object sender, EventArgs e)
+        {
+            List<Categoria> listEquips = null;
+
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandText = "SELECT * FROM tblCat WHERE Nome LIKE '" + tbxPesq.Text + "%';";
+
+                    connection.Open();
+
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        if (dataReader.HasRows)
+                        {
+                            List<Categoria> listCats = new List<Categoria>();
+                            while (dataReader.Read())
+                            {
+                                listCats.Add(new Categoria()
+                                {
+                                    Nome = dataReader["Nome"].ToString(),
+                                    id_cat = Convert.ToInt32(dataReader["id_cat"])
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            gvCatList.DataSource = listEquips;
+            gvCatList.DataBind();
         }
     }
 }

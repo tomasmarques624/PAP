@@ -122,6 +122,43 @@ namespace PAP.DataAccess.EquipDA
             }
         }
 
+        public static Equip GetEquipByDesc(string descri)
+        {
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandText = "SELECT * FROM tblEquip WHERE descri LIKE '" + descri + "%';";
+                    connection.Open();
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        if (dataReader.Read())
+                        {
+                            if (Convert.ToInt32(dataReader["ReturnCode"]) == -1)
+                            {
+                                return null;
+                            }
+                            if (dataReader.NextResult())
+                            {
+                                dataReader.Read();
+                                Equip equip = new Equip()
+                                {
+                                    descri = dataReader["descri"].ToString(),
+                                    disp = Convert.ToBoolean(dataReader["disp"].ToString()),
+                                    id_cat = Convert.ToInt32(dataReader["id_cat"]),
+                                    id_sala = Convert.ToInt32(dataReader["id_sala"]),
+                                    id_equip = Convert.ToInt32(dataReader["id_equip"])
+                                };
+                                return equip;
+                            }
+                        }
+                        return null;
+                    }
+                }
+            }
+        }
         public static int RemoveEquip(int id_equip)
         {
             using (SqlConnection connection = new SqlConnection())

@@ -99,6 +99,37 @@ namespace PAP.DataAccess.SalasDA
             }
         }
 
+        public static Salas GetSalaByNome(string nome)
+        {
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandText = "SELECT * FROM tblSalas WHERE nome_sala LIKE '" + nome + "%';";
+                    connection.Open();
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        if (dataReader.Read())
+                        {
+                            if (dataReader.NextResult())
+                            {
+                                dataReader.Read();
+                                Salas sala = new Salas()
+                                {
+                                    nome_sala = dataReader["nome_sala"].ToString(),
+                                    id_sala = Convert.ToInt32(dataReader["id_sala"])
+                                };
+                                return sala;
+                            }
+                        }
+                        return null;
+                    }
+                }
+            }
+        }
+
         public static int RemoveSala(int id_sala)
         {
             using (SqlConnection connection = new SqlConnection())

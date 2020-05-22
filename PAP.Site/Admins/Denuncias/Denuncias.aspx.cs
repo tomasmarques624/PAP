@@ -13,6 +13,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Drawing.Printing;
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace PAP.Site.Admins
 {
@@ -72,6 +74,13 @@ namespace PAP.Site.Admins
                     ((DropDownList)e.Row.FindControl("ddlEstado")).SelectedValue = "3";
                     ((DropDownList)e.Row.FindControl("ddlEstado")).ForeColor = System.Drawing.Color.Green;
                 }
+
+                Equip equip = EquipDAO.GetEquipByID(denuncia.id_equip);
+                User user = UserDAO.GetUserByID(denuncia.id_user);
+                Button btEquip = (Button)e.Row.FindControl("btEquip");
+                btEquip.Text = equip.descri;
+                Button btUser = (Button)e.Row.FindControl("btUser");
+                btUser.Text = user.Username;
             }
         }
 
@@ -98,7 +107,7 @@ namespace PAP.Site.Admins
                     MailMessage mailMessage = new MailMessage();
                     mailMessage.From = new MailAddress("likedat6969@gmail.com");
                     mailMessage.To.Add(user.Email);
-                    mailMessage.Subject = "Cancelamento de uma requisicao.";
+                    mailMessage.Subject = "Cancelamento de uma denuncia.";
                     mailMessage.Body = "Vimos por este meio informar que a sua denuncia do seguinte equipamento : <br/>" + equip.descri + "<br/> Foi removida. <br/> Para mais informacoes contacte um administrador.";
                     mailMessage.IsBodyHtml = true;
 
@@ -186,7 +195,7 @@ namespace PAP.Site.Admins
                 MailMessage mailMessage = new MailMessage();
                 mailMessage.From = new MailAddress("likedat6969@gmail.com");
                 mailMessage.To.Add(user.Email);
-                mailMessage.Subject = "Cancelamento de uma requisicao.";
+                mailMessage.Subject = "Alteracao do estado de uma denuncia.";
                 mailMessage.Body = "Vimos por este meio informar que o estado da sua denuncia do seguinte equipamento : <br/>" + equip.descri + "<br/> Foi alterado para " + esta + ". <br/> Para mais informacoes contacte um administrador.";
                 mailMessage.IsBodyHtml = true;
 
@@ -286,6 +295,259 @@ namespace PAP.Site.Admins
 
         protected void btRemover_Click(object sender, EventArgs e)
         {
+        }
+
+        protected void tbxPesq_TextChanged(object sender, EventArgs e)
+        {
+            List<Models.Denuncias> listDenus = null;
+
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    if (rblPesq.SelectedValue == "1")
+                    {
+                        command.CommandText = "SELECT * FROM tblDenuncias WHERE problema LIKE '" + tbxPesq.Text + "%';";
+                    }
+                    else if (rblPesq.SelectedValue == "2")
+                    {
+                        command.CommandText = "SELECT * FROM tblEquip WHERE data_denuncia LIKE '" + tbxPesq.Text + "%';";
+                    }
+                    else if (rblPesq.SelectedValue == "3")
+                    {
+                        User user = UserDAO.GetUserByNome(tbxPesq.Text);
+                        command.CommandText = "SELECT * FROM tblDenuncias WHERE id_user = " + user.id_User;
+                    }
+                    else
+                    {
+                        Equip equip = EquipDAO.GetEquipByDesc(tbxPesq.Text);
+                        command.CommandText = "SELECT * FROM tblDenuncias WHERE id_equip = " + equip.id_equip;
+                    }
+
+                    connection.Open();
+
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        if (dataReader.HasRows)
+                        {
+                            listDenus = new List<Models.Denuncias>();
+                            while (dataReader.Read())
+                            {
+                                listDenus.Add(new Models.Denuncias()
+                                {
+                                    problema = dataReader["problema"].ToString(),
+                                    estado = Convert.ToChar(dataReader["estado"].ToString()),
+                                    prioridade = Convert.ToChar(dataReader["prioridade"].ToString()),
+                                    id_denuncia = Convert.ToInt32(dataReader["id_denuncia"]),
+                                    id_user = Convert.ToInt32(dataReader["id_user"]),
+                                    data_denuncia = Convert.ToDateTime(dataReader["data_denuncia"]),
+                                    id_equip = Convert.ToInt32(dataReader["id_equip"])
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            gvDenuList.DataSource = listDenus;
+            gvDenuList.DataBind();
+        }
+
+        protected void OrdPrio_Click(object sender, EventArgs e)
+        {
+            List<Models.Denuncias> listDenus= null;
+
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    if (Convert.ToInt32(ordprio.Value) == 1)
+                    {
+                        command.CommandText = "SELECT * FROM tblDenuncias ORDER BY prioridade;";
+                        ordprio.Value = "2";
+                    }
+                    else
+                    {
+                        command.CommandText = "SELECT * FROM tblDenuncias ORDER BY prioridade DESC;";
+                        ordprio.Value = "1";
+                    }
+
+                    connection.Open();
+
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        if (dataReader.HasRows)
+                        {
+                            listDenus = new List<Models.Denuncias>();
+                            while (dataReader.Read())
+                            {
+                                listDenus.Add(new Models.Denuncias()
+                                {
+                                    problema = dataReader["problema"].ToString(),
+                                    estado = Convert.ToChar(dataReader["estado"].ToString()),
+                                    prioridade = Convert.ToChar(dataReader["prioridade"].ToString()),
+                                    id_denuncia = Convert.ToInt32(dataReader["id_denuncia"]),
+                                    id_user = Convert.ToInt32(dataReader["id_user"]),
+                                    data_denuncia = Convert.ToDateTime(dataReader["data_denuncia"]),
+                                    id_equip = Convert.ToInt32(dataReader["id_equip"])
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            gvDenuList.DataSource = listDenus;
+            gvDenuList.DataBind();
+        }
+
+        protected void OrdEstado_Click(object sender, EventArgs e)
+        {
+            List<Models.Denuncias> listDenus = null;
+
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    if (Convert.ToInt32(ordestado.Value) == 1)
+                    {
+                        command.CommandText = "SELECT * FROM tblDenuncias ORDER BY estado;";
+                        ordestado.Value = "2";
+                    }
+                    else
+                    {
+                        command.CommandText = "SELECT * FROM tblDenuncias ORDER BY estado DESC;";
+                        ordestado.Value = "1";
+                    }
+
+                    connection.Open();
+
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        if (dataReader.HasRows)
+                        {
+                            listDenus = new List<Models.Denuncias>();
+                            while (dataReader.Read())
+                            {
+                                listDenus.Add(new Models.Denuncias()
+                                {
+                                    problema = dataReader["problema"].ToString(),
+                                    estado = Convert.ToChar(dataReader["estado"].ToString()),
+                                    prioridade = Convert.ToChar(dataReader["prioridade"].ToString()),
+                                    id_denuncia = Convert.ToInt32(dataReader["id_denuncia"]),
+                                    id_user = Convert.ToInt32(dataReader["id_user"]),
+                                    data_denuncia = Convert.ToDateTime(dataReader["data_denuncia"]),
+                                    id_equip = Convert.ToInt32(dataReader["id_equip"])
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            gvDenuList.DataSource = listDenus;
+            gvDenuList.DataBind();
+        }
+
+        protected void OrdUti_Click(object sender, EventArgs e)
+        {
+            List<Models.Denuncias> listDenus = null;
+
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    if (Convert.ToInt32(orduti.Value) == 1)
+                    {
+                        command.CommandText = "SELECT * FROM tblDenuncias ORDER BY id_user;";
+                        orduti.Value = "2";
+                    }
+                    else
+                    {
+                        command.CommandText = "SELECT * FROM tblDenuncias ORDER BY id_user DESC;";
+                        orduti.Value = "1";
+                    }
+
+                    connection.Open();
+
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        if (dataReader.HasRows)
+                        {
+                            listDenus = new List<Models.Denuncias>();
+                            while (dataReader.Read())
+                            {
+                                listDenus.Add(new Models.Denuncias()
+                                {
+                                    problema = dataReader["problema"].ToString(),
+                                    estado = Convert.ToChar(dataReader["estado"].ToString()),
+                                    prioridade = Convert.ToChar(dataReader["prioridade"].ToString()),
+                                    id_denuncia = Convert.ToInt32(dataReader["id_denuncia"]),
+                                    id_user = Convert.ToInt32(dataReader["id_user"]),
+                                    data_denuncia = Convert.ToDateTime(dataReader["data_denuncia"]),
+                                    id_equip = Convert.ToInt32(dataReader["id_equip"])
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            gvDenuList.DataSource = listDenus;
+            gvDenuList.DataBind();
+        }
+
+        protected void OrdEquip_Click(object sender, EventArgs e)
+        {
+            List<Models.Denuncias> listDenus = null;
+
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    if (Convert.ToInt32(ordquip.Value) == 1)
+                    {
+                        command.CommandText = "SELECT * FROM tblDenuncias ORDER BY id_equip;";
+                        ordquip.Value = "2";
+                    }
+                    else
+                    {
+                        command.CommandText = "SELECT * FROM tblDenuncias ORDER BY id_equip DESC;";
+                        ordquip.Value = "1";
+                    }
+
+                    connection.Open();
+
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        if (dataReader.HasRows)
+                        {
+                            listDenus = new List<Models.Denuncias>();
+                            while (dataReader.Read())
+                            {
+                                listDenus.Add(new Models.Denuncias()
+                                {
+                                    problema = dataReader["problema"].ToString(),
+                                    estado = Convert.ToChar(dataReader["estado"].ToString()),
+                                    prioridade = Convert.ToChar(dataReader["prioridade"].ToString()),
+                                    id_denuncia = Convert.ToInt32(dataReader["id_denuncia"]),
+                                    id_user = Convert.ToInt32(dataReader["id_user"]),
+                                    data_denuncia = Convert.ToDateTime(dataReader["data_denuncia"]),
+                                    id_equip = Convert.ToInt32(dataReader["id_equip"])
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            gvDenuList.DataSource = listDenus;
+            gvDenuList.DataBind();
         }
     }
 }
