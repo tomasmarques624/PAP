@@ -111,18 +111,18 @@ namespace PAP.DataAccess.CatDA
                     connection.Open();
                     using (SqlDataReader dataReader = command.ExecuteReader())
                     {
-                        if (dataReader.Read())
+                        if (dataReader.HasRows)
                         {
-                            if (dataReader.NextResult())
+                            Categoria cat = new Categoria();
+                            while (dataReader.Read())
                             {
-                                dataReader.Read();
-                                Categoria cat = new Categoria()
+                                cat = new Categoria()
                                 {
                                     Nome = dataReader["Nome"].ToString(),
                                     id_cat = Convert.ToInt32(dataReader["id_cat"])
                                 };
-                                return cat;
                             }
+                            return cat;
                         }
                         return null;
                     }

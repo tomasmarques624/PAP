@@ -90,7 +90,7 @@
                     </ItemTemplate>
                 </asp:TemplateField>
 
-                <asp:TemplateField HeaderText="Ver Denuncias">
+                <asp:TemplateField HeaderText="Denunciar">
                     <ItemTemplate>
                         <asp:LinkButton ID="lkDenuncias" runat="server" Text="Denunciar" OnClick="lkDenuncias_Click" CausesValidation="False" />
                     </ItemTemplate>

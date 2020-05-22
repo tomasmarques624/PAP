@@ -78,7 +78,7 @@
                         <asp:Button Text="Utilizador" runat="server" ForeColor="White" CssClass="btn btn-link" ID="OrdUti" OnClick="OrdUti_Click" />
                     </HeaderTemplate>
                     <ItemTemplate>
-                        <asp:Button runat="server" CssClass="btn btn-link" ID="btUser"/>
+                        <asp:Button runat="server" CssClass="btn btn-link" ID="btUser" ForeColor="Black"/>
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
@@ -89,7 +89,7 @@
                         <asp:Button Text="Equipamento" runat="server" ForeColor="White" CssClass="btn btn-link" ID="OrdEquip" OnClick="OrdEquip_Click" />
                     </HeaderTemplate>
                     <ItemTemplate>
-                         <asp:Button runat="server" CssClass="btn btn-link" ID="btEquip"/>
+                         <asp:Button runat="server" CssClass="btn btn-link" ID="btEquip" ForeColor="Black"/>
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>

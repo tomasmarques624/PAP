@@ -299,59 +299,74 @@ namespace PAP.Site.Admins
 
         protected void tbxPesq_TextChanged(object sender, EventArgs e)
         {
-            List<Models.Denuncias> listDenus = null;
-
-            using (SqlConnection connection = new SqlConnection())
+            if (tbxPesq.Text != "")
             {
-                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
-                using (SqlCommand command = new SqlCommand())
+                List<Models.Denuncias> listDenus = null;
+
+                using (SqlConnection connection = new SqlConnection())
                 {
-                    command.Connection = connection;
-                    if (rblPesq.SelectedValue == "1")
+                    connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                    using (SqlCommand command = new SqlCommand())
                     {
-                        command.CommandText = "SELECT * FROM tblDenuncias WHERE problema LIKE '" + tbxPesq.Text + "%';";
-                    }
-                    else if (rblPesq.SelectedValue == "2")
-                    {
-                        command.CommandText = "SELECT * FROM tblEquip WHERE data_denuncia LIKE '" + tbxPesq.Text + "%';";
-                    }
-                    else if (rblPesq.SelectedValue == "3")
-                    {
-                        User user = UserDAO.GetUserByNome(tbxPesq.Text);
-                        command.CommandText = "SELECT * FROM tblDenuncias WHERE id_user = " + user.id_User;
-                    }
-                    else
-                    {
-                        Equip equip = EquipDAO.GetEquipByDesc(tbxPesq.Text);
-                        command.CommandText = "SELECT * FROM tblDenuncias WHERE id_equip = " + equip.id_equip;
-                    }
-
-                    connection.Open();
-
-                    using (SqlDataReader dataReader = command.ExecuteReader())
-                    {
-                        if (dataReader.HasRows)
+                        command.Connection = connection;
+                        if (rblPesq.SelectedValue == "1")
                         {
-                            listDenus = new List<Models.Denuncias>();
-                            while (dataReader.Read())
+                            command.CommandText = "SELECT * FROM tblDenuncias WHERE problema LIKE '" + tbxPesq.Text + "%';";
+                        }
+                        else if (rblPesq.SelectedValue == "2")
+                        {
+                            TextBox drp = (TextBox)sender;
+
+                            GridViewRow gv = (GridViewRow)drp.NamingContainer;
+
+                            int index = gv.RowIndex;
+
+                            TextBox tbxPesqui = (TextBox)gvDenuList.Rows[index].FindControl("tbxPesq");
+                            tbxPesqui.TextMode = TextBoxMode.Date;
+                            command.CommandText = "SELECT * FROM tblEquip WHERE data_denuncia LIKE '" + tbxPesq.Text + "%';";
+                        }
+                        else if (rblPesq.SelectedValue == "3")
+                        {
+                            User user = UserDAO.GetUserByNome(tbxPesq.Text);
+                            command.CommandText = "SELECT * FROM tblDenuncias WHERE id_user = " + user.id_User;
+                        }
+                        else
+                        {
+                            Equip equip = EquipDAO.GetEquipByDesc(tbxPesq.Text);
+                            command.CommandText = "SELECT * FROM tblDenuncias WHERE id_equip = " + equip.id_equip;
+                        }
+
+                        connection.Open();
+
+                        using (SqlDataReader dataReader = command.ExecuteReader())
+                        {
+                            if (dataReader.HasRows)
                             {
-                                listDenus.Add(new Models.Denuncias()
+                                listDenus = new List<Models.Denuncias>();
+                                while (dataReader.Read())
                                 {
-                                    problema = dataReader["problema"].ToString(),
-                                    estado = Convert.ToChar(dataReader["estado"].ToString()),
-                                    prioridade = Convert.ToChar(dataReader["prioridade"].ToString()),
-                                    id_denuncia = Convert.ToInt32(dataReader["id_denuncia"]),
-                                    id_user = Convert.ToInt32(dataReader["id_user"]),
-                                    data_denuncia = Convert.ToDateTime(dataReader["data_denuncia"]),
-                                    id_equip = Convert.ToInt32(dataReader["id_equip"])
-                                });
+                                    listDenus.Add(new Models.Denuncias()
+                                    {
+                                        problema = dataReader["problema"].ToString(),
+                                        estado = Convert.ToChar(dataReader["estado"].ToString()),
+                                        prioridade = Convert.ToChar(dataReader["prioridade"].ToString()),
+                                        id_denuncia = Convert.ToInt32(dataReader["id_denuncia"]),
+                                        id_user = Convert.ToInt32(dataReader["id_user"]),
+                                        data_denuncia = Convert.ToDateTime(dataReader["data_denuncia"]),
+                                        id_equip = Convert.ToInt32(dataReader["id_equip"])
+                                    });
+                                }
                             }
                         }
                     }
                 }
+                gvDenuList.DataSource = listDenus;
+                gvDenuList.DataBind();
             }
-            gvDenuList.DataSource = listDenus;
-            gvDenuList.DataBind();
+            else
+            {
+                DataBindGrid();
+            }
         }
 
         protected void OrdPrio_Click(object sender, EventArgs e)

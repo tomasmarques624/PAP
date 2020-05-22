@@ -111,18 +111,18 @@ namespace PAP.DataAccess.SalasDA
                     connection.Open();
                     using (SqlDataReader dataReader = command.ExecuteReader())
                     {
-                        if (dataReader.Read())
+                        if (dataReader.HasRows)
                         {
-                            if (dataReader.NextResult())
+                            Salas sala = new Salas();
+                            while (dataReader.Read())
                             {
-                                dataReader.Read();
-                                Salas sala = new Salas()
+                                sala = new Salas()
                                 {
                                     nome_sala = dataReader["nome_sala"].ToString(),
                                     id_sala = Convert.ToInt32(dataReader["id_sala"])
                                 };
-                                return sala;
                             }
+                            return sala;
                         }
                         return null;
                     }

@@ -134,16 +134,12 @@ namespace PAP.DataAccess.EquipDA
                     connection.Open();
                     using (SqlDataReader dataReader = command.ExecuteReader())
                     {
-                        if (dataReader.Read())
+                        if (dataReader.HasRows)
                         {
-                            if (Convert.ToInt32(dataReader["ReturnCode"]) == -1)
+                            Equip equip = new Equip();
+                            while (dataReader.Read())
                             {
-                                return null;
-                            }
-                            if (dataReader.NextResult())
-                            {
-                                dataReader.Read();
-                                Equip equip = new Equip()
+                                equip = new Equip()
                                 {
                                     descri = dataReader["descri"].ToString(),
                                     disp = Convert.ToBoolean(dataReader["disp"].ToString()),
@@ -151,8 +147,8 @@ namespace PAP.DataAccess.EquipDA
                                     id_sala = Convert.ToInt32(dataReader["id_sala"]),
                                     id_equip = Convert.ToInt32(dataReader["id_equip"])
                                 };
-                                return equip;
                             }
+                            return equip;
                         }
                         return null;
                     }
