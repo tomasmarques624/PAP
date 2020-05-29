@@ -398,52 +398,54 @@ namespace PAP.Site.Admins
 
         protected void tbxPesq_TextChanged(object sender, EventArgs e)
         {
-            List<Equip> listEquips = null;
-
-            using (SqlConnection connection = new SqlConnection())
+            if (tbxPesq.Text != "")
             {
-                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
-                using (SqlCommand command = new SqlCommand())
-                {
-                    command.Connection = connection;
-                    if(rblPesq.SelectedValue == "1")
-                    {
-                        command.CommandText = "SELECT * FROM tblEquip WHERE descri LIKE '" + tbxPesq.Text + "%';";
-                    }else if (rblPesq.SelectedValue == "2")
-                    {
-                        Categoria cat = CatDAO.GetCatByNome(tbxPesq.Text);
-                        command.CommandText = "SELECT * FROM tblEquip WHERE id_cat = " + cat.id_cat;
-                    }
-                    else
-                    {
-                        Models.Salas sala = SalasDAO.GetSalaByNome(tbxPesq.Text);
-                        command.CommandText = "SELECT * FROM tblEquip WHERE id_sala = " + sala.id_sala;
-                    }
-                    
-                    connection.Open();
+                List<Equip> listEquips = null;
 
-                    using (SqlDataReader dataReader = command.ExecuteReader())
+                using (SqlConnection connection = new SqlConnection())
+                {
+                    connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                    using (SqlCommand command = new SqlCommand())
                     {
-                        if (dataReader.HasRows)
+                        command.Connection = connection;
+                        if (rblPesq.SelectedValue == "1")
                         {
-                            listEquips = new List<Equip>();
-                            while (dataReader.Read())
+                            command.CommandText = "SELECT * FROM tblEquip WHERE descri LIKE '" + tbxPesq.Text + "%';";
+                        }
+                        else if (rblPesq.SelectedValue == "2")
+                        {
+                            command.CommandText = "SELECT tblEquip.id_equip,tblEquip.descri,tblEquip.disp,tblEquip.id_cat,tblEquip.id_sala FROM tblEquip,tblCat WHERE tblCat.Nome LIKE " + tbxPesq.Text + "%' AND tblEquip.id_cat = tblCat.id_cat;";
+                        }
+                        else
+                        {
+                            command.CommandText = "SELECT tblEquip.id_equip,tblEquip.descri,tblEquip.disp,tblEquip.id_cat,tblEquip.id_sala FROM tblEquip,tblSalas WHERE tblSalas.nome_sala LIKE " + tbxPesq.Text + "%' AND tblEquip.id_sala = tblCat.id_sala;";
+                        }
+
+                        connection.Open();
+
+                        using (SqlDataReader dataReader = command.ExecuteReader())
+                        {
+                            if (dataReader.HasRows)
                             {
-                                listEquips.Add(new Equip()
+                                listEquips = new List<Equip>();
+                                while (dataReader.Read())
                                 {
-                                    descri = dataReader["descri"].ToString(),
-                                    disp = Convert.ToBoolean(dataReader["disp"]),
-                                    id_cat = Convert.ToInt32(dataReader["id_cat"]),
-                                    id_sala = Convert.ToInt32(dataReader["id_sala"]),
-                                    id_equip = Convert.ToInt32(dataReader["id_equip"])
-                                });
+                                    listEquips.Add(new Equip()
+                                    {
+                                        descri = dataReader["descri"].ToString(),
+                                        disp = Convert.ToBoolean(dataReader["disp"]),
+                                        id_cat = Convert.ToInt32(dataReader["id_cat"]),
+                                        id_sala = Convert.ToInt32(dataReader["id_sala"]),
+                                        id_equip = Convert.ToInt32(dataReader["id_equip"])
+                                    });
+                                }
                             }
                         }
                     }
                 }
+                gvEquipList.DataSource = listEquips;
+                gvEquipList.DataBind();
             }
-            gvEquipList.DataSource = listEquips;
-            gvEquipList.DataBind();
         }
 
         protected void OrdCat_Click(object sender, EventArgs e)
@@ -466,7 +468,7 @@ namespace PAP.Site.Admins
                         command.CommandText = "SELECT * FROM tblEquip ORDER BY id_cat DESC;";
                         ordcat.Value = "1";
                     }
-                    
+
                     connection.Open();
 
                     using (SqlDataReader dataReader = command.ExecuteReader())
@@ -491,7 +493,7 @@ namespace PAP.Site.Admins
             }
             gvEquipList.DataSource = listEquips;
             gvEquipList.DataBind();
-            
+
         }
 
         protected void OrdSala_Click(object sender, EventArgs e)
@@ -584,6 +586,17 @@ namespace PAP.Site.Admins
             }
             gvEquipList.DataSource = listEquips;
             gvEquipList.DataBind();
+        }
+
+        protected void rblPesq_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            tbxPesq.Text = "";
+            DataBindGrid();
+        }
+
+        protected void btLimparFiltros_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

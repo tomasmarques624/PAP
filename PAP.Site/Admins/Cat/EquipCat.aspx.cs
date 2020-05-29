@@ -37,10 +37,10 @@ namespace PAP.Site.Admins
         {
             for (int i = 0; i < gvCatList.Rows.Count; i++)
             {
-                Categoria cat = CatDAO.GetCatByID(Convert.ToInt32(gvCatList.DataKeys[i].Value));
-                int id_cat = cat.id_cat;
                 if (((CheckBox)gvCatList.Rows[i].FindControl("chbxEliminar")).Checked)
                 {
+                    Categoria cat = CatDAO.GetCatByID(Convert.ToInt32(gvCatList.DataKeys[i].Value));
+                    int id_cat = cat.id_cat;
                     CatDAO.RemoveCat(id_cat);
                     continue;
                 }

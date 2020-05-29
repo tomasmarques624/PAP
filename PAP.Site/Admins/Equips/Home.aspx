@@ -7,7 +7,7 @@
         $(function () {
             $("#btSimDisp").click(function () {
                 alertify.success('Success message');
-                return false;
+                return true;
             });
         })
     </script>
@@ -24,16 +24,16 @@
     <asp:HiddenField ID="alerta" runat="server" Value="0" />
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
     <div id="content-page">
-        <h3>Inventario</h3>
+        <h2>Inventario</h2>
         <h5>Filtros</h5>
         <asp:Label ID="lbPesq" runat="server" Text="Pesquisar por:"></asp:Label>
-        <asp:RadioButtonList ID="rblPesq" runat="server" >
+        <asp:RadioButtonList ID="rblPesq" runat="server" RepeatDirection="Horizontal" OnSelectedIndexChanged="rblPesq_SelectedIndexChanged">
             <asp:ListItem Text="Descricao" Value="1" Selected="True" />
             <asp:ListItem Text="Categoria" Value="2" />
             <asp:ListItem Text="Sala" Value="3" />
         </asp:RadioButtonList>
         <asp:TextBox ID="tbxPesq" runat="server" Text="" CssClass="form-control" Width="351px" OnTextChanged="tbxPesq_TextChanged" AutoPostBack="true" />
-
+        <asp:Button ID="btLimparFiltros" Text="Limpar" runat="server" CssClass="btn btn-primary" CausesValidation="False" OnClick="btLimparFiltros_Click" />
     </div>
     <div>
         &nbsp&nbsp&nbsp
@@ -42,14 +42,17 @@
     <br />
     <div style="margin-left: 20px">
         <asp:GridView ID="gvEquipList" AutoGenerateColumns="False" DataKeyNames="id_equip" EmptyDataText="Sem registos" runat="server" ViewStateMode="Enabled"
-            CssClass="mydatagrid" HeaderStyle-CssClass="header" RowStyle-CssClass="rows" OnRowDataBound="gvEquipList_RowDataBound" OnRowCancelingEdit="gvEquipList_RowCancelingEdit" OnRowEditing="gvEquipList_RowEditing" OnRowUpdating="gvEquipList_RowUpdating" Height="170px">
+            CssClass="mydatagrid" HeaderStyle-CssClass="header" RowStyle-CssClass="rows" OnRowDataBound="gvEquipList_RowDataBound" OnRowCancelingEdit="gvEquipList_RowCancelingEdit" OnRowEditing="gvEquipList_RowEditing"
+            OnRowUpdating="gvEquipList_RowUpdating" Height="170px">
             <Columns>
                 <asp:BoundField DataField="id_equip" ReadOnly="true" HeaderText="ID" />
                 <asp:BoundField DataField="descri" HeaderText="Descricao" />
 
                 <asp:TemplateField>
                     <HeaderTemplate>
-                        <asp:Button Text="Categoria" runat="server" ForeColor="White" CssClass="btn btn-link" ID="OrdCat" OnClick="OrdCat_Click" />
+                        <asp:Label Text="Categoria" runat="server" />
+                        &nbsp;
+                        <asp:ImageButton runat="server" ImageUrl="../../Content/Imagens/Setas.png" Width="15" Height="15" ID="OrdCat" OnClick="OrdCat_Click" />
                     </HeaderTemplate>
                     <ItemTemplate>
                         <asp:DropDownList ID="ddlCat" runat="server" CssClass="form-control" OnSelectedIndexChanged="ddlCat_SelectedIndexChanged" AutoPostBack="true">
@@ -59,7 +62,9 @@
 
                 <asp:TemplateField>
                     <HeaderTemplate>
-                        <asp:Button Text="Sala" runat="server" ForeColor="White" CssClass="btn btn-link" ID="OrdSala" OnClick="OrdSala_Click" />
+                        <asp:Label Text="Sala" runat="server" />
+                        &nbsp;
+                        <asp:ImageButton Text="Sala" runat="server" ImageUrl="../../Content/Imagens/Setas.png" Width="15" Height="15" ID="OrdSala" OnClick="OrdSala_Click" />
                     </HeaderTemplate>
                     <ItemTemplate>
                         <asp:DropDownList ID="ddlSala" runat="server" CssClass="form-control" OnSelectedIndexChanged="ddlSala_SelectedIndexChanged" AutoPostBack="true">
@@ -69,7 +74,9 @@
 
                 <asp:TemplateField>
                     <HeaderTemplate>
-                        <asp:Button Text="Disponivel" runat="server" ForeColor="White" CssClass="btn btn-link" ID="OrdDisp" OnClick="OrdDisp_Click" />
+                        <asp:Label Text="Disponivel" runat="server" />
+                        &nbsp;
+                        <asp:ImageButton runat="server" ImageUrl="../../Content/Imagens/Setas.png" Width="15" Height="15" ID="OrdDisp" OnClick="OrdDisp_Click" />
                     </HeaderTemplate>
                     <ItemTemplate>
                         <asp:CheckBox runat="server" ID="chbxDisponivel" Text=" Disponivel" OnCheckedChanged="chbxDisponivel_CheckedChanged" AutoPostBack="true" />

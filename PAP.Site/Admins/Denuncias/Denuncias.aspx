@@ -13,16 +13,17 @@
     <asp:HiddenField ID="orduti" runat="server" Value="1" />
     <asp:HiddenField ID="ordquip" runat="server" Value="1" />
     <div id="content-page">
-        <h3>Denuncias</h3>
+        <h2>Denuncias</h2>
         <h5>Filtros</h5>
         <asp:Label ID="lbPesq" runat="server" Text="Pesquisar por:"></asp:Label>
-        <asp:RadioButtonList ID="rblPesq" runat="server">
+        <asp:RadioButtonList ID="rblPesq" runat="server" RepeatDirection="Horizontal" OnSelectedIndexChanged="rblPesq_SelectedIndexChanged" AutoPostBack="true">
             <asp:ListItem Text="Problema" Value="1" Selected="True" />
             <asp:ListItem Text="Data" Value="2" />
             <asp:ListItem Text="Utilizador" Value="3" />
             <asp:ListItem Text="Equipamento" Value="4" />
         </asp:RadioButtonList>
         <asp:TextBox ID="tbxPesq" runat="server" Text="" CssClass="form-control" Width="351px" OnTextChanged="tbxPesq_TextChanged" AutoPostBack="true" />
+        <asp:Button ID="btLimparFiltros" Text="Limpar" runat="server" CssClass="btn btn-primary" CausesValidation="False" OnClick="btLimparFiltros_Click" />
     </div>
     <br />
     <div style="margin-left: 20px">
@@ -44,7 +45,8 @@
             <Columns>
                 <asp:TemplateField >
                     <HeaderTemplate>
-                        <asp:Button Text="Prioridade" runat="server" ForeColor="White" CssClass="btn btn-link" ID="OrdPrio" OnClick="OrdPrio_Click" />
+                        <asp:Label Text="Prioridade" runat="server" />	&nbsp;
+                        <asp:ImageButton runat="server" ImageUrl="../../Content/Imagens/Setas.png" Width="15" Height="15" ID="OrdPrio" OnClick="OrdPrio_Click" />
                     </HeaderTemplate>
                     <ItemTemplate>
                         <asp:DropDownList ID="ddlPrioridade" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlPrioridade_SelectedIndexChanged">
@@ -60,7 +62,8 @@
             <Columns>
                 <asp:TemplateField>
                     <HeaderTemplate>
-                        <asp:Button Text="Estado" runat="server" ForeColor="White" CssClass="btn btn-link" ID="OrdEstado" OnClick="OrdEstado_Click" />
+                        <asp:Label Text="Estado" runat="server" />	&nbsp;
+                        <asp:ImageButton runat="server" ImageUrl="../../Content/Imagens/Setas.png" Width="15" Height="15" ID="OrdEstado" OnClick="OrdEstado_Click" />
                     </HeaderTemplate>
                     <ItemTemplate>
                         <asp:DropDownList ID="ddlEstado" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlEstado_SelectedIndexChanged">
@@ -75,7 +78,8 @@
             <Columns>
                 <asp:TemplateField>
                     <HeaderTemplate>
-                        <asp:Button Text="Utilizador" runat="server" ForeColor="White" CssClass="btn btn-link" ID="OrdUti" OnClick="OrdUti_Click" />
+                        <asp:Label Text="Utilizador" runat="server" />	&nbsp;
+                        <asp:ImageButton runat="server" ImageUrl="../../Content/Imagens/Setas.png" Width="15" Height="15" ID="OrdUti" OnClick="OrdUti_Click" />
                     </HeaderTemplate>
                     <ItemTemplate>
                         <asp:Button runat="server" CssClass="btn btn-link" ID="btUser" ForeColor="Black"/>
@@ -86,7 +90,8 @@
             <Columns>
                 <asp:TemplateField>
                     <HeaderTemplate>
-                        <asp:Button Text="Equipamento" runat="server" ForeColor="White" CssClass="btn btn-link" ID="OrdEquip" OnClick="OrdEquip_Click" />
+                        <asp:Label Text="Equipamento" runat="server" />	&nbsp;
+                        <asp:ImageButton  runat="server" ImageUrl="../../Content/Imagens/Setas.png" Width="15" Height="15" ID="OrdEquip" OnClick="OrdEquip_Click" />
                     </HeaderTemplate>
                     <ItemTemplate>
                          <asp:Button runat="server" CssClass="btn btn-link" ID="btEquip" ForeColor="Black"/>
@@ -162,7 +167,7 @@
     </cc1:ModalPopupExtender>
     <asp:Panel ID="pnlQrCode" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
         <asp:PlaceHolder ID="PlaceHolder1" runat="server"></asp:PlaceHolder>
-        <asp:Button ID="btSimQrCode" Text="Imprimir" runat="server" CssClass="btn btn-primary" CausesValidation="False" OnClick="btSimQrCode_Click" Visible="false" />
+        <asp:Button ID="btSimQrCode" Text="Imprimir" runat="server" CssClass="btn btn-primary" CausesValidation="False" OnClick="btSimQrCode_Click"/>
         <asp:Button ID="btNaoQrCode" Text="Fechar" runat="server" CssClass="btn btn-secondary" CausesValidation="False" />
     </asp:Panel>
 

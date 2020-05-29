@@ -18,12 +18,28 @@
             <h4>Admin Menu - Bem vindo(a) <%= Session["username"].ToString() %></h4>
         </div>
         <div class="menu">
-            <a href="../Admins/Equips/Home.aspx" class="yellow">Inventario</a>
-            <a href="../Admins/Denuncias/Denuncias.aspx" class="green">Denuncias</a>
-            <a href="../Admins/Requisicoes/RequisicoesGrid.aspx" class="pink">Reservas</a>
-            <a href="../Admins/Cat/EquipCat.aspx" class="purple">Categorias</a>
-            <a href="../Admins/Salas/SalasGrid.aspx" class="blue">Salas</a>
-            <a href="../Admins/Users/Users.aspx" class="orange">Utilizadores</a>
+            <a href="Equips/Home.aspx" class="yellow">
+                <img style="width: 94px; height: 86px" src="../Content/Imagens/Equips.png"/>
+                Inventario
+            </a>
+            <a href="Denuncias/Denuncias.aspx" class="green">
+                <img style="width: 94px; height: 86px" src="../Content/Imagens/Denuncias.png"/>
+                Denuncias
+            </a>
+            <a href="Requisicoes/RequisicoesGrid.aspx" class="pink">
+                <img style="width: 94px; height: 86px" src="../Content/Imagens/Reservas.png"/>
+                Reservas
+            </a>
+            <a href="Cat/EquipCat.aspx" class="purple">
+                <img style="width: 94px; height: 86px" src="../Content/Imagens/Cat.png"/>
+                Categorias</a><a href="Salas/SalasGrid.aspx" class="blue"><img style="width: 94px; height: 86px" src="../Content/Imagens/Salas.png"/>
+                <br />
+                Salas
+            </a>
+            <a href="Users/Users.aspx" class="orange">
+                <img style="width: 94px; height: 86px" src="../Content/Imagens/Users.png"/>
+                Utilizadores
+            </a>
         </div>
     </form>
     <script src="../Scripts/bootstrap.min.js"></script>

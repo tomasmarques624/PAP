@@ -96,11 +96,11 @@ namespace PAP.Site.Admins
 
                 CheckBox chbxEliminar = (CheckBox)gvDenuList.Rows[index].FindControl("chbxEliminar");
 
-                Models.Denuncias denuncia = DenunciasDAO.GetDenunciaByID(Convert.ToInt32(gvDenuList.DataKeys[i].Value));
-
-                int id_denuncia = denuncia.id_denuncia;
                 if (chbxEliminar.Checked)
                 {
+                    Models.Denuncias denuncia = DenunciasDAO.GetDenunciaByID(Convert.ToInt32(gvDenuList.DataKeys[i].Value));
+                    int id_denuncia = denuncia.id_denuncia;
+
                     User user = UserDAO.GetUserByID(denuncia.id_user);
                     Equip equip = EquipDAO.GetEquipByID(denuncia.id_equip);
 
@@ -280,21 +280,33 @@ namespace PAP.Site.Admins
             {
                 using (MemoryStream ms = new MemoryStream())
                 {
+                    bitMap.Save("C:\\Users\\Utilizador\\source\\repos\\PAP\\PAP.Site\\Content\\Imagens\\qrcode.png", System.Drawing.Imaging.ImageFormat.Png);
                     bitMap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
                     byte[] byteImage = ms.ToArray();
                     imgBarCode.ImageUrl = "data:image/png;base64," + Convert.ToBase64String(byteImage);
                 }
+                
                 PlaceHolder1.Controls.Add(imgBarCode);
             }
         }
 
         protected void btSimQrCode_Click(object sender, EventArgs e)
         {
-            // imprimir a imagem
+            PrintDocument pd = new PrintDocument();
+            pd.PrintPage += PrintPage;
+            pd.Print();
+        }
+        private void PrintPage(object o, PrintPageEventArgs e)
+        {
+            System.Drawing.Image img = System.Drawing.Image.FromFile("C:\\Users\\Utilizador\\source\\repos\\PAP\\PAP.Site\\Content\\Imagens\\qrcode.png");
+            Point loc = new Point(100, 100);
+            e.Graphics.DrawImage(img, loc);
+            img.Dispose();
         }
 
         protected void btRemover_Click(object sender, EventArgs e)
         {
+            MPE_Rem.Show();
         }
 
         protected void tbxPesq_TextChanged(object sender, EventArgs e)
@@ -315,25 +327,15 @@ namespace PAP.Site.Admins
                         }
                         else if (rblPesq.SelectedValue == "2")
                         {
-                            TextBox drp = (TextBox)sender;
-
-                            GridViewRow gv = (GridViewRow)drp.NamingContainer;
-
-                            int index = gv.RowIndex;
-
-                            TextBox tbxPesqui = (TextBox)gvDenuList.Rows[index].FindControl("tbxPesq");
-                            tbxPesqui.TextMode = TextBoxMode.Date;
-                            command.CommandText = "SELECT * FROM tblEquip WHERE data_denuncia LIKE '" + tbxPesq.Text + "%';";
+                            command.CommandText = "SELECT * FROM tblDenuncias WHERE data_denuncia = '" + Convert.ToDateTime(tbxPesq.Text).ToString("MM/dd/yyyy") + "';";
                         }
                         else if (rblPesq.SelectedValue == "3")
                         {
-                            User user = UserDAO.GetUserByNome(tbxPesq.Text);
-                            command.CommandText = "SELECT * FROM tblDenuncias WHERE id_user = " + user.id_User;
+                            command.CommandText = "SELECT tblDenuncias.id_denuncia,tblDenuncias.problema,tblDenuncias.data_denuncia,tblDenuncias.estado,tblDenuncias.prioridade,tblDenuncias.id_user,tblDenuncias.id_equip FROM tblDenuncias,tblUsers WHERE tblUsers.username LIKE '" + tbxPesq.Text + "%' AND tblDenuncias.id_user = tblUsers.id_user;";
                         }
                         else
                         {
-                            Equip equip = EquipDAO.GetEquipByDesc(tbxPesq.Text);
-                            command.CommandText = "SELECT * FROM tblDenuncias WHERE id_equip = " + equip.id_equip;
+                            command.CommandText = "SELECT tblDenuncias.id_denuncia,tblDenuncias.problema,tblDenuncias.data_denuncia,tblDenuncias.estado,tblDenuncias.prioridade,tblDenuncias.id_user,tblDenuncias.id_equip FROM tblDenuncias,tblEquip WHERE tblEquip.descri LIKE '" + tbxPesq.Text + "%' AND tblDenuncias.id_equip = tblEquip.id_equip;";
                         }
 
                         connection.Open();
@@ -563,6 +565,25 @@ namespace PAP.Site.Admins
             }
             gvDenuList.DataSource = listDenus;
             gvDenuList.DataBind();
+        }
+
+        protected void rblPesq_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            tbxPesq.Text = "";
+            if (rblPesq.SelectedValue == "2")
+            {
+                tbxPesq.TextMode = TextBoxMode.Date;
+            }
+            else
+            {
+                tbxPesq.TextMode = TextBoxMode.SingleLine;
+            }
+        }
+
+        protected void btLimparFiltros_Click(object sender, EventArgs e)
+        {
+            tbxPesq.Text = "";
+            DataBindGrid();
         }
     }
 }

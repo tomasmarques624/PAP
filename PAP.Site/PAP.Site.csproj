@@ -199,6 +199,13 @@
     <Content Include="Content\CustomStyles\LibraryStyles\custom_style.css" />
     <Content Include="Content\CustomStyles\LibraryStyles\styles.css" />
     <Content Include="Content\CustomStyles\LoginRegisterStyles\loginregister.css" />
+    <Content Include="Content\Imagens\Cat.png" />
+    <Content Include="Content\Imagens\Denuncias.png" />
+    <Content Include="Content\Imagens\Equips.png" />
+    <Content Include="Content\Imagens\Reservas.png" />
+    <Content Include="Content\Imagens\Salas.png" />
+    <Content Include="Content\Imagens\Setas.png" />
+    <Content Include="Content\Imagens\Users.png" />
     <Content Include="Global.asax" />
     <Content Include="PwdMgmt\NewPasswordRequest.aspx" />
     <Content Include="PwdMgmt\SetNewPassword.aspx" />

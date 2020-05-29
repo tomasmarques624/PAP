@@ -27,15 +27,7 @@ namespace PAP.Site.Admins
 
         protected void btRemover_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < gvSalaList.Rows.Count; i++)
-            {
-                Models.Salas salas = SalasDAO.GetSalaByID(Convert.ToInt32(gvSalaList.DataKeys[i].Value));
-                int id_sala = salas.id_sala;
-                if (((CheckBox)gvSalaList.Rows[i].FindControl("chbxEliminar")).Checked)
-                {
-                    SalasDAO.RemoveSala(id_sala);
-                }
-            }
+            MPE_Rem.Show();
         }
 
         protected void btNovaSala_Click(object sender, EventArgs e)
@@ -76,6 +68,22 @@ namespace PAP.Site.Admins
                 gvSalaList.EditIndex = -1;
                 DataBindGrid();
             }
+        }
+
+        protected void btSimRe_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < gvSalaList.Rows.Count; i++)
+            {
+                if (((CheckBox)gvSalaList.Rows[i].FindControl("chbxEliminar")).Checked)
+                {
+                    Models.Salas salas = SalasDAO.GetSalaByID(Convert.ToInt32(gvSalaList.DataKeys[i].Value));
+                    int id_sala = salas.id_sala;
+                    SalasDAO.RemoveSala(id_sala);
+                    continue;
+                }
+            }
+            MPE_Rem.Hide();
+            DataBindGrid();
         }
     }
 }

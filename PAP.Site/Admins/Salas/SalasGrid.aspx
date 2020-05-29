@@ -1,9 +1,9 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SalasGrid.aspx.cs" Inherits="PAP.Site.Admins.SalasGrid" MasterPageFile="~/Admins/AdminSite.Master" %>
-
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server"></asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
+    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
     <div id="content-page">
         <h3>Salas</h3>
         <h5>Filtros</h5>
@@ -39,9 +39,8 @@
     <br />
     &nbsp&nbsp&nbsp
    
-    <asp:Button ID="btRemover" Text="Remover as salas selecionadas" runat="server" CssClass="btn btn-danger" OnClick="btRemover_Click" />
+    <asp:Button ID="btRemover" Text="Remover as salas selecionadas" runat="server" CssClass="btn btn-danger" CausesValidation="false" OnClick="btRemover_Click" />
      <!-- Modal Remover -->
-    <asp:Button ID="Button1" Text="Remover os equipamentos" runat="server" CssClass="btn btn-danger" CausesValidation="false" OnClick="btRemover_Click"/>
     <asp:Button ID="btRem" runat="server" Style="display: none;" />
     <cc1:ModalPopupExtender ID="MPE_Rem" runat="server" BehaviorID="btRemover_ModalPopupExtender"
         DynamicServicePath="" TargetControlID="btRem" PopupControlID="pnlRemover"

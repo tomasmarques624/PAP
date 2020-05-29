@@ -10,10 +10,10 @@
     <link href="../Content/CustomStyles/LibraryStyles/custom_style.css" rel="stylesheet" />
     <link href="../Content/alertifyjs/alertify.css" rel="stylesheet" />
 
-    <script src="../Scripts/jquery-3.4.1.min.js"></script>
-    <script src="../Scripts/bootstrap.min.js"></script>
-    <script src="../Scripts/popper.min.js"></script>
-    <script src="../Scripts/alertify.js"></script>
+    <script src="../../Scripts/jquery-3.4.1.min.js"></script>
+    <script src="../../Scripts/bootstrap.min.js"></script>
+    <script src="../../Scripts/popper.min.js"></script>
+    <script src="../../Scripts/alertify.js"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
