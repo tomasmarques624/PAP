@@ -4,6 +4,8 @@ using PAP.DataAccess.UserDA;
 using PAP.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net.Mail;
 using System.Web;
@@ -164,17 +166,220 @@ namespace PAP.Site.Admins
 
         protected void OrdEquip_Click(object sender, EventArgs e)
         {
+            List<Requisicoes> listReqs = null;
 
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    if (Convert.ToInt32(ordequip.Value) == 1)
+                    {
+                        command.CommandText = "SELECT * FROM tblRequisicoes ORDER BY id_equip;";
+                        ordequip.Value = "2";
+                    }
+                    else
+                    {
+                        command.CommandText = "SELECT * FROM tblRequisicoes ORDER BY id_equip DESC;";
+                        ordequip.Value = "1";
+                    }
+
+                    connection.Open();
+
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        if (dataReader.HasRows)
+                        {
+                            listReqs = new List<Requisicoes>();
+                            while (dataReader.Read())
+                            {
+                                listReqs.Add(new Requisicoes()
+                                {
+                                    id_requisicao = Convert.ToInt32(dataReader["id_requisicao"]),
+                                    data_requisicao = Convert.ToDateTime(dataReader["data_requisicao"].ToString()),
+                                    data_requisicao_final = Convert.ToDateTime(dataReader["data_requisicao_final"].ToString()),
+                                    estado = Convert.ToBoolean(dataReader["estado"].ToString()),
+                                    id_user = Convert.ToInt32(dataReader["id_user"]),
+                                    id_equip = Convert.ToInt32(dataReader["id_equip"])
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            gvReqList.DataSource = listReqs;
+            gvReqList.DataBind();
         }
 
         protected void OrdUti_Click(object sender, EventArgs e)
         {
+            List<Requisicoes> listReqs = null;
 
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    if (Convert.ToInt32(ordequip.Value) == 1)
+                    {
+                        command.CommandText = "SELECT * FROM tblRequisicoes ORDER BY id_user;";
+                        orduti.Value = "2";
+                    }
+                    else
+                    {
+                        command.CommandText = "SELECT * FROM tblRequisicoes ORDER BY id_user DESC;";
+                        orduti.Value = "1";
+                    }
+
+                    connection.Open();
+
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        if (dataReader.HasRows)
+                        {
+                            listReqs = new List<Requisicoes>();
+                            while (dataReader.Read())
+                            {
+                                listReqs.Add(new Requisicoes()
+                                {
+                                    id_requisicao = Convert.ToInt32(dataReader["id_requisicao"]),
+                                    data_requisicao = Convert.ToDateTime(dataReader["data_requisicao"].ToString()),
+                                    data_requisicao_final = Convert.ToDateTime(dataReader["data_requisicao_final"].ToString()),
+                                    estado = Convert.ToBoolean(dataReader["estado"].ToString()),
+                                    id_user = Convert.ToInt32(dataReader["id_user"]),
+                                    id_equip = Convert.ToInt32(dataReader["id_equip"])
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            gvReqList.DataSource = listReqs;
+            gvReqList.DataBind();
         }
 
         protected void tbxPesq_TextChanged(object sender, EventArgs e)
         {
+            if (tbxPesq.Text != "")
+            {
+                List<Requisicoes> listReqs = null;
 
+                using (SqlConnection connection = new SqlConnection())
+                {
+                    connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        if (rblPesq.SelectedValue == "1")
+                        {
+                            command.CommandText = "SELECT * FROM tblRequisicoes WHERE data_requisicao LIKE '" + Convert.ToDateTime(tbxPesq.Text).ToString("MM/dd/yyyy") + "%';";
+                        }
+                        else if (rblPesq.SelectedValue == "2")
+                        {
+                            command.CommandText = "SELECT * FROM tblRequisicoes WHERE data_requisicao_final = '" + Convert.ToDateTime(tbxPesq.Text).ToString("MM/dd/yyyy") + "';";
+                        }
+                        else if (rblPesq.SelectedValue == "3")
+                        {
+                            command.CommandText = "SELECT tblRequisicoes.id_requisicao,tblRequisicoes.data_requisicao,tblRequisicoes.data_requisicao_final,tblRequisicoes.estado,tblRequisicoes.id_user,tblRequisicoes.id_equip FROM tblRequisicoes,tblUsers WHERE tblUsers.username LIKE '" + tbxPesq.Text + "%' AND tblRequisicoes.id_user = tblUsers.id_user;";
+                        }
+                        else
+                        {
+                            command.CommandText = "SELECT tblRequisicoes.id_requisicao,tblRequisicoes.data_requisicao,tblRequisicoes.data_requisicao_final,tblRequisicoes.estado,tblRequisicoes.id_user,tblRequisicoes.id_equip FROM tblRequisicoes,tblUsers WHERE tblEquip.descri LIKE '" + tbxPesq.Text + "%' AND tblRequisicoes.id_equip = tblEquip.id_equip;";
+                        }
+
+                        connection.Open();
+
+                        using (SqlDataReader dataReader = command.ExecuteReader())
+                        {
+                            if (dataReader.HasRows)
+                            {
+                                listReqs = new List<Requisicoes>();
+                                while (dataReader.Read())
+                                {
+                                    listReqs.Add(new Requisicoes()
+                                    {
+                                        id_requisicao = Convert.ToInt32(dataReader["id_requisicao"]),
+                                        data_requisicao = Convert.ToDateTime(dataReader["data_requisicao"].ToString()),
+                                        data_requisicao_final = Convert.ToDateTime(dataReader["data_requisicao_final"].ToString()),
+                                        estado = Convert.ToBoolean(dataReader["estado"].ToString()),
+                                        id_user = Convert.ToInt32(dataReader["id_user"]),
+                                        id_equip = Convert.ToInt32(dataReader["id_equip"])
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+                gvReqList.DataSource = listReqs;
+                gvReqList.DataBind();
+            }
+            else
+            {
+                DataBindGrid();
+            }
+        }
+
+        protected void rblPesq_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            tbxPesq.Text = "";
+            if (rblPesq.SelectedValue == "1" || rblPesq.SelectedValue == "2")
+            {
+                tbxPesq.TextMode = TextBoxMode.Date;
+            }
+            else
+            {
+                tbxPesq.TextMode = TextBoxMode.SingleLine;
+            }
+        }
+
+        protected void OrdEstado_Click(object sender, ImageClickEventArgs e)
+        {
+            List<Requisicoes> listReqs = null;
+
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    if (Convert.ToInt32(ordequip.Value) == 1)
+                    {
+                        command.CommandText = "SELECT * FROM tblRequisicoes ORDER BY estado;";
+                        ordest.Value = "2";
+                    }
+                    else
+                    {
+                        command.CommandText = "SELECT * FROM tblRequisicoes ORDER BY estado DESC;";
+                        ordest.Value = "1";
+                    }
+
+                    connection.Open();
+
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        if (dataReader.HasRows)
+                        {
+                            listReqs = new List<Requisicoes>();
+                            while (dataReader.Read())
+                            {
+                                listReqs.Add(new Requisicoes()
+                                {
+                                    id_requisicao = Convert.ToInt32(dataReader["id_requisicao"]),
+                                    data_requisicao = Convert.ToDateTime(dataReader["data_requisicao"].ToString()),
+                                    data_requisicao_final = Convert.ToDateTime(dataReader["data_requisicao_final"].ToString()),
+                                    estado = Convert.ToBoolean(dataReader["estado"].ToString()),
+                                    id_user = Convert.ToInt32(dataReader["id_user"]),
+                                    id_equip = Convert.ToInt32(dataReader["id_equip"])
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            gvReqList.DataSource = listReqs;
+            gvReqList.DataBind();
         }
     }
 }

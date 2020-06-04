@@ -211,9 +211,14 @@
             </tr>
             <tr>
                 <td>
-                    <asp:ValidationSummary HeaderText="<div class='validationheader'>&nbsp;Erros: </div>" ForeColor="Red" runat="server" DisplayMode="BulletList" CssClass="validationsummary" />
+                    <asp:ValidationSummary HeaderText="<div class='validationheader'>&nbsp;Erros: </div>" ForeColor="Red" runat="server" DisplayMode="BulletList" CssClass="validationsummary"/>
                 </td>
             </tr>
+            <tr>
+                    <td>
+                        <asp:Label Text="" ID="lbMensagem" runat="server" ForeColor="Red" />
+                    </td>
+                </tr>
             <tr>
                 <td>
                     <asp:Button ID="btSimReq" Text="Inserir" runat="server" OnClick="btSimReq_Click" CssClass="btn btn-success" CausesValidation="False" />

@@ -156,6 +156,7 @@ namespace PAP.Site.Admins
         protected void btSimEstado_Click(object sender, EventArgs e)
         {
             char est;
+            Models.Denuncias denuncia = DenunciasDAO.GetDenunciaByID(Convert.ToInt32(id_denu.Value));
             if (estado.Value == "1")
             {
                 est = 'V';
@@ -163,6 +164,7 @@ namespace PAP.Site.Admins
             else if (estado.Value == "2")
             {
                 est = 'P';
+                int a = EquipDAO.UpdateEquipDisp(Convert.ToInt32(denuncia.id_equip), Convert.ToBoolean(0));
             }
             else
             {
@@ -176,7 +178,6 @@ namespace PAP.Site.Admins
             }
             else
             {
-                Models.Denuncias denuncia = DenunciasDAO.GetDenunciaByID(Convert.ToInt32(id_denu.Value));
                 User user = UserDAO.GetUserByID(denuncia.id_user);
                 Equip equip = EquipDAO.GetEquipByID(denuncia.id_equip);
                 string esta;

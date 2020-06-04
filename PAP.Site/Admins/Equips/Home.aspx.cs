@@ -207,24 +207,33 @@ namespace PAP.Site.Admins
             }
             else
             {
-                User user = UserDAO.GetUserByEmail(Session["email"].ToString());
-                Requisicoes req = new Requisicoes()
+                var dataIni = Convert.ToDateTime(tbxDataReqIni.Text);
+                var dataFin = Convert.ToDateTime(tbxDataReqFin.Text);
+                if (dataIni < dataFin)
                 {
-                    id_equip = Convert.ToInt32(id_equip.Value),
-                    data_requisicao = Convert.ToDateTime(tbxDataReqIni.Text),
-                    data_requisicao_final = Convert.ToDateTime(tbxDataReqFin.Text),
-                    estado = false,
-                    id_user = user.id_User
-                };
-                int returncode = RequisicoesDAO.InsertReq(req);
-                MPE_NewReq.Hide();
-                if (returncode == -1)
-                {
-                    // alerta
+                    User user = UserDAO.GetUserByEmail(Session["email"].ToString());
+                    Requisicoes req = new Requisicoes()
+                    {
+                        id_equip = Convert.ToInt32(id_equip.Value),
+                        data_requisicao = Convert.ToDateTime(tbxDataReqIni.Text),
+                        data_requisicao_final = Convert.ToDateTime(tbxDataReqFin.Text),
+                        estado = false,
+                        id_user = user.id_User
+                    };
+                    int returncode = RequisicoesDAO.InsertReq(req);
+                    MPE_NewReq.Hide();
+                    if (returncode == -1)
+                    {
+                        // alerta
+                    }
+                    else
+                    {
+                        // alerta
+                    }
                 }
                 else
                 {
-                    // alerta
+                    lbMensagem.Text = "A data final tem de ser superior a inicial.";
                 }
             }
             btSimReq.CausesValidation = false;
