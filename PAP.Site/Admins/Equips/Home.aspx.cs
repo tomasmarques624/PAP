@@ -263,6 +263,7 @@ namespace PAP.Site.Admins
                 tbxDataReqFin.Visible = true;
                 tbxDataReqIni.Visible = true;
             }
+            MPE_NewReq.Show();
         }
 
         protected void btNaoRe_Click(object sender, EventArgs e)
@@ -345,6 +346,9 @@ namespace PAP.Site.Admins
             }
             else
             {
+                Equip equip = EquipDAO.GetEquipByID(denu.id_equip);
+                fluFoto.PostedFile.SaveAs(Server.MapPath("~/Content/Imagens/Denuncias/") + equip.descri+"_"+DateTime.Now.ToString("MM/dd/yyyy"));
+
                 // alerta
             }
             btSimDenu.CausesValidation = false;

@@ -35,10 +35,6 @@
         <asp:TextBox ID="tbxPesq" runat="server" Text="" CssClass="form-control" Width="351px" OnTextChanged="tbxPesq_TextChanged" AutoPostBack="true" />
         <asp:Button ID="btLimparFiltros" Text="Limpar" runat="server" CssClass="btn btn-primary" CausesValidation="False" OnClick="btLimparFiltros_Click" />
     </div>
-    <div>
-        &nbsp&nbsp&nbsp
-        <asp:Button ID="btNovoEquip" Text="Adicionar Equipamento" runat="server" CssClass="btn btn-primary" OnClick="btNovoEquip_Click" CausesValidation="False" />
-    </div>
     <br />
     <div style="margin-left: 20px">
         <asp:GridView ID="gvEquipList" AutoGenerateColumns="False" DataKeyNames="id_equip" EmptyDataText="Sem registos" runat="server" ViewStateMode="Enabled"
@@ -55,6 +51,7 @@
                         <asp:ImageButton runat="server" ImageUrl="../../Content/Imagens/Setas.png" Width="15" Height="15" ID="OrdCat" OnClick="OrdCat_Click" />
                     </HeaderTemplate>
                     <ItemTemplate>
+                        &nbsp
                         <asp:DropDownList ID="ddlCat" runat="server" CssClass="form-control" OnSelectedIndexChanged="ddlCat_SelectedIndexChanged" AutoPostBack="true">
                         </asp:DropDownList>
                     </ItemTemplate>
@@ -245,6 +242,12 @@
                     <asp:RequiredFieldValidator ID="rfvProb" runat="server" ErrorMessage="É necessário um problema." Text="*" ControlToValidate="tbxProb" ForeColor="Red" Enabled="false"></asp:RequiredFieldValidator>
                 </td>
             </tr>
+            <tr>
+                    <td>Foto</td>
+                    <td>
+                        <asp:FileUpload CssClass="form-control-file" runat="server" ID="fluFoto"/>
+                    </td>
+                </tr>
             <tr>
                 <td>
                     <asp:ValidationSummary HeaderText="<div class='validationheader'>&nbsp;Erros: </div>" ForeColor="Red" runat="server" DisplayMode="BulletList" CssClass="validationsummary" />

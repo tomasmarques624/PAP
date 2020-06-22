@@ -182,6 +182,50 @@ namespace PAP.DataAccess.UserDA
                 }
             }
         }
+
+        public static User GetUserByUsername(string username)
+        {
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandText = "sp_GetUserByUsername";
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@username", username);
+                    connection.Open();
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        if (dataReader.Read())
+                        {
+                            if (Convert.ToInt32(dataReader["ReturnCode"]) == -1)
+                            {
+                                return null;
+                            }
+                            if (dataReader.NextResult())
+                            {
+                                dataReader.Read();
+                                User user = new User()
+                                {
+                                    id_User = Convert.ToInt32(dataReader["id_user"]),
+                                    Password = dataReader["password"].ToString(),
+                                    Username = dataReader["username"].ToString(),
+                                    Email = dataReader["email"].ToString(),
+                                    Role = dataReader["role"].ToString()[0],
+                                    isloocked = Convert.ToBoolean(dataReader["is_looked"]),
+                                    nr_attempts = Convert.ToInt32(dataReader["nr_attempts"]),
+                                    locked_date_time = dataReader["locked_date_time"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(dataReader["locked_date_time"])
+                                };
+                                return user;
+                            }
+                        }
+                        return null;
+                    }
+                }
+            }
+        }
+
         public static User GetUserByEmail(string email)
         {
             using (SqlConnection connection = new SqlConnection())

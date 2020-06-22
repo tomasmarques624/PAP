@@ -84,3 +84,9 @@
         padding: 2px 0px 0px 15px;
     }
 
+@supports (-webkit-text-stroke: 1px black) {
+    .mt-5.shadow {
+        -webkit-text-stroke: 1px black;
+        -webkit-text-fill-color: white;
+    }
+}

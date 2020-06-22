@@ -15,6 +15,8 @@ using System.Web.UI.WebControls;
 using System.Drawing.Printing;
 using System.Data.SqlClient;
 using System.Configuration;
+using PAP.DataAccess.CatDA;
+using PAP.DataAccess.SalasDA;
 
 namespace PAP.Site.Admins
 {
@@ -270,7 +272,8 @@ namespace PAP.Site.Admins
             int id_denuncia = Convert.ToInt32(gvDenuList.Rows[index].Cells[0].Text);
             MPE_QrCode.Show();
             Models.Denuncias denuncia = DenunciasDAO.GetDenunciaByID(id_denuncia);
-            string code = denuncia.problema;
+            Equip equip = EquipDAO.GetEquipByID(denuncia.id_equip);
+            string code = "Equipamento : "+ equip.descri+"\nProblema :"+denuncia.problema;
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
             QRCodeData qrCodeData = qrGenerator.CreateQrCode(code, QRCodeGenerator.ECCLevel.Q);
             System.Web.UI.WebControls.Image imgBarCode = new System.Web.UI.WebControls.Image();
@@ -585,6 +588,96 @@ namespace PAP.Site.Admins
         {
             tbxPesq.Text = "";
             DataBindGrid();
+        }
+
+        protected void btContactar_Click(object sender, EventArgs e)
+        {
+            divContactar.Visible = true;
+            MPE_User.Show();
+        }
+
+        protected void btEnviar_Click(object sender, EventArgs e)
+        {
+            MailMessage mailMessage = new MailMessage();
+            mailMessage.From = new MailAddress("likedat6969@gmail.com");
+            mailMessage.To.Add(lbEmail.Text);
+            mailMessage.Subject = tbxAssunto.Text;
+            mailMessage.Body = tbxMensagem.Text;
+            mailMessage.IsBodyHtml = true;
+
+            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+            smtpClient.EnableSsl = true;
+            smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+            smtpClient.UseDefaultCredentials = false;
+            smtpClient.Credentials = new System.Net.NetworkCredential("likedat6969@gmail.com", "teste123456");
+            smtpClient.Send(mailMessage);
+
+            divContactar.Visible = false;
+            tbxMensagem.Text = "";
+            tbxAssunto.Text = "";
+        }
+
+        protected void btCancelar_Click(object sender, EventArgs e)
+        {
+            divContactar.Visible = false;
+            MPE_User.Show();
+        }
+
+        protected void btUser_Click(object sender, EventArgs e)
+        {
+            Button bt = (Button)sender;
+
+            GridViewRow gv = (GridViewRow)bt.NamingContainer;
+
+            int index = gv.RowIndex;
+
+            Button btUser = (Button)gvDenuList.Rows[index].FindControl("btUser");
+            String username = btUser.Text;
+            User user = UserDAO.GetUserByUsername(username);
+            lbNomeUser.Text = "<b>Nome : </b>" + username + "\n";
+            lbEmail.Text = "<b>Email : </b>" + user.Email + "\n";
+            MPE_User.Show();
+        }
+
+        protected void btFecharUser_Click(object sender, EventArgs e)
+        {
+            MPE_User.Hide();
+        }
+
+        protected void btEquip_Click(object sender, EventArgs e)
+        {
+            Button bt = (Button)sender;
+
+            GridViewRow gv = (GridViewRow)bt.NamingContainer;
+
+            int index = gv.RowIndex;
+
+            Button btEquip = (Button)gvDenuList.Rows[index].FindControl("btEquip");
+            String descri = btEquip.Text;
+            Equip equip = EquipDAO.GetEquipByDescri(descri);
+            Categoria cat = CatDAO.GetCatByID(equip.id_cat);
+            Models.Salas sala = SalasDAO.GetSalaByID(equip.id_sala);
+            lbDescri.Text = "<b>Descricao : </b>" + descri + "\n";
+            lbCategoria.Text = "<b>Categoria : </b>" + cat.Nome + "\n";
+            lbSala.Text = "<b>Sala : </b>" + sala.nome_sala + "\n";
+            MPE_Equip.Show();
+        }
+
+        protected void lkFoto_Click(object sender, EventArgs e)
+        {
+            LinkButton drp = (LinkButton)sender;
+
+            GridViewRow gv = (GridViewRow)drp.NamingContainer;
+
+            int index = gv.RowIndex;
+
+            LinkButton lkFoto = (LinkButton)gvDenuList.Rows[index].FindControl("lkFoto");
+            int id_denuncia = Convert.ToInt32(gvDenuList.Rows[index].Cells[0].Text);
+            MPE_QrCode.Show();
+            Models.Denuncias denuncia = DenunciasDAO.GetDenunciaByID(id_denuncia);
+            Equip equip = EquipDAO.GetEquipByID(denuncia.id_equip);
+            string v = "~/Content/Imagens/Denuncias/" + equip.descri + "_" + denuncia.data_denuncia.ToString("MM/dd/yyyy");
+            imgFoto.ImageUrl = v;
         }
     }
 }

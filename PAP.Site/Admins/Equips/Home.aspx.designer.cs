@@ -132,15 +132,6 @@ namespace PAP.Site.Admins
         protected global::System.Web.UI.WebControls.Button btLimparFiltros;
 
         /// <summary>
-        /// btNovoEquip control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btNovoEquip;
-
-        /// <summary>
         /// gvEquipList control.
         /// </summary>
         /// <remarks>
@@ -598,6 +589,15 @@ namespace PAP.Site.Admins
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvProb;
+
+        /// <summary>
+        /// fluFoto control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fluFoto;
 
         /// <summary>
         /// btSimDenu control.

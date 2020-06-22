@@ -64,7 +64,7 @@
                         <asp:ImageButton runat="server" ImageUrl="../../Content/Imagens/Setas.png" Width="15" Height="15" ID="OrdUti" OnClick="OrdUti_Click" />
                     </HeaderTemplate>
                     <ItemTemplate>
-                        <asp:Button runat="server" CssClass="btn btn-link" ID="btUser" ForeColor="Black" />
+                        <asp:Button runat="server" CssClass="btn btn-link" ID="btUser" ForeColor="Black" OnClick="btUser_Click" />
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
@@ -76,7 +76,7 @@
                         <asp:ImageButton runat="server" ImageUrl="../../Content/Imagens/Setas.png" Width="15" Height="15" ID="OrdEquip" OnClick="OrdEquip_Click" />
                     </HeaderTemplate>
                     <ItemTemplate>
-                         <asp:Button runat="server" ForeColor="Black" CssClass="btn btn-link" ID="btEquip"/>
+                         <asp:Button runat="server" ForeColor="Black" CssClass="btn btn-link" ID="btEquip" OnClick="btEquip_Click"/>
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
@@ -119,4 +119,55 @@
         <asp:Button ID="btNaoEstado" Text="Nao" runat="server" CssClass="btn btn-danger" CausesValidation="False" OnClick="btNaoEstado_Click" />
     </asp:Panel>
 
+    <!-- Modal Detalhes User -->
+    <asp:Button ID="btDetalhesUser" runat="server" Style="display: none;" />
+    <cc1:ModalPopupExtender ID="MPE_User" runat="server" BehaviorID="MPE_User"
+        DynamicServicePath="" TargetControlID="btDetalhesUser" PopupControlID="pnlUser"
+        CancelControlID="btFecharUser" BackgroundCssClass="popupbg">
+    </cc1:ModalPopupExtender>
+    <asp:Panel ID="pnlUser" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
+        <asp:Label ID="lbNomeUser" Text="" runat="server" />
+        <br />
+        
+        <asp:Label ID="lbEmail" Text="" runat="server" />
+
+        <div id="divContactar" visible="false" runat="server" style="border:3px solid">
+            <div class="form-group">
+                <label>Assunto</label>
+                <asp:TextBox ID="tbxAssunto" CssClass="form-control" runat="server"></asp:TextBox>
+                <asp:RequiredFieldValidator runat="server" ErrorMessage="É necessário um assunto." Text="*" ControlToValidate="tbxAssunto" ForeColor="Red"></asp:RequiredFieldValidator>
+            </div>
+            <div class="form-group">
+                <label>Mensagem</label>
+                <asp:TextBox ID="tbxMensagem" CssClass="form-control" runat="server" Height="145px" Width="100%" TextMode="MultiLine"></asp:TextBox>
+                <asp:RequiredFieldValidator runat="server" ErrorMessage="É necessário uma mensagem." Text="*" ControlToValidate="tbxMensagem" ForeColor="Red"></asp:RequiredFieldValidator>
+            </div>
+            <br />
+            <asp:ValidationSummary HeaderText="Erros" ForeColor="Red" runat="server" />
+            &nbsp&nbsp&nbsp
+            <asp:Label Text="" ID="lbMensagem" runat="server" ForeColor="Red" />
+            <br />
+            <asp:Button ID="btEnviar" CssClass="btn btn-primary" runat="server" Text="Enviar" OnClick="btEnviar_Click"/>
+            <asp:Button ID="btCancelar" Text="Cancelar" runat="server" CssClass="btn btn-secondary" CausesValidation="False" OnClick="btCancelar_Click" />
+        </div>
+        <br />
+        <asp:Button ID="btContactar" Text="Contactar" runat="server" CssClass="btn btn-primary" CausesValidation="False" OnClick="btContactar_Click" />
+        <asp:Button ID="btFecharUser" Text="Fechar" runat="server" CssClass="btn btn-secondary" CausesValidation="False" OnClick="btFecharUser_Click" />
+    </asp:Panel>
+
+    <!-- Modal Detalhes Equips -->
+    <asp:Button ID="btDetalhesEquip" runat="server" Style="display: none;" />
+    <cc1:ModalPopupExtender ID="MPE_Equip" runat="server" BehaviorID="MPE_Equip"
+        DynamicServicePath="" TargetControlID="btDetalhesEquip" PopupControlID="pnlEquip"
+        CancelControlID="btFecharEquip" BackgroundCssClass="popupbg">
+    </cc1:ModalPopupExtender>
+    <asp:Panel ID="pnlEquip" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
+        <asp:Label ID="lbDescri" Text="" runat="server" />
+        <br />
+        <asp:Label ID="lbCategoria" Text="" runat="server" />
+        <br />
+        <asp:Label ID="lbSala" Text="" runat="server" />
+        <br />
+        <asp:Button ID="btFecharEquip" Text="Fechar" runat="server" CssClass="btn btn-secondary" CausesValidation="False"  />
+    </asp:Panel>
 </asp:Content>

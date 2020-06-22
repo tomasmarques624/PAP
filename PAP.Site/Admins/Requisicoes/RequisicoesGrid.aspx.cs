@@ -1,5 +1,7 @@
-﻿using PAP.DataAccess.EquipDA;
+﻿using PAP.DataAccess.CatDA;
+using PAP.DataAccess.EquipDA;
 using PAP.DataAccess.RequisicoesDA;
+using PAP.DataAccess.SalasDA;
 using PAP.DataAccess.UserDA;
 using PAP.Models;
 using System;
@@ -380,6 +382,81 @@ namespace PAP.Site.Admins
             }
             gvReqList.DataSource = listReqs;
             gvReqList.DataBind();
+        }
+
+        protected void btEnviar_Click(object sender, EventArgs e)
+        {
+            MailMessage mailMessage = new MailMessage();
+            mailMessage.From = new MailAddress("likedat6969@gmail.com");
+            mailMessage.To.Add(lbEmail.Text);
+            mailMessage.Subject = tbxAssunto.Text;
+            mailMessage.Body = tbxMensagem.Text;
+            mailMessage.IsBodyHtml = true;
+
+            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+            smtpClient.EnableSsl = true;
+            smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+            smtpClient.UseDefaultCredentials = false;
+            smtpClient.Credentials = new System.Net.NetworkCredential("likedat6969@gmail.com", "teste123456");
+            smtpClient.Send(mailMessage);
+
+            divContactar.Visible = false;
+            tbxMensagem.Text = "";
+            tbxAssunto.Text = "";
+        }
+
+        protected void btCancelar_Click(object sender, EventArgs e)
+        {
+            divContactar.Visible = false;
+            btContactar.Visible = true;
+            MPE_User.Show();
+        }
+
+        protected void btContactar_Click(object sender, EventArgs e)
+        {
+            divContactar.Visible = true;
+            btContactar.Visible = false;
+            MPE_User.Show();
+        }
+
+        protected void btFecharUser_Click(object sender, EventArgs e)
+        {
+            MPE_User.Hide();
+        }
+
+        protected void btUser_Click(object sender, EventArgs e)
+        {
+            Button bt = (Button)sender;
+
+            GridViewRow gv = (GridViewRow)bt.NamingContainer;
+
+            int index = gv.RowIndex;
+
+            Button btUser = (Button)gvReqList.Rows[index].FindControl("btUser");
+            String username = btUser.Text;
+            User user = UserDAO.GetUserByUsername(username);
+            lbNomeUser.Text = "<b>Nome : </b>" + username + "\n";
+            lbEmail.Text = "<b>Email : </b>" + user.Email + "\n";
+            MPE_User.Show();
+        }
+
+        protected void btEquip_Click(object sender, EventArgs e)
+        {
+            Button bt = (Button)sender;
+
+            GridViewRow gv = (GridViewRow)bt.NamingContainer;
+
+            int index = gv.RowIndex;
+
+            Button btEquip = (Button)gvReqList.Rows[index].FindControl("btEquip");
+            String descri = btEquip.Text;
+            Equip equip = EquipDAO.GetEquipByDescri(descri);
+            Categoria cat = CatDAO.GetCatByID(equip.id_cat);
+            Models.Salas sala = SalasDAO.GetSalaByID(equip.id_sala);
+            lbDescri.Text = "<b>Descricao : </b>" + descri + "\n";
+            lbCategoria.Text = "<b>Categoria : </b>" + cat.Nome + "\n";
+            lbSala.Text = "<b>Sala : </b>" + sala.nome_sala + "\n";
+            MPE_Equip.Show();
         }
     }
 }

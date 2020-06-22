@@ -42,6 +42,15 @@ namespace PAP.Site.Admins.Equips
         protected global::System.Web.UI.WebControls.DropDownList ddlSala;
 
         /// <summary>
+        /// fluFoto control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fluFoto;
+
+        /// <summary>
         /// lbMensagem control.
         /// </summary>
         /// <remarks>

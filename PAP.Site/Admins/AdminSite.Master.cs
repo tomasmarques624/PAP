@@ -12,14 +12,17 @@ namespace PAP.Site.Admins
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Session["role"].ToString() == "U")
+            {
+                Response.Redirect("~/AcessoNegado.aspx");
+            }
         }
 
         protected void buttonLogout_Click(object sender, EventArgs e)
         {
             FormsAuthentication.SignOut();
             Session.Abandon();
-            Response.Redirect("~/Authentication/Login.aspx");
+            Response.Redirect("~/Authentication/Home.aspx");
         }
     }
 }

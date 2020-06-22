@@ -54,10 +54,12 @@ namespace PAP.Site.Admins.Equips
                 if (returncode == -1)
                 {
                     lbMensagem.ForeColor = System.Drawing.Color.Red;
-                    lbMensagem.Text = "Adição falhada!<br />Contacte o administrador ou tente novamente...";
+                    lbMensagem.Text = "Adição falhada!<br />Tente novamente mais tarde...";
                 }
                 else
                 {
+                    fluFoto.PostedFile.SaveAs(Server.MapPath("~/Content/Imagens/Equips/") + equip.descri);
+
                     lbMensagem.ForeColor = System.Drawing.Color.Green;
                     lbMensagem.Text = "Adição Efetuada com sucesso!";
                     btCancelar.Text = "Voltar";
