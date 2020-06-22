@@ -122,6 +122,8 @@
     <Build Include="SProcedures\Requisicoes\sp_GetUserReq.sql" />
     <Build Include="SProcedures\Denuncias\sp_GetUserDenu.sql" />
     <Build Include="SProcedures\Equip\sp_UpdateEquipDisp.sql" />
+    <Build Include="SProcedures\Users\sp_GetUserByUsername.sql" />
+    <Build Include="SProcedures\Equip\sp_GetEquipByDescri.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="PAP.Database.refactorlog" />
