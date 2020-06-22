@@ -42,8 +42,13 @@
             OnRowUpdating="gvEquipList_RowUpdating" Height="170px">
             <Columns>
                 <asp:BoundField DataField="id_equip" ReadOnly="true" HeaderText="ID" />
-                <asp:BoundField DataField="descri" HeaderText="Descricao" />
+            </Columns>
 
+            <Columns>
+                <asp:BoundField DataField="descri" HeaderText="Descricao" />
+            </Columns>
+
+            <Columns>
                 <asp:TemplateField>
                     <HeaderTemplate>
                         <asp:Label Text="Categoria" runat="server" />
@@ -56,7 +61,9 @@
                         </asp:DropDownList>
                     </ItemTemplate>
                 </asp:TemplateField>
+            </Columns>
 
+            <Columns>
                 <asp:TemplateField>
                     <HeaderTemplate>
                         <asp:Label Text="Sala" runat="server" />
@@ -68,7 +75,9 @@
                         </asp:DropDownList>
                     </ItemTemplate>
                 </asp:TemplateField>
+            </Columns>
 
+            <Columns>
                 <asp:TemplateField>
                     <HeaderTemplate>
                         <asp:Label Text="Disponivel" runat="server" />
@@ -79,28 +88,44 @@
                         <asp:CheckBox runat="server" ID="chbxDisponivel" Text=" Disponivel" OnCheckedChanged="chbxDisponivel_CheckedChanged" AutoPostBack="true" />
                     </ItemTemplate>
                 </asp:TemplateField>
+            </Columns>
 
+            <Columns>
                 <asp:TemplateField HeaderText="Remover Equipamentos">
                     <ItemTemplate>
                         <asp:CheckBox runat="server" ID="chbxEliminar" Text=" Eliminar" />
                     </ItemTemplate>
                 </asp:TemplateField>
-
+            </Columns>
+            <Columns>
                 <asp:CommandField ButtonType="Link" EditText="Editar" ShowEditButton="True" CancelText="Cancelar" UpdateText="Confirmar" CausesValidation="False" />
+            </Columns>
 
+            <Columns>
                 <asp:TemplateField HeaderText="Reservar">
                     <ItemTemplate>
                         <asp:LinkButton ID="lkReservar" runat="server" Text="Reservar" OnClick="lkReservar_Click" CausesValidation="False" />
                     </ItemTemplate>
                 </asp:TemplateField>
+            </Columns>
 
+            <Columns>
                 <asp:TemplateField HeaderText="Denunciar">
                     <ItemTemplate>
                         <asp:LinkButton ID="lkDenuncias" runat="server" Text="Denunciar" OnClick="lkDenuncias_Click" CausesValidation="False" />
                     </ItemTemplate>
                 </asp:TemplateField>
-
             </Columns>
+
+
+            <Columns>
+                <asp:TemplateField HeaderText="Foto">
+                    <ItemTemplate>
+                        <asp:LinkButton ID="lkFoto" runat="server" Text="Ver Foto" OnClick="lkFoto_Click"/>
+                    </ItemTemplate>
+                </asp:TemplateField>
+            </Columns>
+
         </asp:GridView>
     </div>
     <br />
@@ -208,14 +233,14 @@
             </tr>
             <tr>
                 <td>
-                    <asp:ValidationSummary HeaderText="<div class='validationheader'>&nbsp;Erros: </div>" ForeColor="Red" runat="server" DisplayMode="BulletList" CssClass="validationsummary"/>
+                    <asp:ValidationSummary HeaderText="<div class='validationheader'>&nbsp;Erros: </div>" ForeColor="Red" runat="server" DisplayMode="BulletList" CssClass="validationsummary" />
                 </td>
             </tr>
             <tr>
-                    <td>
-                        <asp:Label Text="" ID="lbMensagem" runat="server" ForeColor="Red" />
-                    </td>
-                </tr>
+                <td>
+                    <asp:Label Text="" ID="lbMensagem" runat="server" ForeColor="Red" />
+                </td>
+            </tr>
             <tr>
                 <td>
                     <asp:Button ID="btSimReq" Text="Inserir" runat="server" OnClick="btSimReq_Click" CssClass="btn btn-success" CausesValidation="False" />
@@ -243,11 +268,11 @@
                 </td>
             </tr>
             <tr>
-                    <td>Foto</td>
-                    <td>
-                        <asp:FileUpload CssClass="form-control-file" runat="server" ID="fluFoto"/>
-                    </td>
-                </tr>
+                <td>Foto</td>
+                <td>
+                    <asp:FileUpload CssClass="form-control-file" runat="server" ID="fluFoto" />
+                </td>
+            </tr>
             <tr>
                 <td>
                     <asp:ValidationSummary HeaderText="<div class='validationheader'>&nbsp;Erros: </div>" ForeColor="Red" runat="server" DisplayMode="BulletList" CssClass="validationsummary" />
@@ -261,5 +286,18 @@
             </tr>
         </table>
     </asp:Panel>
+
+    <!-- Modal Foto -->
+    <asp:Button ID="btFoto" runat="server" Style="display: none;" />
+    <cc1:ModalPopupExtender ID="MPE_Foto" runat="server" BehaviorID="MPE_Foto"
+        DynamicServicePath="" TargetControlID="btFoto" PopupControlID="pnlFoto"
+        CancelControlID="btFechar" BackgroundCssClass="popupbg">
+    </cc1:ModalPopupExtender>
+    <asp:Panel ID="pnlFoto" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
+        <asp:Image ImageUrl="" runat="server" ID="imgFoto" />
+        <asp:Button ID="btSalvar" Text="Salvar" runat="server" CssClass="btn btn-primary" CausesValidation="False"/>
+        <asp:Button ID="btFechar" Text="Fechar" runat="server" CssClass="btn btn-secondary" CausesValidation="False" />
+    </asp:Panel>
+
 </asp:Content>
 

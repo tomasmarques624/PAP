@@ -242,8 +242,8 @@
         CancelControlID="btNaoQrCode" BackgroundCssClass="popupbg">
     </cc1:ModalPopupExtender>
     <asp:Panel ID="pnlFoto" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
-        <asp:Image ImageUrl="" runat="server" ID="imgFoto" />
-        <asp:Button ID="btSalvar" Text="Salvar" runat="server" CssClass="btn btn-primary" CausesValidation="False"/>
+        <asp:Image ImageUrl="../../Content/Imagens/ImgNotFound.png" runat="server" ID="imgFoto"  Width="210px" Height="125px"/>
+        <asp:Button ID="btSalvarFoto" Text="Salvar" runat="server" CssClass="btn btn-primary" CausesValidation="False"/>
         <asp:Button ID="btFechar" Text="Fechar" runat="server" CssClass="btn btn-secondary" CausesValidation="False" />
     </asp:Panel>
 </asp:Content>

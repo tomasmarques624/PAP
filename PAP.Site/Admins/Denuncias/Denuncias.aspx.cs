@@ -673,11 +673,18 @@ namespace PAP.Site.Admins
 
             LinkButton lkFoto = (LinkButton)gvDenuList.Rows[index].FindControl("lkFoto");
             int id_denuncia = Convert.ToInt32(gvDenuList.Rows[index].Cells[0].Text);
-            MPE_QrCode.Show();
+            MPE_Foto.Show();
             Models.Denuncias denuncia = DenunciasDAO.GetDenunciaByID(id_denuncia);
             Equip equip = EquipDAO.GetEquipByID(denuncia.id_equip);
-            string v = "~/Content/Imagens/Denuncias/" + equip.descri + "_" + denuncia.data_denuncia.ToString("MM/dd/yyyy");
-            imgFoto.ImageUrl = v;
+            string png = "/Content/Imagens/Denuncias/" + equip.descri + "_" + denuncia.data_denuncia.ToString("MM/dd/yyyy")+".png";
+            string jpg = "/Content/Imagens/Denuncias/" + equip.descri + "_" + denuncia.data_denuncia.ToString("MM/dd/yyyy") + ".jpg";
+            if (File.Exists(Server.MapPath(png)))
+            {
+                imgFoto.ImageUrl = png;
+            }else if (File.Exists(Server.MapPath(jpg)))
+            {
+                imgFoto.ImageUrl = jpg;
+            }
         }
     }
 }

@@ -609,6 +609,11 @@ namespace PAP.Site.Admins
 
         protected void btLimparFiltros_Click(object sender, EventArgs e)
         {
+            DataBindGrid();
+        }
+
+        protected void lkFoto_Click(object sender, EventArgs e)
+        {
 
         }
     }

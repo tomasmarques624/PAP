@@ -207,6 +207,7 @@
     <Content Include="Content\Imagens\Cat.png" />
     <Content Include="Content\Imagens\Denuncias.png" />
     <Content Include="Content\Imagens\Equips.png" />
+    <Content Include="Content\Imagens\ImgNotFound.png" />
     <Content Include="Content\Imagens\Reservas.png" />
     <Content Include="Content\Imagens\Salas.png" />
     <Content Include="Content\Imagens\Setas.png" />
