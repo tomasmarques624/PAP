@@ -6,9 +6,8 @@
 <head runat="server">
     <title>Home</title>
     <link href="../Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../Content/Custom2Styles/LoginRegisterStyles/loginregister.css" rel="stylesheet" />
     <link href="../Content/CustomStyles/LibraryStyles/styles.css" rel="stylesheet" />
-    <link href="../Content/CustomStyles/LoginRegisterStyles/loginregister.css" rel="stylesheet" />
-    
 </head>
 <body>
     <form id="form1" runat="server">
@@ -42,9 +41,10 @@
             </a>
         </div>
     </form>
-    <script src="../Scripts/bootstrap.min.js"></script>
-    <script src="../Scripts/jquery-3.4.1.min.js"></script>
+    <script src="../Scripts/jquery-3.5.1.min.js"></script>
     <script src="../Scripts/popper.min.js"></script>
+    <script src="../Scripts/bootstrap.min.js"></script>
+    
     <script type="text/javascript">
         $(document).ready(function () {
             $('.menu a').hover(function () {

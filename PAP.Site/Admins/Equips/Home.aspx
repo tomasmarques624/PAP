@@ -3,14 +3,6 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <script>
-        $(function () {
-            $("#btSimDisp").click(function () {
-                alertify.success('Success message');
-                return true;
-            });
-        })
-    </script>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -21,7 +13,6 @@
     <asp:HiddenField ID="ordcat" runat="server" Value="1" />
     <asp:HiddenField ID="ordsala" runat="server" Value="1" />
     <asp:HiddenField ID="orddisp" runat="server" Value="1" />
-    <asp:HiddenField ID="alerta" runat="server" Value="0" />
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
     <div id="content-page">
         <h2>Inventario</h2>
@@ -297,6 +288,17 @@
         <asp:Image ImageUrl="" runat="server" ID="imgFoto" />
         <asp:Button ID="btSalvar" Text="Salvar" runat="server" CssClass="btn btn-primary" CausesValidation="False"/>
         <asp:Button ID="btFechar" Text="Fechar" runat="server" CssClass="btn btn-secondary" CausesValidation="False" />
+    </asp:Panel>
+
+    <!-- Modal Erro -->
+    <asp:Button ID="btErro" runat="server" Style="display: none;" />
+    <cc1:ModalPopupExtender ID="MPE_Erro" runat="server" BehaviorID="MPE_Erro"
+        DynamicServicePath="" TargetControlID="btFoto" PopupControlID="pnlErro"
+        CancelControlID="btOkErro" BackgroundCssClass="popupbg">
+    </cc1:ModalPopupExtender>
+    <asp:Panel ID="pnlErro" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
+        <asp:Label ID="lbErro" Text="" runat="server" ForeColor="Red" />
+        <asp:Button ID="btOkErro" Text="Ok" runat="server" CssClass="btn btn-primary" CausesValidation="False"/>
     </asp:Panel>
 
 </asp:Content>

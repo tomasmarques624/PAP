@@ -20,7 +20,7 @@ namespace PAP.Site.ContactUs
         {
             MailMessage mailMessage = new MailMessage();
             mailMessage.From = new MailAddress("likedat6969@gmail.com");
-            mailMessage.To.Add(tbxEmail.Text);
+            mailMessage.To.Add("likedat6969@gmail.com");
             mailMessage.Subject = tbxAssunto.Text;
             mailMessage.Body = "<b>Remente: </b>" + tbxNome.Text + "<br/>" + "<b>Email do remetente: </b>" + tbxEmail.Text + "<br/>" + "<b>Mensagem: </b>" + tbxMensagem.Text;
             mailMessage.IsBodyHtml = true;
@@ -38,9 +38,6 @@ namespace PAP.Site.ContactUs
             tbxNome.Enabled = false;
             tbxEmail.Enabled = false;
             tbxAssunto.Enabled = false;
-            btEnviar.Enabled = false;
-            hlLogin.Enabled = false;
-            hlVoltar.Visible = true;
         }
     }
 }

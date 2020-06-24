@@ -41,36 +41,33 @@
          </div>
       </div>
       <div class="main" runat="server">
-         <div class="col-md-6 col-sm-12">
+         <div class="col-md-2 col-sm-4">
             <div class="login-form">
                <form runat="server">
                   <div class="form-group">
                      <label>Email</label>
-                     <asp:TextBox ID="tbxEmail" CssClass="form-control" runat="server"></asp:TextBox>
+                     <asp:TextBox ID="tbxEmail" CssClass="form-control" runat="server" Width="250"></asp:TextBox>
                      <asp:RequiredFieldValidator runat="server" ErrorMessage="É necessário o email" Text="*" ControlToValidate="tbxEmail" ForeColor="Red"></asp:RequiredFieldValidator>
                   </div>
                    <div class="form-group">
                      <label>Nome</label>
-                     <asp:TextBox ID="tbxNome" CssClass="form-control" runat="server"></asp:TextBox>
+                     <asp:TextBox ID="tbxNome" CssClass="form-control" runat="server" Width="250"></asp:TextBox>
                      <asp:RequiredFieldValidator runat="server" ErrorMessage="É necessário um nome" Text="*" ControlToValidate="tbxNome" ForeColor="Red"></asp:RequiredFieldValidator>
                   </div>
                    <div class="form-group">
                      <label>Assunto</label>
-                     <asp:TextBox ID="tbxAssunto" CssClass="form-control" runat="server"></asp:TextBox>
+                     <asp:TextBox ID="tbxAssunto" CssClass="form-control" runat="server" Width="250"></asp:TextBox>
                         <asp:RequiredFieldValidator runat="server" ErrorMessage="É necessário um assunto" Text="*" ControlToValidate="tbxAssunto" ForeColor="Red"></asp:RequiredFieldValidator>
                   </div>
                    <div class="form-group">
                      <label>Mensagem</label>
-                     <asp:TextBox ID="tbxMensagem" CssClass="form-control" runat="server" Height="145px" Width="100%" TextMode="MultiLine"></asp:TextBox>
+                     <asp:TextBox ID="tbxMensagem" CssClass="form-control" runat="server" Height="145px" Width="250" TextMode="MultiLine"></asp:TextBox>
                         <asp:RequiredFieldValidator runat="server" ErrorMessage="É necessário uma mensagem" Text="*" ControlToValidate="tbxMensagem" ForeColor="Red"></asp:RequiredFieldValidator>
                   </div>
-                   <asp:ValidationSummary HeaderText="Erros" ForeColor="Red" runat="server" />
+                   <asp:ValidationSummary HeaderText="Erros" ForeColor="Red" runat="server" Font-Size="12pt" />
                    <asp:Label Text="" ID="lbMensagem"  runat="server" ForeColor="Red" />
                    <br />
-                   <br />
                   <asp:Button id="btEnviar" Text="Enviar" runat="server" CssClass="btn btn-primary" onclick="btEnviar_Click" />
-                  <asp:HyperLink ID="hlLogin" runat="server" text="Cancelar" CssClass="btn btn-secondary" NavigateUrl="~/Authentication/Login.aspx"/>
-                  <asp:HyperLink ID="hlVoltar" runat="server" Visible="false" NavigateUrl="~/Authentication/Login.aspx">Clique aqui para voltar à página de login.</asp:HyperLink>
                </form>
             </div>
          </div>

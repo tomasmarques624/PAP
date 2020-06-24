@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -25,10 +26,6 @@ namespace PAP.Site.Admins
             {
                 DataBindGrid();
             }
-            /*if (alerta.Value == "1")
-            {
-                Response.Write("<script>alertify.success('Success message');</script>");
-            }*/
         }
 
         public void DataBindGrid()
@@ -36,10 +33,6 @@ namespace PAP.Site.Admins
             List<Equip> listEquips = EquipDAO.GetEquips();
             gvEquipList.DataSource = listEquips;
             gvEquipList.DataBind();
-            /*if (alerta.Value == "1")
-            {
-                Response.Write("<script>alertify.success('Success message');</script>");
-            }*/
         }
 
         protected void gvEquipList_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -156,14 +149,16 @@ namespace PAP.Site.Admins
 
             int returncode = EquipDAO.UpdateEquipCat(Convert.ToInt32(id_equip.Value), Convert.ToInt32(id_cat.Value));
             MPE_CAT.Hide();
+            String str;
             if (returncode == -1)
             {
-                // alerta
+                str = "<script>alertify.error('Alteracao feita sem sucesso!!');</script>";
             }
             else
             {
-                // alerta
+                str = "<script>alertify.success('Alteracao Feita com sucesso!');</script>";
             }
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
         }
 
         protected void btSimSala_Click(object sender, EventArgs e)
@@ -171,18 +166,23 @@ namespace PAP.Site.Admins
 
             int returncode = EquipDAO.UpdateEquipSala(Convert.ToInt32(id_equip.Value), Convert.ToInt32(id_sala.Value));
             MPE_Sala.Hide();
+            String str;
+
             if (returncode == -1)
             {
-                // alerta
+                str = "<script>alertify.error('Alteracao feita sem sucesso!!');</script>";
             }
             else
             {
-                // alerta
+                str = "<script>alertify.success('Alteracao Feita com sucesso!');</script>";
             }
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
         }
 
         protected void btSimReq_Click(object sender, EventArgs e)
         {
+            String str;
+            Equip equip = EquipDAO.GetEquipByID(Convert.ToInt32(id_equip.Value));
             if (ddlNDias.SelectedValue == "1")
             {
                 User user = UserDAO.GetUserByEmail(Session["email"].ToString());
@@ -194,46 +194,64 @@ namespace PAP.Site.Admins
                     estado = false,
                     id_user = user.id_User
                 };
-                int returncode = RequisicoesDAO.InsertReq(req);
-                MPE_NewReq.Hide();
-                if (returncode == -1)
+                if (equip.disp == false)
                 {
-                    // alerta
+                    str = "<script>alertify.error('Alteracao feita sem sucesso!!');</script>";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
                 }
                 else
                 {
-                    // alerta
-                }
-            }
-            else
-            {
-                var dataIni = Convert.ToDateTime(tbxDataReqIni.Text);
-                var dataFin = Convert.ToDateTime(tbxDataReqFin.Text);
-                if (dataIni < dataFin)
-                {
-                    User user = UserDAO.GetUserByEmail(Session["email"].ToString());
-                    Requisicoes req = new Requisicoes()
-                    {
-                        id_equip = Convert.ToInt32(id_equip.Value),
-                        data_requisicao = Convert.ToDateTime(tbxDataReqIni.Text),
-                        data_requisicao_final = Convert.ToDateTime(tbxDataReqFin.Text),
-                        estado = false,
-                        id_user = user.id_User
-                    };
                     int returncode = RequisicoesDAO.InsertReq(req);
                     MPE_NewReq.Hide();
                     if (returncode == -1)
                     {
-                        // alerta
+                        lbMensagem.Text = "Ja existem uma reserva deste equipamento para essa data.";
                     }
                     else
                     {
-                        // alerta
+                        str = "<script>alertify.success('Insercao feita com sucesso!');</script>";
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
                     }
+                }
+            }
+            else
+            {
+                if (equip.disp == false)
+                {
+                    str = "<script>alertify.error('Alteracao feita sem sucesso!!');</script>";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
                 }
                 else
                 {
-                    lbMensagem.Text = "A data final tem de ser superior a inicial.";
+                    var dataIni = Convert.ToDateTime(tbxDataReqIni.Text);
+                    var dataFin = Convert.ToDateTime(tbxDataReqFin.Text);
+                    if (dataIni < dataFin)
+                    {
+                        User user = UserDAO.GetUserByEmail(Session["email"].ToString());
+                        Requisicoes req = new Requisicoes()
+                        {
+                            id_equip = Convert.ToInt32(id_equip.Value),
+                            data_requisicao = Convert.ToDateTime(tbxDataReqIni.Text),
+                            data_requisicao_final = Convert.ToDateTime(tbxDataReqFin.Text),
+                            estado = false,
+                            id_user = user.id_User
+                        };
+                        int returncode = RequisicoesDAO.InsertReq(req);
+                        MPE_NewReq.Hide();
+                        if (returncode == -1)
+                        {
+                            lbMensagem.Text = "Ja existem uma reserva deste equipamento para essas datas.";
+                        }
+                        else
+                        {
+                            str = "<script>alertify.success('Insercao feita com sucesso!');</script>";
+                            Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                        }
+                    }
+                    else
+                    {
+                        lbMensagem.Text = "A data final tem de ser superior a inicial.";
+                    }
                 }
             }
             btSimReq.CausesValidation = false;
@@ -330,6 +348,7 @@ namespace PAP.Site.Admins
         protected void btSimDenu_Click(object sender, EventArgs e)
         {
             User user = UserDAO.GetUserByEmail(Session["email"].ToString());
+
             Models.Denuncias denu = new Models.Denuncias()
             {
                 id_equip = Convert.ToInt32(id_equip.Value),
@@ -342,15 +361,18 @@ namespace PAP.Site.Admins
             MPE_Denu.Hide();
             if (returncode == -1)
             {
-                // alerta
+                lbErro.Text = "Ja existe uma denuncia com este problema neste equipamento que nao se encontra resolvida.";
+                MPE_Erro.Show();
             }
             else
             {
                 Equip equip = EquipDAO.GetEquipByID(denu.id_equip);
-                fluFoto.PostedFile.SaveAs(Server.MapPath("~/Content/Imagens/Denuncias/") + equip.descri+"_"+DateTime.Now.ToString("MM/dd/yyyy"));
+                fluFoto.PostedFile.SaveAs(Server.MapPath("~/Content/Imagens/Denuncias/") + equip.descri + "_" + DateTime.Now.ToString("MM/dd/yyyy"));
 
-                // alerta
+                String str = "<script>alertify.success('Insercao feita com sucesso!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
             }
+
             btSimDenu.CausesValidation = false;
             rfvProb.Enabled = false;
         }
@@ -387,15 +409,17 @@ namespace PAP.Site.Admins
         {
             int returncode = EquipDAO.UpdateEquipDisp(Convert.ToInt32(id_equip.Value), Convert.ToBoolean(Convert.ToInt32(disp.Value)));
             MPE_Disp.Hide();
+            String str;
+
             if (returncode == -1)
             {
-                // alerta
+                str = "<script>alertify.error('Alteracao Feita sem sucesso!!');</script>";
             }
             else
             {
-
-                alerta.Value = "1";
+                str = "<script>alertify.success('Alteracao Feita com sucesso!');</script>";
             }
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
         }
 
         protected void Button4_Click(object sender, EventArgs e)
@@ -614,7 +638,27 @@ namespace PAP.Site.Admins
 
         protected void lkFoto_Click(object sender, EventArgs e)
         {
+            LinkButton drp = (LinkButton)sender;
 
+            GridViewRow gv = (GridViewRow)drp.NamingContainer;
+
+            int index = gv.RowIndex;
+
+            LinkButton lkFoto = (LinkButton)gvEquipList.Rows[index].FindControl("lkFoto");
+            int id_denuncia = Convert.ToInt32(gvEquipList.Rows[index].Cells[0].Text);
+            MPE_Foto.Show();
+            Models.Denuncias denuncia = DenunciasDAO.GetDenunciaByID(id_denuncia);
+            Equip equip = EquipDAO.GetEquipByID(denuncia.id_equip);
+            string png = "/Content/Imagens/Equips/" + equip.descri + ".png";
+            string jpg = "/Content/Imagens/Equips/" + equip.descri + ".jpg";
+            if (File.Exists(Server.MapPath(png)))
+            {
+                imgFoto.ImageUrl = png;
+            }
+            else if (File.Exists(Server.MapPath(jpg)))
+            {
+                imgFoto.ImageUrl = jpg;
+            }
         }
     }
 }
