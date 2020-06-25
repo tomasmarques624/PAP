@@ -222,13 +222,13 @@ namespace PAP.Site.Admins
         protected global::System.Web.UI.WebControls.Label lbCat;
 
         /// <summary>
-        /// btteste control.
+        /// FecharCat control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btteste;
+        protected global::System.Web.UI.WebControls.Button FecharCat;
 
         /// <summary>
         /// btSimCat control.
@@ -285,13 +285,13 @@ namespace PAP.Site.Admins
         protected global::System.Web.UI.WebControls.Label Label1;
 
         /// <summary>
-        /// btnao2 control.
+        /// FecharDisp control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnao2;
+        protected global::System.Web.UI.WebControls.Button FecharDisp;
 
         /// <summary>
         /// btSimDisp control.
@@ -303,13 +303,13 @@ namespace PAP.Site.Admins
         protected global::System.Web.UI.WebControls.Button btSimDisp;
 
         /// <summary>
-        /// Button4 control.
+        /// btNaoDisp control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button4;
+        protected global::System.Web.UI.WebControls.Button btNaoDisp;
 
         /// <summary>
         /// btSala control.
@@ -348,13 +348,13 @@ namespace PAP.Site.Admins
         protected global::System.Web.UI.WebControls.Label lbSala;
 
         /// <summary>
-        /// btTeste1 control.
+        /// FecharSala control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btTeste1;
+        protected global::System.Web.UI.WebControls.Button FecharSala;
 
         /// <summary>
         /// btSimSala control.
@@ -400,15 +400,6 @@ namespace PAP.Site.Admins
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlReq;
-
-        /// <summary>
-        /// lbReq control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbReq;
 
         /// <summary>
         /// ddlNDias control.
@@ -553,15 +544,6 @@ namespace PAP.Site.Admins
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlDenu;
-
-        /// <summary>
-        /// lbDenu control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbDenu;
 
         /// <summary>
         /// tbxProb control.

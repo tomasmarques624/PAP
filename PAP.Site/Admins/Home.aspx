@@ -13,7 +13,7 @@
     <form id="form1" runat="server">
         <br />
         <div style="text-align: center">
-            <h2>G.E.T - Gestor de Equipamento Informatico</h2>
+            <h2>G.E.T - Gestor de Equipamento Informático</h2>
             <h4>Admin Menu - Bem vindo(a) <%= Session["username"].ToString() %></h4>
         </div>
         <div class="menu">

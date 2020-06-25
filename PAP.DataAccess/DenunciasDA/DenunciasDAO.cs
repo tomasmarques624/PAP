@@ -127,6 +127,25 @@ namespace PAP.DataAccess.DenunciasDA
             }
         }
 
+        public static int UpdateComentarios(int id_denu, string comentarios)
+        {
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandText = "sp_UpdateComentarios";
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@id_denu", id_denu);
+                    command.Parameters.AddWithValue("@comentarios", comentarios);
+                    connection.Open();
+                    int returncode = (int)command.ExecuteScalar();
+                    return returncode;
+                }
+            }
+        }
+
         public static int UpdateDenuPrio(int id_denu, char prio)
         {
             using (SqlConnection connection = new SqlConnection())
@@ -176,7 +195,8 @@ namespace PAP.DataAccess.DenunciasDA
                                     id_denuncia = Convert.ToInt32(dataReader["id_denuncia"]),
                                     id_user = Convert.ToInt32(dataReader["id_user"]),
                                     data_denuncia = Convert.ToDateTime(dataReader["data_denuncia"]),
-                                    id_equip = Convert.ToInt32(dataReader["id_equip"])
+                                    id_equip = Convert.ToInt32(dataReader["id_equip"]),
+                                    comentarios = dataReader["comentarios"].ToString()
                                 };
                                 return denuncia;
                             }

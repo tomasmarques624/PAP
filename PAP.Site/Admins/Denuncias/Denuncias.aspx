@@ -27,7 +27,7 @@
     </div>
     <br />
     <div style="margin-left: 20px">
-        <asp:GridView ID="gvDenuList" AutoGenerateColumns="false" EmptyDataText="Sem registos" runat="server" ViewStateMode="Enabled"
+        <asp:GridView ID="gvDenuList" AutoGenerateColumns="false" EmptyDataText="Sem registos" runat="server" ViewStateMode="Enabled" DataKeyNames="id_denuncia"
             CssClass="mydatagrid" HeaderStyle-CssClass="header" RowStyle-CssClass="rows" OnRowDataBound="gvDenuList_RowDataBound" Height="170px">
 
             <Columns>
@@ -120,9 +120,9 @@
             </Columns>
 
             <Columns>
-                <asp:TemplateField HeaderText="Foto">
+                <asp:TemplateField HeaderText="Foto & Comentários">
                     <ItemTemplate>
-                        <asp:LinkButton ID="lkFoto" runat="server" Text="Ver Foto" OnClick="lkFoto_Click" />
+                        <asp:LinkButton ID="lkFoto" runat="server" Text="Ver Foto/Comentários" OnClick="lkFoto_Click" />
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
@@ -131,17 +131,17 @@
     <br />
     &nbsp&nbsp&nbsp
      <!-- Modal Remover -->
-    <asp:Button ID="btRemover" Text="Remover os equipamentos" runat="server" CssClass="btn btn-danger" OnClick="btRemover_Click" />
+    <asp:Button ID="btRemover" Text="Remover as denuncias selecionadas" runat="server" CssClass="btn btn-danger" OnClick="btRemover_Click" />
     <cc1:ModalPopupExtender ID="MPE_Rem" runat="server" BehaviorID="btRemover_ModalPopupExtender"
         DynamicServicePath="" TargetControlID="btRemover" PopupControlID="pnlRemover"
         CancelControlID="btNaoRe" BackgroundCssClass="popupbg">
     </cc1:ModalPopupExtender>
     <br />
     <asp:Panel ID="pnlRemover" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
-        <asp:Label ID="lblRemover" runat="server" Text="Tem a certeza que pretende remover estes equipamentos"></asp:Label>
+        <asp:Label ID="lblRemover" runat="server" Text="Tem a certeza que pretende remover estas denuncias?"></asp:Label>
         <br />
         <asp:Button ID="btSimRe" Text="Sim" runat="server" OnClick="btSimRe_Click" CssClass="btn btn-success" CausesValidation="False" />
-        <asp:Button ID="btNaoRe" Text="Nao" runat="server" CssClass="btn btn-danger" CausesValidation="False" OnClick="btNaoRe_Click" />
+        <asp:Button ID="btNaoRe" Text="Não" runat="server" CssClass="btn btn-danger" CausesValidation="False" OnClick="btNaoRe_Click" />
     </asp:Panel>
 
     <!-- Modal Estado -->
@@ -155,20 +155,21 @@
         <br />
         <asp:Button ID="btnao1" runat="server" Style="display: none;" />
         <asp:Button ID="btSimEstado" Text="Sim" runat="server" CssClass="btn btn-success" CausesValidation="False" OnClick="btSimEstado_Click" />
-        <asp:Button ID="btNaoEstado" Text="Nao" runat="server" CssClass="btn btn-danger" CausesValidation="False" OnClick="btNaoEstado_Click" />
+        <asp:Button ID="btNaoEstado" Text="Não" runat="server" CssClass="btn btn-danger" CausesValidation="False" OnClick="btNaoEstado_Click" />
     </asp:Panel>
 
     <!-- Modal Prioridade -->
     <asp:Button ID="btPrio" runat="server" Style="display: none;" />
     <cc1:ModalPopupExtender ID="MPE_Prio" runat="server" BehaviorID="MPE_Prio"
         DynamicServicePath="" TargetControlID="btPrio" PopupControlID="pnlPrio"
-        CancelControlID="btNaoPrio" BackgroundCssClass="popupbg">
+        CancelControlID="btnao2" BackgroundCssClass="popupbg">
     </cc1:ModalPopupExtender>
     <asp:Panel ID="pnlPrio" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
         <asp:Label ID="Label1" runat="server" Text="Tem a certeza que pretende alterar a prioridade desta denuncia?"></asp:Label>
         <br />
+        <asp:Button ID="btnao2" runat="server" Style="display: none;" />
         <asp:Button ID="btSimPrio" Text="Sim" runat="server" CssClass="btn btn-success" CausesValidation="False" OnClick="btSimPrio_Click" />
-        <asp:Button ID="btNaoPrio" Text="Nao" runat="server" CssClass="btn btn-danger" CausesValidation="False" OnClick="btNaoPrio_Click" />
+        <asp:Button ID="btNaoPrio" Text="Não" runat="server" CssClass="btn btn-danger" CausesValidation="False" OnClick="btNaoPrio_Click" />
     </asp:Panel>
 
     <!-- Modal QR Code -->
@@ -190,6 +191,8 @@
         CancelControlID="btFecharUser" BackgroundCssClass="popupbg">
     </cc1:ModalPopupExtender>
     <asp:Panel ID="pnlUser" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
+         <h3>Detalhes do Utilizador</h3>
+        <br />
         <asp:Label ID="lbNomeUser" Text="" runat="server" />
         <br />
 
@@ -226,6 +229,8 @@
         CancelControlID="btFecharEquip" BackgroundCssClass="popupbg">
     </cc1:ModalPopupExtender>
     <asp:Panel ID="pnlEquip" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
+        <h3>Detalhes do Equipamento</h3>
+        <br />
         <asp:Label ID="lbDescri" Text="" runat="server" />
         <br />
         <asp:Label ID="lbCategoria" Text="" runat="server" />
@@ -242,8 +247,12 @@
         CancelControlID="btNaoQrCode" BackgroundCssClass="popupbg">
     </cc1:ModalPopupExtender>
     <asp:Panel ID="pnlFoto" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
-        <asp:Image ImageUrl="../../Content/Imagens/ImgNotFound.png" runat="server" ID="imgFoto"  Width="210px" Height="125px"/>
-        <asp:Button ID="btSalvarFoto" Text="Salvar" runat="server" CssClass="btn btn-primary" CausesValidation="False"/>
+        <asp:Image ImageUrl="../../Content/Imagens/ImgNotFound.png" runat="server" ID="imgFoto" CssClass="img-fluid"/>
+        <p></p>
+        <h3>Comentários </h3>
+        <asp:TextBox ID="tbxComentarios" CssClass="form-control" runat="server" Height="145px" Width="100%" TextMode="MultiLine" AutoPostBack="true" OnTextChanged="tbxComentarios_TextChanged"></asp:TextBox>
+        <p></p>
+        <asp:Button ID="btSalvarComentarios" Text="Salvar" runat="server" CssClass="btn btn-primary" CausesValidation="False" OnClick="btSalvarComentarios_Click" Visible="false"/>
         <asp:Button ID="btFechar" Text="Fechar" runat="server" CssClass="btn btn-secondary" CausesValidation="False" />
     </asp:Panel>
 </asp:Content>

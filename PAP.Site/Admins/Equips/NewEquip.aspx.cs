@@ -53,17 +53,24 @@ namespace PAP.Site.Admins.Equips
 
                 if (returncode == -1)
                 {
-                    lbMensagem.ForeColor = System.Drawing.Color.Red;
-                    lbMensagem.Text = "Adição falhada!<br />Tente novamente mais tarde...";
+                    String str = "<script>alertify.error('Inserção feita sem sucesso!');</script>";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                    lbErro.Text = "Ja existe um equipamento com esta descrição.";
+                    MPE_Erro.Show();
                 }
                 else
                 {
-                    fluFoto.PostedFile.SaveAs(Server.MapPath("~/Content/Imagens/Equips/") + equip.descri);
+                    if(fluFoto.HasFile == true)
+                    {
+                        fluFoto.PostedFile.SaveAs(Server.MapPath("~/Content/Imagens/Equips/") + equip.descri + ".jpg");
+                    }
 
-                    lbMensagem.ForeColor = System.Drawing.Color.Green;
-                    lbMensagem.Text = "Adição Efetuada com sucesso!";
+                    String str = "<script>alertify.success('Inserção feita com sucesso!');</script>";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                    
+
                     btCancelar.Text = "Voltar";
-
+                    fluFoto.Enabled = false;
                     tbxDesc.Enabled = false;
                     ddlSala.Enabled = false;
                     ddlCat.Enabled = false;

@@ -130,18 +130,52 @@ namespace PAP.Site.Admins
 
         protected void btSimRe_Click(object sender, EventArgs e)
         {
+            bool a = false,b = false;
             for (int i = 0; i < gvEquipList.Rows.Count; i++)
             {
                 Equip equip = EquipDAO.GetEquipByID(Convert.ToInt32(gvEquipList.DataKeys[i].Value));
                 int id_equip = equip.id_equip;
                 if (((CheckBox)gvEquipList.Rows[i].FindControl("chbxEliminar")).Checked)
                 {
-                    EquipDAO.RemoveEquip(id_equip);
+                    a = true;
+                    int returncode = EquipDAO.RemoveEquip(id_equip);
+                    if (returncode == 2)
+                    {
+                        lbErro.Text = "Não foi possivel remover este equipamento :"+equip.descri+"\nDevido a haver reserva(s) deste equipamento.";
+                        MPE_Erro.Show();
+                        b = true;
+                    }
+                    else if (returncode == 3)
+                    {
+                        lbErro.Text = "Não foi possivel remover este equipamento :" + equip.descri + "\nDevido a haver denuncia(s) deste equipamento.";
+                        MPE_Erro.Show();
+                        b = true;
+                    }
+                    
                     continue;
                 }
             }
             MPE_Rem.Hide();
-            DataBindGrid();
+            if (a == true)
+            {
+                if(b == true)
+                {
+                    DataBindGrid();
+                    String str = "<script>alertify.success('Remoção feita com sucesso em alguns casos!');</script>";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                }
+                else
+                {
+                    DataBindGrid();
+                    String str = "<script>alertify.success('Remoção feita com sucesso!');</script>";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                }            }
+            else
+            {
+                DataBindGrid();
+                String str = "<script>alertify.error('Não há nada para remover!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+            }
         }
 
         protected void btSimCat_Click(object sender, EventArgs e)
@@ -152,11 +186,11 @@ namespace PAP.Site.Admins
             String str;
             if (returncode == -1)
             {
-                str = "<script>alertify.error('Alteracao feita sem sucesso!!');</script>";
+                str = "<script>alertify.error('Alteração feita sem sucesso!');</script>";
             }
             else
             {
-                str = "<script>alertify.success('Alteracao Feita com sucesso!');</script>";
+                str = "<script>alertify.success('Alteração feita com sucesso!');</script>";
             }
             Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
         }
@@ -170,11 +204,11 @@ namespace PAP.Site.Admins
 
             if (returncode == -1)
             {
-                str = "<script>alertify.error('Alteracao feita sem sucesso!!');</script>";
+                str = "<script>alertify.error('Alteração feita sem sucesso!');</script>";
             }
             else
             {
-                str = "<script>alertify.success('Alteracao Feita com sucesso!');</script>";
+                str = "<script>alertify.success('Alteração feita com sucesso!');</script>";
             }
             Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
         }
@@ -196,7 +230,7 @@ namespace PAP.Site.Admins
                 };
                 if (equip.disp == false)
                 {
-                    str = "<script>alertify.error('Alteracao feita sem sucesso!!');</script>";
+                    str = "<script>alertify.error('Alteração feita sem sucesso!');</script>";
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
                 }
                 else
@@ -209,7 +243,7 @@ namespace PAP.Site.Admins
                     }
                     else
                     {
-                        str = "<script>alertify.success('Insercao feita com sucesso!');</script>";
+                        str = "<script>alertify.success('Inserção feita com sucesso!');</script>";
                         Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
                     }
                 }
@@ -218,7 +252,7 @@ namespace PAP.Site.Admins
             {
                 if (equip.disp == false)
                 {
-                    str = "<script>alertify.error('Alteracao feita sem sucesso!!');</script>";
+                    str = "<script>alertify.error('Alteração feita sem sucesso!');</script>";
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
                 }
                 else
@@ -240,17 +274,17 @@ namespace PAP.Site.Admins
                         MPE_NewReq.Hide();
                         if (returncode == -1)
                         {
-                            lbMensagem.Text = "Ja existem uma reserva deste equipamento para essas datas.";
+                            lbMensagem.Text = "Ja existe uma reserva deste equipamento para essas datas.";
                         }
                         else
                         {
-                            str = "<script>alertify.success('Insercao feita com sucesso!');</script>";
+                            str = "<script>alertify.success('Inserção feita com sucesso!');</script>";
                             Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
                         }
                     }
                     else
                     {
-                        lbMensagem.Text = "A data final tem de ser superior a inicial.";
+                        lbMensagem.Text = "A data final tem de ser superior à inicial.";
                     }
                 }
             }
@@ -333,13 +367,17 @@ namespace PAP.Site.Admins
             int ReturnCode = EquipDAO.UpdateEquip(equip);
             if (ReturnCode == -1)
             {
-                // alerta
+                String str = "<script>alertify.error('Alteração feita sem sucesso!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                lbErro.Text = "Ja existe um equipamento com esta descrição.";
+                MPE_Erro.Show();
                 gvEquipList.EditIndex = -1;
                 DataBindGrid();
             }
             else
             {
-                // alerta
+                String str = "<script>alertify.success('Alteração feita com sucesso!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
                 gvEquipList.EditIndex = -1;
                 DataBindGrid();
             }
@@ -361,15 +399,25 @@ namespace PAP.Site.Admins
             MPE_Denu.Hide();
             if (returncode == -1)
             {
-                lbErro.Text = "Ja existe uma denuncia com este problema neste equipamento que nao se encontra resolvida.";
+                String str = "<script>alertify.error('Inserção feita sem sucesso!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                lbErro.Text = "Ja existe uma denuncia com este problema neste equipamento que ainda não se encontra resolvida.";
                 MPE_Erro.Show();
             }
             else
             {
-                Equip equip = EquipDAO.GetEquipByID(denu.id_equip);
-                fluFoto.PostedFile.SaveAs(Server.MapPath("~/Content/Imagens/Denuncias/") + equip.descri + "_" + DateTime.Now.ToString("MM/dd/yyyy"));
+                if(fluFoto.HasFile == true)
+                {
+                    Equip equip = EquipDAO.GetEquipByID(denu.id_equip);
+                    String path = equip.descri + "_" + DateTime.Now.ToString("MM-dd-yyyy") + ".jpg";
+                    fluFoto.PostedFile.SaveAs(Server.MapPath("~/Content/Imagens/Denuncias/") + path);
+                }
+                else
+                {
+                    imgFoto.ImageUrl = "../../Content/Imagens/ImgNotFound.png";
+                }
 
-                String str = "<script>alertify.success('Insercao feita com sucesso!');</script>";
+                String str = "<script>alertify.success('Inserção feita com sucesso!');</script>";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
             }
 
@@ -413,19 +461,13 @@ namespace PAP.Site.Admins
 
             if (returncode == -1)
             {
-                str = "<script>alertify.error('Alteracao Feita sem sucesso!!');</script>";
+                str = "<script>alertify.error('Alteração feita sem sucesso!!');</script>";
             }
             else
             {
-                str = "<script>alertify.success('Alteracao Feita com sucesso!');</script>";
+                str = "<script>alertify.success('Alteração feita com sucesso!');</script>";
             }
             Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
-        }
-
-        protected void Button4_Click(object sender, EventArgs e)
-        {
-            MPE_Disp.Hide();
-            DataBindGrid();
         }
 
         protected void btRemover_Click(object sender, EventArgs e)
@@ -645,20 +687,24 @@ namespace PAP.Site.Admins
             int index = gv.RowIndex;
 
             LinkButton lkFoto = (LinkButton)gvEquipList.Rows[index].FindControl("lkFoto");
-            int id_denuncia = Convert.ToInt32(gvEquipList.Rows[index].Cells[0].Text);
+            int id_equip = Convert.ToInt32(gvEquipList.Rows[index].Cells[0].Text);
             MPE_Foto.Show();
-            Models.Denuncias denuncia = DenunciasDAO.GetDenunciaByID(id_denuncia);
-            Equip equip = EquipDAO.GetEquipByID(denuncia.id_equip);
-            string png = "/Content/Imagens/Equips/" + equip.descri + ".png";
+            Equip equip = EquipDAO.GetEquipByID(id_equip);
             string jpg = "/Content/Imagens/Equips/" + equip.descri + ".jpg";
-            if (File.Exists(Server.MapPath(png)))
-            {
-                imgFoto.ImageUrl = png;
-            }
-            else if (File.Exists(Server.MapPath(jpg)))
+            if (File.Exists(Server.MapPath(jpg)))
             {
                 imgFoto.ImageUrl = jpg;
             }
+            else
+            {
+                imgFoto.ImageUrl = "../../Content/Imagens/ImgNotFound.png";
+            }
+        }
+
+        protected void btNaoDisp_Click(object sender, EventArgs e)
+        {
+            MPE_Disp.Hide();
+            DataBindGrid();
         }
     }
 }

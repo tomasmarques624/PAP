@@ -35,10 +35,12 @@ namespace PAP.Site.Admins
 
         protected void btSimRe_Click(object sender, EventArgs e)
         {
+            bool a = false;
             for (int i = 0; i < gvCatList.Rows.Count; i++)
             {
                 if (((CheckBox)gvCatList.Rows[i].FindControl("chbxEliminar")).Checked)
                 {
+                    a = true;
                     Categoria cat = CatDAO.GetCatByID(Convert.ToInt32(gvCatList.DataKeys[i].Value));
                     int id_cat = cat.id_cat;
                     CatDAO.RemoveCat(id_cat);
@@ -46,7 +48,18 @@ namespace PAP.Site.Admins
                 }
             }
             MPE_Rem.Hide();
-            DataBindGrid();
+            if (a == true)
+            {
+                DataBindGrid();
+                String str = "<script>alertify.success('Remoção feita com sucesso!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+            }
+            else
+            {
+                DataBindGrid();
+                String str = "<script>alertify.error('Não há nada para remover!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+            }
         }
 
         protected void btNovaCat_Click(object sender, EventArgs e)
@@ -76,8 +89,15 @@ namespace PAP.Site.Admins
             };
             int ReturnCode = CatDAO.UpdateCat(cat);
 
-            if (ReturnCode == -1) { // alerta
-            }else{   // alerta 
+            if (ReturnCode == -1) {
+                String str = "<script>alertify.error('Alteração feita sem sucesso!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                lbErro.Text = "Ja existe uma sala com este nome.";
+                MPE_Erro.Show();
+            }
+            else{
+                String str = "<script>alertify.success('Alteração feita com sucesso!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
             }
 
             gvCatList.EditIndex = -1;

@@ -11,27 +11,27 @@ BEGIN
 		SELECT -1 AS ReturnCode
 	END
 	ELSE
-	BEGIN
-	declare @count1 int
-	select @count1 = COUNT(*) from tblRequisicoes where id_equip = @id_equip
+		BEGIN
+		declare @count1 int
+		select @count1 = COUNT(*) from tblRequisicoes where id_equip = @id_equip
 	if(@count1=0)
-	begin
+		begin
 		declare @count2 int
 		select @count2 = COUNT(*) from tblDenuncias where id_equip = @id_equip
 		if(@count2=0)
-		begin
-			delete from tblEquip where id_equip = @id_equip
-			SELECT 1 AS ReturnCode
-		end
+			begin
+				delete from tblEquip where id_equip = @id_equip
+				SELECT 1 AS ReturnCode
+			end
 		else
-		begin
-			select 3 as ReturnCode
+			begin
+				select 3 as ReturnCode
+			end
 		end
-	end
 	else
-	begin
-		select 2 as ReturnCode
-	end
+		begin
+			select 2 as ReturnCode
+		end
 	END
 END
 

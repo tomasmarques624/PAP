@@ -58,13 +58,17 @@ namespace PAP.Site.Admins
             int ReturnCode = SalasDAO.UpdateSala(sala);
             if (ReturnCode == -1)
             {
-                // alerta
+                String str = "<script>alertify.error('Alteração feita sem sucesso!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                lbErro.Text = "Ja existe uma sala com este nome.";
+                MPE_Erro.Show();
                 gvSalaList.EditIndex = -1;
                 DataBindGrid();
             }
             else
             {
-                // alerta
+                String str = "<script>alertify.success('Alteração feita com sucesso!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
                 gvSalaList.EditIndex = -1;
                 DataBindGrid();
             }
@@ -72,10 +76,12 @@ namespace PAP.Site.Admins
 
         protected void btSimRe_Click(object sender, EventArgs e)
         {
+            bool a = false;
             for (int i = 0; i < gvSalaList.Rows.Count; i++)
             {
                 if (((CheckBox)gvSalaList.Rows[i].FindControl("chbxEliminar")).Checked)
                 {
+                    a = true;
                     Models.Salas salas = SalasDAO.GetSalaByID(Convert.ToInt32(gvSalaList.DataKeys[i].Value));
                     int id_sala = salas.id_sala;
                     SalasDAO.RemoveSala(id_sala);
@@ -83,7 +89,18 @@ namespace PAP.Site.Admins
                 }
             }
             MPE_Rem.Hide();
-            DataBindGrid();
+            if (a == true)
+            {
+                DataBindGrid();
+                String str = "<script>alertify.success('Remoção feita com sucesso!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+            }
+            else
+            {
+                DataBindGrid();
+                String str = "<script>alertify.error('Não há nada para remover!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+            }
         }
     }
 }

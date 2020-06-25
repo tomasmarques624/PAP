@@ -285,6 +285,15 @@ namespace PAP.Site.Admins
         protected global::System.Web.UI.WebControls.Label Label1;
 
         /// <summary>
+        /// btnao2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnao2;
+
+        /// <summary>
         /// btSimPrio control.
         /// </summary>
         /// <remarks>
@@ -573,13 +582,22 @@ namespace PAP.Site.Admins
         protected global::System.Web.UI.WebControls.Image imgFoto;
 
         /// <summary>
-        /// btSalvarFoto control.
+        /// tbxComentarios control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btSalvarFoto;
+        protected global::System.Web.UI.WebControls.TextBox tbxComentarios;
+
+        /// <summary>
+        /// btSalvarComentarios control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btSalvarComentarios;
 
         /// <summary>
         /// btFechar control.

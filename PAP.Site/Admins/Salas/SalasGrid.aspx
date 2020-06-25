@@ -1,5 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SalasGrid.aspx.cs" Inherits="PAP.Site.Admins.SalasGrid" MasterPageFile="~/Admins/AdminSite.Master" %>
+
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server"></asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -51,6 +53,18 @@
         <asp:Label ID="lblRemover" runat="server" Text="Tem a certeza que pretende remover estes equipamentos"></asp:Label>
         <br />
         <asp:Button ID="btSimRe" Text="Sim" runat="server" OnClick="btSimRe_Click" CssClass="btn btn-success" CausesValidation="False" />
-        <asp:Button ID="btNaoRe" Text="Nao" runat="server" CssClass="btn btn-danger" CausesValidation="False"/>
+        <asp:Button ID="btNaoRe" Text="Não" runat="server" CssClass="btn btn-danger" CausesValidation="False"/>
+    </asp:Panel>
+
+     <!-- Modal Erro -->
+    <asp:Button ID="btErro" runat="server" Style="display: none;" />
+    <cc1:ModalPopupExtender ID="MPE_Erro" runat="server" BehaviorID="MPE_Erro"
+        DynamicServicePath="" TargetControlID="btErro" PopupControlID="pnlErro"
+        CancelControlID="btOkErro" BackgroundCssClass="popupbg">
+    </cc1:ModalPopupExtender>
+    <asp:Panel ID="pnlErro" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
+        <asp:Label ID="lbErro" Text="" runat="server" ForeColor="Red" />
+         <br />
+        <asp:Button ID="btOkErro" Text="Ok" runat="server" CssClass="btn btn-info" CausesValidation="False"/>
     </asp:Panel>
 </asp:Content>

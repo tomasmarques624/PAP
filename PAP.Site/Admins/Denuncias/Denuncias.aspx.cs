@@ -88,19 +88,14 @@ namespace PAP.Site.Admins
 
         protected void btSimRe_Click(object sender, EventArgs e)
         {
+            bool a = false;
             for (int i = 0; i < gvDenuList.Rows.Count; i++)
             {
-                CheckBox drp = (CheckBox)sender;
-
-                GridViewRow gv = (GridViewRow)drp.NamingContainer;
-
-                int index = gv.RowIndex;
-
-                CheckBox chbxEliminar = (CheckBox)gvDenuList.Rows[index].FindControl("chbxEliminar");
-
-                if (chbxEliminar.Checked)
+                Models.Denuncias denuncia = DenunciasDAO.GetDenunciaByID(Convert.ToInt32(gvDenuList.DataKeys[i].Value));
+                if (((CheckBox)gvDenuList.Rows[i].FindControl("chbxEliminar")).Checked)
                 {
-                    Models.Denuncias denuncia = DenunciasDAO.GetDenunciaByID(Convert.ToInt32(gvDenuList.DataKeys[i].Value));
+                    a = true;
+                    
                     int id_denuncia = denuncia.id_denuncia;
 
                     User user = UserDAO.GetUserByID(denuncia.id_user);
@@ -110,7 +105,7 @@ namespace PAP.Site.Admins
                     mailMessage.From = new MailAddress("likedat6969@gmail.com");
                     mailMessage.To.Add(user.Email);
                     mailMessage.Subject = "Cancelamento de uma denuncia.";
-                    mailMessage.Body = "Vimos por este meio informar que a sua denuncia do seguinte equipamento : <br/>" + equip.descri + "<br/> Foi removida. <br/> Para mais informacoes contacte um administrador.";
+                    mailMessage.Body = "Vimos por este meio informar que a sua denuncia do seguinte equipamento : <br/>" + equip.descri + "<br/> Foi removida. <br/> Para mais informações contacte um administrador.";
                     mailMessage.IsBodyHtml = true;
 
                     SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
@@ -121,10 +116,23 @@ namespace PAP.Site.Admins
                     smtpClient.Send(mailMessage);
 
                     DenunciasDAO.RemoveDenuncia(id_denuncia);
+                    continue;
                 }
             }
             MPE_Rem.Hide();
-            DataBindGrid();
+            if (a == true)
+            {
+                DataBindGrid();
+                String str = "<script>alertify.success('Remoção feita com sucesso!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+            }
+            else
+            {
+                DataBindGrid();
+                String str = "<script>alertify.error('Não há nada para remover!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+            }
+            
         }
 
         protected void ddlPrioridade_SelectedIndexChanged(object sender, EventArgs e)
@@ -176,7 +184,8 @@ namespace PAP.Site.Admins
             MPE_Estado.Hide();
             if (returncode == -1)
             {
-                // alerta
+                String str = "<script>alertify.error('Alteração feita sem sucesso!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
             }
             else
             {
@@ -209,7 +218,8 @@ namespace PAP.Site.Admins
                 smtpClient.Credentials = new System.Net.NetworkCredential("likedat6969@gmail.com", "teste123456");
                 smtpClient.Send(mailMessage);
                 DataBindGrid();
-                // alerta
+                String str = "<script>alertify.success('Alteração feita com sucesso!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
             }
         }
 
@@ -242,11 +252,13 @@ namespace PAP.Site.Admins
             MPE_Estado.Hide();
             if (returncode == -1)
             {
-                // alerta
+                String str = "<script>alertify.error('Alteração feita sem sucesso!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
             }
             else
             {
-                // alerta
+                String str = "<script>alertify.success('Alteração feita com sucesso!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
             }
             DataBindGrid();
         }
@@ -657,7 +669,7 @@ namespace PAP.Site.Admins
             Equip equip = EquipDAO.GetEquipByDescri(descri);
             Categoria cat = CatDAO.GetCatByID(equip.id_cat);
             Models.Salas sala = SalasDAO.GetSalaByID(equip.id_sala);
-            lbDescri.Text = "<b>Descricao : </b>" + descri + "\n";
+            lbDescri.Text = "<b>Descrição : </b>" + descri + "\n";
             lbCategoria.Text = "<b>Categoria : </b>" + cat.Nome + "\n";
             lbSala.Text = "<b>Sala : </b>" + sala.nome_sala + "\n";
             MPE_Equip.Show();
@@ -673,18 +685,44 @@ namespace PAP.Site.Admins
 
             LinkButton lkFoto = (LinkButton)gvDenuList.Rows[index].FindControl("lkFoto");
             int id_denuncia = Convert.ToInt32(gvDenuList.Rows[index].Cells[0].Text);
-            MPE_Foto.Show();
+            id_denu.Value = id_denuncia.ToString();
             Models.Denuncias denuncia = DenunciasDAO.GetDenunciaByID(id_denuncia);
             Equip equip = EquipDAO.GetEquipByID(denuncia.id_equip);
-            string png = "/Content/Imagens/Denuncias/" + equip.descri + "_" + denuncia.data_denuncia.ToString("MM/dd/yyyy")+".png";
-            string jpg = "/Content/Imagens/Denuncias/" + equip.descri + "_" + denuncia.data_denuncia.ToString("MM/dd/yyyy") + ".jpg";
-            if (File.Exists(Server.MapPath(png)))
-            {
-                imgFoto.ImageUrl = png;
-            }else if (File.Exists(Server.MapPath(jpg)))
+            string jpg = "/Content/Imagens/Denuncias/" + equip.descri + "_" + denuncia.data_denuncia.ToString("MM-dd-yyyy") + ".jpg";
+            if (File.Exists(Server.MapPath(jpg)))
             {
                 imgFoto.ImageUrl = jpg;
             }
+            else
+            {
+                imgFoto.ImageUrl = "../../Content/Imagens/ImgNotFound.png";
+            }
+            tbxComentarios.Text = denuncia.comentarios;
+            MPE_Foto.Show();
+        }
+
+        protected void btSalvarComentarios_Click(object sender, EventArgs e)
+        {
+            int returncode = DenunciasDAO.UpdateComentarios(Convert.ToInt32(id_denu.Value), tbxComentarios.Text);
+            if (returncode == -1)
+            {
+                String str = "<script>alertify.error('Alterações feita sem sucesso!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+            }
+            else
+            {
+                String str = "<script>alertify.success('Alterações guardadas com sucesso!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+            }
+            DataBindGrid();
+            btSalvarComentarios.Visible = false;
+            MPE_Foto.Show();
+        }
+
+        protected void tbxComentarios_TextChanged(object sender, EventArgs e)
+        {
+            btSalvarComentarios.Visible = true;
+            MPE_Foto.Show();
         }
     }
 }

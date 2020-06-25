@@ -61,7 +61,7 @@ namespace PAP.Site.Admins
 
         protected void btSimRe_Click(object sender, EventArgs e)
         {
-
+            bool a = false;
             for (int i = 0; i < gvReqList.Rows.Count; i++)
             {
                 Models.Requisicoes requisicoes = RequisicoesDAO.GetRequisicaoByID(Convert.ToInt32(gvReqList.DataKeys[i].Value));
@@ -74,8 +74,8 @@ namespace PAP.Site.Admins
                     MailMessage mailMessage = new MailMessage();
                     mailMessage.From = new MailAddress("likedat6969@gmail.com");
                     mailMessage.To.Add(user.Email);
-                    mailMessage.Subject = "Cancelamento de uma requisicao.";
-                    mailMessage.Body = "Vimos por este meio informar que a sua reserva do seguinte equipamento : <br/>" + equip.descri + "<br/> Foi cancelada. <br/> Para mais informacoes contacte um administrador.";
+                    mailMessage.Subject = "Cancelamento de uma requisição.";
+                    mailMessage.Body = "Vimos por este meio informar que a sua reserva do seguinte equipamento : <br/>" + equip.descri + "<br/> Foi cancelada. <br/> Para mais informações contacte um administrador.";
                     mailMessage.IsBodyHtml = true;
 
                     SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
@@ -86,10 +86,22 @@ namespace PAP.Site.Admins
                     smtpClient.Send(mailMessage);
 
                     RequisicoesDAO.RemoveRequisicao(id_requisicao);
+                    continue;
                 }
             }
             MPE_Rem.Hide();
-            DataBindGrid();
+            if (a == true)
+            {
+                DataBindGrid();
+                String str = "<script>alertify.success('Remoção feita com sucesso!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+            }
+            else
+            {
+                DataBindGrid();
+                String str = "<script>alertify.error('Não há nada para remover!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+            }
         }
 
         protected void ddlEstado_SelectedIndexChanged(object sender, EventArgs e)
@@ -126,7 +138,8 @@ namespace PAP.Site.Admins
             MPE_Estado.Hide();
             if (returncode == -1)
             {
-                // alerta
+                String str = "<script>alertify.error('Alteração feita sem sucesso!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
             }
             else
             {
@@ -145,8 +158,8 @@ namespace PAP.Site.Admins
                 MailMessage mailMessage = new MailMessage();
                 mailMessage.From = new MailAddress("likedat6969@gmail.com");
                 mailMessage.To.Add(user.Email);
-                mailMessage.Subject = "Alteracao do estado de uma requisicao.";
-                mailMessage.Body = "Vimos por este meio informar que o estado da sua reserva do seguinte equipamento : <br/>" + equip.descri + "<br/> Foi aleterado para "+ esta +". <br/> Para mais informacoes contacte um administrador.";
+                mailMessage.Subject = "Alteração do estado de uma requisição.";
+                mailMessage.Body = "Vimos por este meio informar que o estado da sua reserva do seguinte equipamento : <br/>" + equip.descri + "<br/> Foi alterado para "+ esta +". <br/> Para mais informações contacte um administrador.";
                 mailMessage.IsBodyHtml = true;
 
                 SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
@@ -156,7 +169,8 @@ namespace PAP.Site.Admins
                 smtpClient.Credentials = new System.Net.NetworkCredential("likedat6969@gmail.com", "teste123456");
                 smtpClient.Send(mailMessage);
                 DataBindGrid();
-                // alerta
+                String str = "<script>alertify.success('Alteração feita com sucesso!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
             }
 
         }
@@ -453,7 +467,7 @@ namespace PAP.Site.Admins
             Equip equip = EquipDAO.GetEquipByDescri(descri);
             Categoria cat = CatDAO.GetCatByID(equip.id_cat);
             Models.Salas sala = SalasDAO.GetSalaByID(equip.id_sala);
-            lbDescri.Text = "<b>Descricao : </b>" + descri + "\n";
+            lbDescri.Text = "<b>Descrição : </b>" + descri + "\n";
             lbCategoria.Text = "<b>Categoria : </b>" + cat.Nome + "\n";
             lbSala.Text = "<b>Sala : </b>" + sala.nome_sala + "\n";
             MPE_Equip.Show();

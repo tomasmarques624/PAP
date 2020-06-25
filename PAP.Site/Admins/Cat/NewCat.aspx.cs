@@ -29,13 +29,15 @@ namespace PAP.Site.Admins.Cat
 
                 if (returncode == -1)
                 {
-                    lbMensagem.ForeColor = System.Drawing.Color.Red;
-                    lbMensagem.Text = "Adição falhada!<br />Contacte o administrador ou tente novamente...";
+                    String str = "<script>alertify.error('Inserção feita sem sucesso!');</script>";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                    lbErro.Text = "Ja existe uma sala com este nome.";
+                    MPE_Erro.Show();
                 }
                 else
                 {
-                    lbMensagem.ForeColor = System.Drawing.Color.Green;
-                    lbMensagem.Text = "Adição Efetuada com sucesso!";
+                    String str = "<script>alertify.success('Inserção feita com sucesso!');</script>";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
                     tbxNome.Enabled = false;
                     btInserir.Enabled = false;
                     btCancelar.Text = "Voltar";

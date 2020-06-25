@@ -36,7 +36,7 @@
         <div class="login-main-text">
             <h2>G.E.T</h2>
             <br />
-            <h3>Gestor de equipamento informatico</h3>
+            <h3>Gestor de equipamento informático</h3>
             <p>Faça Login para aceder à aplicação.</p>
         </div>
     </div>

@@ -30,13 +30,13 @@
     <div style="margin-left: 20px">
         <asp:GridView ID="gvEquipList" AutoGenerateColumns="False" DataKeyNames="id_equip" EmptyDataText="Sem registos" runat="server" ViewStateMode="Enabled"
             CssClass="mydatagrid" HeaderStyle-CssClass="header" RowStyle-CssClass="rows" OnRowDataBound="gvEquipList_RowDataBound" OnRowCancelingEdit="gvEquipList_RowCancelingEdit" OnRowEditing="gvEquipList_RowEditing"
-            OnRowUpdating="gvEquipList_RowUpdating" Height="170px">
+            OnRowUpdating="gvEquipList_RowUpdating" Height="170px" OnSelectedIndexChanged="gvEquipList_SelectedIndexChanged">
             <Columns>
                 <asp:BoundField DataField="id_equip" ReadOnly="true" HeaderText="ID" />
             </Columns>
 
             <Columns>
-                <asp:BoundField DataField="descri" HeaderText="Descricao" />
+                <asp:BoundField DataField="descri" HeaderText="Descrição" />
             </Columns>
 
             <Columns>
@@ -47,7 +47,6 @@
                         <asp:ImageButton runat="server" ImageUrl="../../Content/Imagens/Setas.png" Width="15" Height="15" ID="OrdCat" OnClick="OrdCat_Click" />
                     </HeaderTemplate>
                     <ItemTemplate>
-                        &nbsp
                         <asp:DropDownList ID="ddlCat" runat="server" CssClass="form-control" OnSelectedIndexChanged="ddlCat_SelectedIndexChanged" AutoPostBack="true">
                         </asp:DropDownList>
                     </ItemTemplate>
@@ -133,49 +132,49 @@
         <asp:Label ID="lblRemover" runat="server" Text="Tem a certeza que pretende remover estes equipamentos"></asp:Label>
         <br />
         <asp:Button ID="btSimRe" Text="Sim" runat="server" OnClick="btSimRe_Click" CssClass="btn btn-success" CausesValidation="False" />
-        <asp:Button ID="btNaoRe" Text="Nao" runat="server" CssClass="btn btn-danger" CausesValidation="False" OnClick="btNaoRe_Click" />
+        <asp:Button ID="btNaoRe" Text="Não" runat="server" CssClass="btn btn-danger" CausesValidation="False" OnClick="btNaoRe_Click" />
     </asp:Panel>
 
     <!-- Modal Categoria -->
     <asp:Button ID="btCat" runat="server" Style="display: none;" />
     <cc1:ModalPopupExtender ID="MPE_CAT" runat="server" BehaviorID="MPE_CAT"
         DynamicServicePath="" TargetControlID="btCat" PopupControlID="pnlCat"
-        CancelControlID="btteste" BackgroundCssClass="popupbg">
+        CancelControlID="FecharCat" BackgroundCssClass="popupbg">
     </cc1:ModalPopupExtender>
     <asp:Panel ID="pnlCat" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
         <asp:Label ID="lbCat" runat="server" Text="Tem a certeza que pretende alterar a categoria deste equipamento?"></asp:Label>
         <br />
-        <asp:Button ID="btteste" runat="server" Style="display: none;" />
+        <asp:Button ID="FecharCat" runat="server" Style="display: none;" />
         <asp:Button ID="btSimCat" Text="Sim" runat="server" OnClick="btSimCat_Click" CssClass="btn btn-success" CausesValidation="False" />
-        <asp:Button ID="btNaoCat" Text="Nao" runat="server" CssClass="btn btn-danger" CausesValidation="False" OnClick="btNaoCat_Click" />
+        <asp:Button ID="btNaoCat" Text="Não" runat="server" CssClass="btn btn-danger" CausesValidation="False" OnClick="btNaoCat_Click" />
     </asp:Panel>
 
     <!-- Modal Disponivel -->
     <asp:Button ID="btDisp" runat="server" Style="display: none;" />
     <cc1:ModalPopupExtender ID="MPE_Disp" runat="server" BehaviorID="MPE_Disp"
         DynamicServicePath="" TargetControlID="btDisp" PopupControlID="pnlDisp"
-        CancelControlID="btnao2" BackgroundCssClass="popupbg">
+        CancelControlID="FecharDisp" BackgroundCssClass="popupbg">
     </cc1:ModalPopupExtender>
     <asp:Panel ID="pnlDisp" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
         <asp:Label ID="Label1" runat="server" Text="Tem a certeza que pretende alterar a disponibilidade deste equipamento?"></asp:Label>
         <br />
-        <asp:Button ID="btnao2" runat="server" Style="display: none;" />
+        <asp:Button ID="FecharDisp" runat="server" Style="display: none;" />
         <asp:Button ID="btSimDisp" Text="Sim" runat="server" OnClick="btSimDisp_Click" CssClass="btn btn-success" CausesValidation="False" ClientIDMode="Static" />
-        <asp:Button ID="Button4" Text="Nao" runat="server" CssClass="btn btn-danger" CausesValidation="False" OnClick="Button4_Click" />
+        <asp:Button ID="btNaoDisp" Text="Não" runat="server" CssClass="btn btn-danger" CausesValidation="False" OnClick="btNaoDisp_Click" />
     </asp:Panel>
 
     <!-- Modal Salas -->
     <asp:Button ID="btSala" runat="server" Style="display: none;" />
     <cc1:ModalPopupExtender ID="MPE_Sala" runat="server" BehaviorID="MPE_Sala"
         DynamicServicePath="" TargetControlID="btSala" PopupControlID="pnlSala"
-        CancelControlID="btTeste1" BackgroundCssClass="popupbg">
+        CancelControlID="FecharSala" BackgroundCssClass="popupbg">
     </cc1:ModalPopupExtender>
     <asp:Panel ID="pnlSala" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
         <asp:Label ID="lbSala" runat="server" Text="Tem a certeza que pretende alterar a sala deste equipamento?"></asp:Label>
         <br />
-        <asp:Button ID="btTeste1" runat="server" Style="display: none;" />
+        <asp:Button ID="FecharSala" runat="server" Style="display: none;" />
         <asp:Button ID="btSimSala" Text="Sim" runat="server" OnClick="btSimSala_Click" CssClass="btn btn-success" CausesValidation="False" />
-        <asp:Button ID="btNaoSala" Text="Nao" runat="server" CssClass="btn btn-danger" CausesValidation="False" OnClick="btNaoSala_Click" />
+        <asp:Button ID="btNaoSala" Text="Não" runat="server" CssClass="btn btn-danger" CausesValidation="False" OnClick="btNaoSala_Click" />
     </asp:Panel>
 
     <!-- Modal Nova Requisicao -->
@@ -185,7 +184,7 @@
         CancelControlID="btNaoReq" BackgroundCssClass="popupbg">
     </cc1:ModalPopupExtender>
     <asp:Panel ID="pnlReq" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
-        <asp:Label ID="lbReq" runat="server" Text="Reservar Equipamento"></asp:Label>
+        <h3>Reservar Equipamento</h3>
         <br />
         <table>
             <tr>
@@ -248,7 +247,7 @@
         CancelControlID="btNaoDenu" BackgroundCssClass="popupbg">
     </cc1:ModalPopupExtender>
     <asp:Panel ID="pnlDenu" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
-        <asp:Label ID="lbDenu" runat="server" Text="Denunciar Equipamento"></asp:Label>
+        <h3>Reservar Equipamento</h3>
         <br />
         <table>
             <tr>
@@ -285,7 +284,8 @@
         CancelControlID="btFechar" BackgroundCssClass="popupbg">
     </cc1:ModalPopupExtender>
     <asp:Panel ID="pnlFoto" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
-        <asp:Image ImageUrl="" runat="server" ID="imgFoto" />
+        <asp:Image ImageUrl="../../Content/Imagens/ImgNotFound.png" runat="server" ID="imgFoto" CssClass="img-fluid" />
+        <br />
         <asp:Button ID="btSalvar" Text="Salvar" runat="server" CssClass="btn btn-primary" CausesValidation="False"/>
         <asp:Button ID="btFechar" Text="Fechar" runat="server" CssClass="btn btn-secondary" CausesValidation="False" />
     </asp:Panel>
@@ -293,12 +293,13 @@
     <!-- Modal Erro -->
     <asp:Button ID="btErro" runat="server" Style="display: none;" />
     <cc1:ModalPopupExtender ID="MPE_Erro" runat="server" BehaviorID="MPE_Erro"
-        DynamicServicePath="" TargetControlID="btFoto" PopupControlID="pnlErro"
+        DynamicServicePath="" TargetControlID="btErro" PopupControlID="pnlErro"
         CancelControlID="btOkErro" BackgroundCssClass="popupbg">
     </cc1:ModalPopupExtender>
     <asp:Panel ID="pnlErro" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
         <asp:Label ID="lbErro" Text="" runat="server" ForeColor="Red" />
-        <asp:Button ID="btOkErro" Text="Ok" runat="server" CssClass="btn btn-primary" CausesValidation="False"/>
+        <br />
+        <asp:Button ID="btOkErro" Text="Ok" runat="server" CssClass="btn btn-info" CausesValidation="False"/>
     </asp:Panel>
 
 </asp:Content>

@@ -82,7 +82,7 @@
             </Columns>
 
             <Columns>
-                <asp:TemplateField HeaderText="Cancelar Requisicao">
+                <asp:TemplateField HeaderText="Cancelar Requisição">
                     <ItemTemplate>
                         <asp:CheckBox runat="server" ID="chbxCancelar" Text=" Cancelar" />
                     </ItemTemplate>
@@ -103,20 +103,21 @@
         <asp:Label ID="lblRemover" runat="server" Text="Tem a certeza que pretende remover estas reservas?"></asp:Label>
         <br />
         <asp:Button ID="btSimRe" Text="Sim" runat="server" OnClick="btSimRe_Click" CssClass="btn btn-success" CausesValidation="False" />
-        <asp:Button ID="btNaoRe" Text="Nao" runat="server" CssClass="btn btn-danger" CausesValidation="False" OnClick="btNaoRe_Click" />
+        <asp:Button ID="btNaoRe" Text="Não" runat="server" CssClass="btn btn-danger" CausesValidation="False" OnClick="btNaoRe_Click" />
     </asp:Panel>
 
     <!-- Modal Estado -->
     <asp:Button ID="btEstado" runat="server" Style="display: none;" />
     <cc1:ModalPopupExtender ID="MPE_Estado" runat="server" BehaviorID="MPE_Estado"
         DynamicServicePath="" TargetControlID="btEstado" PopupControlID="pnlEstado"
-        CancelControlID="btNaoEstado" BackgroundCssClass="popupbg">
+        CancelControlID="FecharEstado" BackgroundCssClass="popupbg">
     </cc1:ModalPopupExtender>
     <asp:Panel ID="pnlEstado" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
         <asp:Label ID="lbEstado" runat="server" Text="Tem a certeza que pretende alterar o estado desta reserva?"></asp:Label>
         <br />
+        <asp:Button ID="FecharEstado" runat="server" Style="display: none;" />
         <asp:Button ID="btSimEstado" Text="Sim" runat="server" CssClass="btn btn-success" CausesValidation="False" OnClick="btSimEstado_Click" />
-        <asp:Button ID="btNaoEstado" Text="Nao" runat="server" CssClass="btn btn-danger" CausesValidation="False" OnClick="btNaoEstado_Click" />
+        <asp:Button ID="btNaoEstado" Text="Não" runat="server" CssClass="btn btn-danger" CausesValidation="False" OnClick="btNaoEstado_Click" />
     </asp:Panel>
 
     <!-- Modal Detalhes User -->
@@ -126,6 +127,8 @@
         CancelControlID="btFecharUser" BackgroundCssClass="popupbg">
     </cc1:ModalPopupExtender>
     <asp:Panel ID="pnlUser" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
+        <h3>Detalhes do Utilizador</h3>
+        <br />
         <asp:Label ID="lbNomeUser" Text="" runat="server" />
         <br />
         
@@ -162,6 +165,8 @@
         CancelControlID="btFecharEquip" BackgroundCssClass="popupbg">
     </cc1:ModalPopupExtender>
     <asp:Panel ID="pnlEquip" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
+        <h3>Detalhes do Equipamento</h3>
+        <br />
         <asp:Label ID="lbDescri" Text="" runat="server" />
         <br />
         <asp:Label ID="lbCategoria" Text="" runat="server" />
