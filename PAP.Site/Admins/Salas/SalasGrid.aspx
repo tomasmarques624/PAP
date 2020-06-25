@@ -7,7 +7,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
     <div id="content-page">
-        <h3>Salas</h3>
+        <h2>Salas</h2>
         <h5>Filtros</h5>
         <asp:TextBox ID="tbxPesq" runat="server" ForeColor="Silver" Text="Pesquisar..." CssClass="form-control" Width="351px" />
     </div>

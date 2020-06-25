@@ -12,7 +12,7 @@
     <asp:HiddenField ID="orduti" runat="server" Value="1" />
 
     <div id="content-page">
-        <h3>Reservas</h3>
+        <h2>Reservas</h2>
         <h5>Filtros</h5>
         <asp:Label ID="lbPesq" runat="server" Text="Pesquisar por:"></asp:Label>
         <asp:RadioButtonList ID="rblPesq" runat="server" RepeatDirection="Horizontal" OnSelectedIndexChanged="rblPesq_SelectedIndexChanged" AutoPostBack="true">
@@ -22,6 +22,7 @@
             <asp:ListItem Text="Equipamento" Value="4" />
         </asp:RadioButtonList>
         <asp:TextBox ID="tbxPesq" runat="server" Text="" CssClass="form-control" Width="351px" OnTextChanged="tbxPesq_TextChanged" AutoPostBack="true" />
+        <asp:Button ID="btLimparFiltros" Text="Limpar" runat="server" CssClass="btn btn-primary" CausesValidation="False" OnClick="btLimparFiltros_Click1"/>
     </div>
     <br />
     <div style="margin-left: 20px">
@@ -44,7 +45,7 @@
             <Columns>
                 <asp:TemplateField>
                     <HeaderTemplate>
-                        <asp:Label Text="Estado da Requisicao" runat="server" />	&nbsp;
+                        <asp:Label Text="Estado" runat="server" />	&nbsp;
                         <asp:ImageButton runat="server" ImageUrl="../../Content/Imagens/Setas.png" Width="15" Height="15" ID="OrdEstado" OnClick="OrdEstado_Click"/>
                     </HeaderTemplate>
                     <ItemTemplate>

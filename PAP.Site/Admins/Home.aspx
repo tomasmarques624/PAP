@@ -19,7 +19,7 @@
         <div class="menu">
             <a href="Equips/Home.aspx" class="yellow">
                 <img style="width: 94px; height: 86px" src="../Content/Imagens/Equips.png"/>
-                Inventario
+                Inventário
             </a>
             <a href="Denuncias/Denuncias.aspx" class="green">
                 <img style="width: 94px; height: 86px" src="../Content/Imagens/Denuncias.png"/>
@@ -31,7 +31,9 @@
             </a>
             <a href="Cat/EquipCat.aspx" class="purple">
                 <img style="width: 94px; height: 86px" src="../Content/Imagens/Cat.png"/>
-                Categorias</a><a href="Salas/SalasGrid.aspx" class="blue"><img style="width: 94px; height: 86px" src="../Content/Imagens/Salas.png"/>
+                Categorias
+            </a>
+            <a href="Salas/SalasGrid.aspx" class="blue"><img style="width: 94px; height: 86px" src="../Content/Imagens/Salas.png"/>
                 <br />
                 Salas
             </a>

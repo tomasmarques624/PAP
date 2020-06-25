@@ -14,36 +14,41 @@
     <form runat="server">
         <asp:HiddenField ID="id_equip" runat="server" />
         <asp:HiddenField ID="id_req" runat="server" />
+        <asp:HiddenField ID="id_denu" runat="server" />
+        <asp:HiddenField ID="ordest" runat="server" Value="1" />
+        <asp:HiddenField ID="ordestado" runat="server" Value="1" />
         <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">G.E.T</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
-                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <a class="navbar-brand" href="HomeUser.aspx">G.E.T</a>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="../Users/EquipGrid.aspx">Equipamentos<span class="sr-only">(current)</span></a>
+                    <li class="nav-item dropdown" id="navLinkHome" runat="server">
+                        <a class="nav-link" href="#">Equipamentos<span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Reservas & Denuncias</a>
+                    <li class="nav-item active" id="navLinkDenuncias" runat="server">
+                        <a class="nav-link" href="ResDenu.aspx">Reservas & Denuncias</a>
                     </li>
                 </ul>
                 <span class="navbar-text">Bem vindo(a) <%= Session["username"].ToString() %>
                 </span>
             </div>
             <div style="padding-left: 1rem">
-                <asp:Button ID="buttonLogout" Text="Logout" CssClass="btn btn-secondary" runat="server" OnClick="buttonLogout_Click" CausesValidation="False" />
+                <asp:Button ID="button1" Text="Logout" CssClass="btn btn-secondary" runat="server" OnClick="buttonLogout_Click" CausesValidation="False" />
             </div>
         </nav>
-        <div class="jumbotron">
-            <h2>G.E.T - Gestor de Equipamento Informatico</h2>
-        </div>
         <div>
             <div id="content-page">
-                <h3>Reservas</h3>
+                <h2>Reservas</h2>
                 <h5>Filtros</h5>
+                <asp:Label ID="lbPesq" runat="server" Text="Pesquisar por:"></asp:Label>
+                <asp:RadioButtonList ID="rblPesq" runat="server" RepeatDirection="Horizontal" OnSelectedIndexChanged="rblPesq_SelectedIndexChanged" AutoPostBack="true">
+                    <asp:ListItem Text="Data Inicial" Value="1" Selected="True" />
+                    <asp:ListItem Text="Data Final" Value="2" />
+                    <asp:ListItem Text="Equipamento" Value="3" />
+                </asp:RadioButtonList>
+                <asp:TextBox ID="tbxPesq" runat="server" Text="" CssClass="form-control" Width="351px" OnTextChanged="tbxPesq_TextChanged" AutoPostBack="true" />
+                <asp:Button ID="btLimparFiltros" Text="Limpar" runat="server" CssClass="btn btn-primary" CausesValidation="False" OnClick="btLimparFiltros_Click" />
             </div>
             <br />
             <div style="margin-left: 20px">
@@ -53,32 +58,49 @@
 
                     <Columns>
                         <asp:BoundField DataField="id_requisicao" ReadOnly="true" HeaderText="ID" />
+                    </Columns>
 
+                    <Columns>
                         <asp:BoundField DataField="data_requisicao" HeaderText="Data Inicial da Reserva" DataFormatString="{0:MM/dd/yyyy}" />
+                    </Columns>
 
+                    <Columns>
                         <asp:BoundField DataField="data_requisicao_final" HeaderText="Data Final da Reserva" DataFormatString="{0:MM/dd/yyyy}" />
+                    </Columns>
 
-                        <asp:TemplateField HeaderText="Estado da Requisicao">
+                    <Columns>
+                        <asp:TemplateField>
+                            <HeaderTemplate>
+                                <asp:Label Text="Estado" runat="server" />
+                                &nbsp;
+                        <asp:ImageButton runat="server" ImageUrl="../Content/Imagens/Setas.png" Width="15" Height="15" ID="OrdEstado" OnClick="OrdEstado_Click" />
+                            </HeaderTemplate>
                             <ItemTemplate>
                                 <asp:Label runat="server" ID="lbEstado" />
                             </ItemTemplate>
                         </asp:TemplateField>
+                    </Columns>
 
+                    <Columns>
                         <asp:TemplateField HeaderText="Equipamento">
                             <ItemTemplate>
                                 <asp:Label runat="server" ID="lbEquip" />
                             </ItemTemplate>
                         </asp:TemplateField>
+                    </Columns>
 
+                    <Columns>
                         <asp:TemplateField HeaderText="Denunciar Equipamento">
                             <ItemTemplate>
                                 <asp:LinkButton ID="lkDenu" runat="server" Text="Denunciar" OnClick="lkDenu_Click" CausesValidation="false" />
                             </ItemTemplate>
                         </asp:TemplateField>
+                    </Columns>
 
+                    <Columns>
                         <asp:TemplateField HeaderText="Cancelar Requisicao">
                             <ItemTemplate>
-                                <asp:LinkButton runat="server" ID="btCancelar" Text="X" CssClass="btn btn-danger" CausesValidation="false" OnClick="btCancelar_Click"/>
+                                <asp:LinkButton runat="server" ID="btCancelar" Text="X" CssClass="btn btn-danger" CausesValidation="false" OnClick="btCancelar_Click" />
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
@@ -87,8 +109,16 @@
         </div>
         <div>
             <div id="content-page">
-                <h3>Denuncias</h3>
+                <h2>Denuncias</h2>
                 <h5>Filtros</h5>
+                <asp:Label ID="Label1" runat="server" Text="Pesquisar por:"></asp:Label>
+                <asp:RadioButtonList ID="rblPesqDenu" runat="server" RepeatDirection="Horizontal" AutoPostBack="true">
+                    <asp:ListItem Text="Problema" Value="1" Selected="True" />
+                    <asp:ListItem Text="Data" Value="2" />
+                    <asp:ListItem Text="Equipamento" Value="3" />
+                </asp:RadioButtonList>
+                <asp:TextBox ID="tbxPesqDenu" runat="server" Text="" CssClass="form-control" Width="351px" AutoPostBack="true" OnTextChanged="tbxPesqDenu_TextChanged" />
+                <asp:Button ID="btLimparFiltrosDenu" Text="Limpar" runat="server" CssClass="btn btn-primary" CausesValidation="False" OnClick="btLimparFiltrosDenu_Click" />
             </div>
             <br />
             <div style="margin-left: 20px">
@@ -97,26 +127,44 @@
 
                     <Columns>
                         <asp:BoundField DataField="id_denuncia" ReadOnly="true" HeaderText="ID" />
-
+                    </Columns>
+                    <Columns>
                         <asp:BoundField DataField="problema" HeaderText="Problema" />
-
+                    </Columns>
+                    <Columns>
                         <asp:BoundField DataField="data_denuncia" HeaderText="Data da Denuncia" DataFormatString="{0:MM/dd/yyyy}" />
-
-                        <asp:TemplateField HeaderText="Estado da Denuncia">
+                    </Columns>
+                    <Columns>
+                        <asp:TemplateField>
+                            <HeaderTemplate>
+                                <asp:Label Text="Estado" runat="server" />
+                                &nbsp;
+                        <asp:ImageButton runat="server" ImageUrl="../Content/Imagens/Setas.png" Width="15" Height="15" ID="OrdEstadoDenu" OnClick="OrdEstadoDenu_Click" />
+                            </HeaderTemplate>
                             <ItemTemplate>
                                 <asp:Label runat="server" ID="lbEstadoD" />
                             </ItemTemplate>
                         </asp:TemplateField>
-
+                    </Columns>
+                    <Columns>
                         <asp:TemplateField HeaderText="Equipamento">
                             <ItemTemplate>
                                 <asp:Label runat="server" ID="lbEquipD" />
                             </ItemTemplate>
                         </asp:TemplateField>
-
+                    </Columns>
+                    <Columns>
                         <asp:TemplateField HeaderText="QR Code">
                             <ItemTemplate>
                                 <asp:LinkButton ID="lkQrCode" runat="server" Text="Ver QR Code" OnClick="lkQrCode_Click" CausesValidation="false" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                    </Columns>
+                    <Columns>
+                        <asp:TemplateField HeaderText="Foto">
+                            <ItemTemplate>
+                                <asp:LinkButton ID="lkFoto" runat="server" Text="Ver Foto" OnClick="lkFoto_Click" />
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
@@ -124,18 +172,18 @@
             </div>
         </div>
         <!-- Modal Remover -->
-    <asp:Button ID="btRemover" runat="server"  Style="display: none;" />
-    <cc1:ModalPopupExtender ID="MPE_Rem" runat="server" BehaviorID="btRemover_ModalPopupExtender"
-        DynamicServicePath="" TargetControlID="btRemover" PopupControlID="pnlRemover"
-        CancelControlID="btNaoRe" BackgroundCssClass="popupbg">
-    </cc1:ModalPopupExtender>
-    <br />
-    <asp:Panel ID="pnlRemover" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
-        <asp:Label ID="lblRemover" runat="server" Text="Tem a certeza que pretende cancelar esta reserva?"></asp:Label>
+        <asp:Button ID="btRemover" runat="server" Style="display: none;" />
+        <cc1:ModalPopupExtender ID="MPE_Rem" runat="server" BehaviorID="btRemover_ModalPopupExtender"
+            DynamicServicePath="" TargetControlID="btRemover" PopupControlID="pnlRemover"
+            CancelControlID="btNaoRe" BackgroundCssClass="popupbg">
+        </cc1:ModalPopupExtender>
         <br />
-        <asp:Button ID="btSimRe" Text="Sim" runat="server"  CssClass="btn btn-success" CausesValidation="False" OnClick="btSimRe_Click" />
-        <asp:Button ID="btNaoRe" Text="Nao" runat="server" CssClass="btn btn-danger" CausesValidation="False" OnClick="btNaoRe_Click"/>
-    </asp:Panel>
+        <asp:Panel ID="pnlRemover" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
+            <asp:Label ID="lblRemover" runat="server" Text="Tem a certeza que pretende cancelar esta reserva?"></asp:Label>
+            <br />
+            <asp:Button ID="btSimRe" Text="Sim" runat="server" CssClass="btn btn-success" CausesValidation="False" OnClick="btSimRe_Click" />
+            <asp:Button ID="btNaoRe" Text="Nao" runat="server" CssClass="btn btn-danger" CausesValidation="False" OnClick="btNaoRe_Click" />
+        </asp:Panel>
 
         <!-- Modal Nova Denuncia -->
         <asp:Button ID="btNewDenu" runat="server" Style="display: none;" />
@@ -144,7 +192,7 @@
             CancelControlID="btNaoDenu" BackgroundCssClass="popupbg">
         </cc1:ModalPopupExtender>
         <asp:Panel ID="pnlDenu" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
-            <asp:Label ID="lbDenu" runat="server" Text="Denunciar Equipamento"></asp:Label>
+            <h3>Reservar Equipamento</h3>
             <br />
             <table>
                 <tr>
@@ -152,6 +200,12 @@
                     <td>
                         <asp:TextBox CssClass="form-control" ID="tbxProb" runat="server" Height="145px" Width="100%" TextMode="MultiLine" />
                         <asp:RequiredFieldValidator ID="rfvProb" runat="server" ErrorMessage="É necessário um problema." Text="*" ControlToValidate="tbxProb" ForeColor="Red" Enabled="false"></asp:RequiredFieldValidator>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Foto</td>
+                    <td>
+                        <asp:FileUpload CssClass="form-control-file" runat="server" ID="fluFoto" />
                     </td>
                 </tr>
                 <tr>
@@ -180,6 +234,29 @@
             <asp:Button ID="btNaoQrCode" Text="Fechar" runat="server" CssClass="btn btn-secondary" CausesValidation="False" />
         </asp:Panel>
 
+        <!-- Modal Erro -->
+        <asp:Button ID="btErro" runat="server" Style="display: none;" />
+        <cc1:ModalPopupExtender ID="MPE_Erro" runat="server" BehaviorID="MPE_Erro"
+            DynamicServicePath="" TargetControlID="btErro" PopupControlID="pnlErro"
+            CancelControlID="btOkErro" BackgroundCssClass="popupbg">
+        </cc1:ModalPopupExtender>
+        <asp:Panel ID="pnlErro" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
+            <asp:Label ID="lbErro" Text="" runat="server" ForeColor="Red" />
+            <br />
+            <asp:Button ID="btOkErro" Text="Ok" runat="server" CssClass="btn btn-info" CausesValidation="False" />
+        </asp:Panel>
+
+        <!-- Modal Foto -->
+        <asp:Button ID="btFoto" runat="server" Style="display: none;" />
+        <cc1:ModalPopupExtender ID="MPE_Foto" runat="server" BehaviorID="MPE_Foto"
+            DynamicServicePath="" TargetControlID="btFoto" PopupControlID="pnlFoto"
+            CancelControlID="btFechar" BackgroundCssClass="popupbg">
+        </cc1:ModalPopupExtender>
+        <asp:Panel ID="pnlFoto" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
+            <asp:Image ImageUrl="../Content/Imagens/ImgNotFound.png" runat="server" ID="imgFoto" CssClass="img-fluid" />
+            <br />
+            <asp:Button ID="btFechar" Text="Fechar" runat="server" CssClass="btn btn-secondary" CausesValidation="False" />
+        </asp:Panel>
     </form>
 </body>
 </html>

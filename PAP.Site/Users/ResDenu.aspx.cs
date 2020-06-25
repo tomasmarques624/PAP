@@ -6,7 +6,10 @@ using PAP.Models;
 using QRCoder;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
@@ -32,6 +35,11 @@ namespace PAP.Site.Users
             List<Requisicoes> listRequisicoes = RequisicoesDAO.GetUserReq(user.id_User);
             gvReqList.DataSource = listRequisicoes;
             gvReqList.DataBind();
+        }
+
+        public void DataBindGridDenu()
+        {
+            User user = UserDAO.GetUserByEmail(Session["email"].ToString());
 
             List<Denuncias> listDenuncias = DenunciasDAO.GetUserDenu(user.id_User);
             gvDenuList.DataSource = listDenuncias;
@@ -81,7 +89,8 @@ namespace PAP.Site.Users
             int id_denuncia = Convert.ToInt32(gvDenuList.Rows[index].Cells[0].Text);
             MPE_QrCode.Show();
             Models.Denuncias denuncia = DenunciasDAO.GetDenunciaByID(id_denuncia);
-            string code = denuncia.problema;
+            Equip equip = EquipDAO.GetEquipByID(denuncia.id_equip);
+            string code = "Equipamento : " + equip.descri + "\nProblema :" + denuncia.problema;
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
             QRCodeData qrCodeData = qrGenerator.CreateQrCode(code, QRCodeGenerator.ECCLevel.Q);
             System.Web.UI.WebControls.Image imgBarCode = new System.Web.UI.WebControls.Image();
@@ -92,10 +101,12 @@ namespace PAP.Site.Users
             {
                 using (MemoryStream ms = new MemoryStream())
                 {
+                    bitMap.Save("C:\\Users\\Utilizador\\source\\repos\\PAP\\PAP.Site\\Content\\Imagens\\qrcode.png", System.Drawing.Imaging.ImageFormat.Png);
                     bitMap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
                     byte[] byteImage = ms.ToArray();
                     imgBarCode.ImageUrl = "data:image/png;base64," + Convert.ToBase64String(byteImage);
                 }
+
                 PlaceHolder1.Controls.Add(imgBarCode);
             }
         }
@@ -150,7 +161,8 @@ namespace PAP.Site.Users
         protected void btSimDenu_Click(object sender, EventArgs e)
         {
             User user = UserDAO.GetUserByEmail(Session["email"].ToString());
-            Denuncias denu = new Denuncias()
+
+            Models.Denuncias denu = new Models.Denuncias()
             {
                 id_equip = Convert.ToInt32(id_equip.Value),
                 prioridade = 'N',
@@ -162,27 +174,52 @@ namespace PAP.Site.Users
             MPE_Denu.Hide();
             if (returncode == -1)
             {
-                // alerta
+                String str = "<script>alertify.error('Inserção feita sem sucesso!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                lbErro.Text = "Ja existe uma denuncia com este problema neste equipamento que ainda não se encontra resolvida.";
+                MPE_Erro.Show();
             }
             else
             {
-                // alerta
+                if (fluFoto.HasFile == true)
+                {
+                    Equip equip = EquipDAO.GetEquipByID(denu.id_equip);
+                    String path = equip.descri + "_" + DateTime.Now.ToString("MM-dd-yyyy") + ".jpg";
+                    fluFoto.PostedFile.SaveAs(Server.MapPath("~/Content/Imagens/Denuncias/") + path);
+                }
+                else
+                {
+                    imgFoto.ImageUrl = "../../Content/Imagens/ImgNotFound.png";
+                }
+
+                String str = "<script>alertify.success('Inserção feita com sucesso!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
             }
+
             btSimDenu.CausesValidation = false;
             rfvProb.Enabled = false;
-            DataBindGrid();
+            DataBindGridDenu();
         }
 
         protected void btNaoDenu_Click(object sender, EventArgs e)
         {
             btSimDenu.CausesValidation = false;
             rfvProb.Enabled = false;
-            DataBindGrid();
+            DataBindGridDenu();
         }
 
         protected void btSimQrCode_Click(object sender, EventArgs e)
         {
-            // Imprimir a imagem
+            PrintDocument pd = new PrintDocument();
+            pd.PrintPage += PrintPage;
+            pd.Print();
+        }
+        private void PrintPage(object o, PrintPageEventArgs e)
+        {
+            System.Drawing.Image img = System.Drawing.Image.FromFile("C:\\Users\\Utilizador\\source\\repos\\PAP\\PAP.Site\\Content\\Imagens\\qrcode.png");
+            Point loc = new Point(100, 100);
+            e.Graphics.DrawImage(img, loc);
+            img.Dispose();
         }
 
         protected void btCancelar_Click(object sender, EventArgs e)
@@ -227,6 +264,268 @@ namespace PAP.Site.Users
         protected void btNaoRe_Click(object sender, EventArgs e)
         {
             DataBindGrid();
+        }
+
+        protected void rblPesq_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            tbxPesq.Text = "";
+            if (rblPesq.SelectedValue == "1" || rblPesq.SelectedValue == "2")
+            {
+                tbxPesq.TextMode = TextBoxMode.Date;
+            }
+            else
+            {
+                tbxPesq.TextMode = TextBoxMode.SingleLine;
+            }
+        }
+
+        protected void tbxPesq_TextChanged(object sender, EventArgs e)
+        {
+            if (tbxPesq.Text != "")
+            {
+                List<Requisicoes> listReqs = null;
+
+                using (SqlConnection connection = new SqlConnection())
+                {
+                    connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        if (rblPesq.SelectedValue == "1")
+                        {
+                            command.CommandText = "SELECT * FROM tblRequisicoes WHERE data_requisicao LIKE '" + Convert.ToDateTime(tbxPesq.Text).ToString("MM/dd/yyyy") + "%';";
+                        }
+                        else if (rblPesq.SelectedValue == "2")
+                        {
+                            command.CommandText = "SELECT * FROM tblRequisicoes WHERE data_requisicao_final = '" + Convert.ToDateTime(tbxPesq.Text).ToString("MM/dd/yyyy") + "';";
+                        }
+                        else
+                        {
+                            command.CommandText = "SELECT tblRequisicoes.id_requisicao,tblRequisicoes.data_requisicao,tblRequisicoes.data_requisicao_final,tblRequisicoes.estado,tblRequisicoes.id_user,tblRequisicoes.id_equip FROM tblRequisicoes,tblUsers WHERE tblEquip.descri LIKE '" + tbxPesq.Text + "%' AND tblRequisicoes.id_equip = tblEquip.id_equip;";
+                        }
+
+                        connection.Open();
+
+                        using (SqlDataReader dataReader = command.ExecuteReader())
+                        {
+                            if (dataReader.HasRows)
+                            {
+                                listReqs = new List<Requisicoes>();
+                                while (dataReader.Read())
+                                {
+                                    listReqs.Add(new Requisicoes()
+                                    {
+                                        id_requisicao = Convert.ToInt32(dataReader["id_requisicao"]),
+                                        data_requisicao = Convert.ToDateTime(dataReader["data_requisicao"].ToString()),
+                                        data_requisicao_final = Convert.ToDateTime(dataReader["data_requisicao_final"].ToString()),
+                                        estado = Convert.ToBoolean(dataReader["estado"].ToString()),
+                                        id_user = Convert.ToInt32(dataReader["id_user"]),
+                                        id_equip = Convert.ToInt32(dataReader["id_equip"])
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+                gvReqList.DataSource = listReqs;
+                gvReqList.DataBind();
+            }
+            else
+            {
+                DataBindGrid();
+            }
+        }
+
+        protected void OrdEstado_Click(object sender, ImageClickEventArgs e)
+        {
+            List<Requisicoes> listReqs = null;
+
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    if (Convert.ToInt32(ordest.Value) == 1)
+                    {
+                        command.CommandText = "SELECT * FROM tblRequisicoes ORDER BY estado;";
+                        ordest.Value = "2";
+                    }
+                    else
+                    {
+                        command.CommandText = "SELECT * FROM tblRequisicoes ORDER BY estado DESC;";
+                        ordest.Value = "1";
+                    }
+
+                    connection.Open();
+
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        if (dataReader.HasRows)
+                        {
+                            listReqs = new List<Requisicoes>();
+                            while (dataReader.Read())
+                            {
+                                listReqs.Add(new Requisicoes()
+                                {
+                                    id_requisicao = Convert.ToInt32(dataReader["id_requisicao"]),
+                                    data_requisicao = Convert.ToDateTime(dataReader["data_requisicao"].ToString()),
+                                    data_requisicao_final = Convert.ToDateTime(dataReader["data_requisicao_final"].ToString()),
+                                    estado = Convert.ToBoolean(dataReader["estado"].ToString()),
+                                    id_user = Convert.ToInt32(dataReader["id_user"]),
+                                    id_equip = Convert.ToInt32(dataReader["id_equip"])
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            gvReqList.DataSource = listReqs;
+            gvReqList.DataBind();
+        }
+
+        protected void OrdEstadoDenu_Click(object sender, ImageClickEventArgs e)
+        {
+            List<Models.Denuncias> listDenus = null;
+
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    if (Convert.ToInt32(ordestado.Value) == 1)
+                    {
+                        command.CommandText = "SELECT * FROM tblDenuncias ORDER BY estado;";
+                        ordestado.Value = "2";
+                    }
+                    else
+                    {
+                        command.CommandText = "SELECT * FROM tblDenuncias ORDER BY estado DESC;";
+                        ordestado.Value = "1";
+                    }
+
+                    connection.Open();
+
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        if (dataReader.HasRows)
+                        {
+                            listDenus = new List<Models.Denuncias>();
+                            while (dataReader.Read())
+                            {
+                                listDenus.Add(new Models.Denuncias()
+                                {
+                                    problema = dataReader["problema"].ToString(),
+                                    estado = Convert.ToChar(dataReader["estado"].ToString()),
+                                    prioridade = Convert.ToChar(dataReader["prioridade"].ToString()),
+                                    id_denuncia = Convert.ToInt32(dataReader["id_denuncia"]),
+                                    id_user = Convert.ToInt32(dataReader["id_user"]),
+                                    data_denuncia = Convert.ToDateTime(dataReader["data_denuncia"]),
+                                    id_equip = Convert.ToInt32(dataReader["id_equip"])
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            gvDenuList.DataSource = listDenus;
+            gvDenuList.DataBind();
+        }
+
+        protected void btLimparFiltros_Click(object sender, EventArgs e)
+        {
+            tbxPesq.Text = "";
+            DataBindGrid();
+        }
+
+        protected void btLimparFiltrosDenu_Click(object sender, EventArgs e)
+        {
+            tbxPesq.Text = "";
+            DataBindGridDenu();
+        }
+
+        protected void tbxPesqDenu_TextChanged(object sender, EventArgs e)
+        {
+            if (tbxPesq.Text != "")
+            {
+                List<Models.Denuncias> listDenus = null;
+
+                using (SqlConnection connection = new SqlConnection())
+                {
+                    connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        if (rblPesq.SelectedValue == "1")
+                        {
+                            command.CommandText = "SELECT * FROM tblDenuncias WHERE problema LIKE '" + tbxPesq.Text + "%';";
+                        }
+                        else if (rblPesq.SelectedValue == "2")
+                        {
+                            command.CommandText = "SELECT * FROM tblDenuncias WHERE data_denuncia = '" + Convert.ToDateTime(tbxPesq.Text).ToString("MM/dd/yyyy") + "';";
+                        }
+                        else
+                        {
+                            command.CommandText = "SELECT tblDenuncias.id_denuncia,tblDenuncias.problema,tblDenuncias.data_denuncia,tblDenuncias.estado,tblDenuncias.prioridade,tblDenuncias.id_user,tblDenuncias.id_equip FROM tblDenuncias,tblEquip WHERE tblEquip.descri LIKE '" + tbxPesq.Text + "%' AND tblDenuncias.id_equip = tblEquip.id_equip;";
+                        }
+
+                        connection.Open();
+
+                        using (SqlDataReader dataReader = command.ExecuteReader())
+                        {
+                            if (dataReader.HasRows)
+                            {
+                                listDenus = new List<Models.Denuncias>();
+                                while (dataReader.Read())
+                                {
+                                    listDenus.Add(new Models.Denuncias()
+                                    {
+                                        problema = dataReader["problema"].ToString(),
+                                        estado = Convert.ToChar(dataReader["estado"].ToString()),
+                                        prioridade = Convert.ToChar(dataReader["prioridade"].ToString()),
+                                        id_denuncia = Convert.ToInt32(dataReader["id_denuncia"]),
+                                        id_user = Convert.ToInt32(dataReader["id_user"]),
+                                        data_denuncia = Convert.ToDateTime(dataReader["data_denuncia"]),
+                                        id_equip = Convert.ToInt32(dataReader["id_equip"])
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+                gvDenuList.DataSource = listDenus;
+                gvDenuList.DataBind();
+            }
+            else
+            {
+                DataBindGridDenu();
+            }
+        }
+
+        protected void lkFoto_Click(object sender, EventArgs e)
+        {
+            LinkButton drp = (LinkButton)sender;
+
+            GridViewRow gv = (GridViewRow)drp.NamingContainer;
+
+            int index = gv.RowIndex;
+
+            LinkButton lkFoto = (LinkButton)gvDenuList.Rows[index].FindControl("lkFoto");
+            int id_denuncia = Convert.ToInt32(gvDenuList.Rows[index].Cells[0].Text);
+            id_denu.Value = id_denuncia.ToString();
+            Models.Denuncias denuncia = DenunciasDAO.GetDenunciaByID(id_denuncia);
+            Equip equip = EquipDAO.GetEquipByID(denuncia.id_equip);
+            string jpg = "/Content/Imagens/Denuncias/" + equip.descri + "_" + denuncia.data_denuncia.ToString("MM-dd-yyyy") + ".jpg";
+            if (File.Exists(Server.MapPath(jpg)))
+            {
+                imgFoto.ImageUrl = jpg;
+            }
+            else
+            {
+                imgFoto.ImageUrl = "../../Content/Imagens/ImgNotFound.png";
+            }
+            MPE_Foto.Show();
         }
     }
 }

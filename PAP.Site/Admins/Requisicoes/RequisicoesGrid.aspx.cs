@@ -238,7 +238,7 @@ namespace PAP.Site.Admins
                 using (SqlCommand command = new SqlCommand())
                 {
                     command.Connection = connection;
-                    if (Convert.ToInt32(ordequip.Value) == 1)
+                    if (Convert.ToInt32(orduti.Value) == 1)
                     {
                         command.CommandText = "SELECT * FROM tblRequisicoes ORDER BY id_user;";
                         orduti.Value = "2";
@@ -360,7 +360,7 @@ namespace PAP.Site.Admins
                 using (SqlCommand command = new SqlCommand())
                 {
                     command.Connection = connection;
-                    if (Convert.ToInt32(ordequip.Value) == 1)
+                    if (Convert.ToInt32(ordest.Value) == 1)
                     {
                         command.CommandText = "SELECT * FROM tblRequisicoes ORDER BY estado;";
                         ordest.Value = "2";
@@ -471,6 +471,12 @@ namespace PAP.Site.Admins
             lbCategoria.Text = "<b>Categoria : </b>" + cat.Nome + "\n";
             lbSala.Text = "<b>Sala : </b>" + sala.nome_sala + "\n";
             MPE_Equip.Show();
+        }
+
+        protected void btLimparFiltros_Click(object sender, EventArgs e)
+        {
+            tbxPesq.Text = "";
+            DataBindGrid();
         }
     }
 }

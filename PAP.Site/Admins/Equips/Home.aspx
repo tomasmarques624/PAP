@@ -19,7 +19,7 @@
         <h5>Filtros</h5>
         <asp:Label ID="lbPesq" runat="server" Text="Pesquisar por:"></asp:Label>
         <asp:RadioButtonList ID="rblPesq" runat="server" RepeatDirection="Horizontal" OnSelectedIndexChanged="rblPesq_SelectedIndexChanged">
-            <asp:ListItem Text="Descricao" Value="1" Selected="True" />
+            <asp:ListItem Text="Descrição" Value="1" Selected="True" />
             <asp:ListItem Text="Categoria" Value="2" />
             <asp:ListItem Text="Sala" Value="3" />
         </asp:RadioButtonList>
@@ -30,7 +30,7 @@
     <div style="margin-left: 20px">
         <asp:GridView ID="gvEquipList" AutoGenerateColumns="False" DataKeyNames="id_equip" EmptyDataText="Sem registos" runat="server" ViewStateMode="Enabled"
             CssClass="mydatagrid" HeaderStyle-CssClass="header" RowStyle-CssClass="rows" OnRowDataBound="gvEquipList_RowDataBound" OnRowCancelingEdit="gvEquipList_RowCancelingEdit" OnRowEditing="gvEquipList_RowEditing"
-            OnRowUpdating="gvEquipList_RowUpdating" Height="170px" OnSelectedIndexChanged="gvEquipList_SelectedIndexChanged">
+            OnRowUpdating="gvEquipList_RowUpdating" Height="170px" >
             <Columns>
                 <asp:BoundField DataField="id_equip" ReadOnly="true" HeaderText="ID" />
             </Columns>
@@ -75,7 +75,7 @@
                         <asp:ImageButton runat="server" ImageUrl="../../Content/Imagens/Setas.png" Width="15" Height="15" ID="OrdDisp" OnClick="OrdDisp_Click" />
                     </HeaderTemplate>
                     <ItemTemplate>
-                        <asp:CheckBox runat="server" ID="chbxDisponivel" Text=" Disponivel" OnCheckedChanged="chbxDisponivel_CheckedChanged" AutoPostBack="true" />
+                            <asp:CheckBox runat="server" ID="chbxDisponivel" Text=" Disponivel" OnCheckedChanged="chbxDisponivel_CheckedChanged" AutoPostBack="true" />
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>

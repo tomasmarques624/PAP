@@ -230,13 +230,12 @@ namespace PAP.Site.Admins
                 };
                 if (equip.disp == false)
                 {
-                    str = "<script>alertify.error('Alteração feita sem sucesso!');</script>";
+                    str = "<script>alertify.error('Inserção feita sem sucesso!');</script>";
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
                 }
                 else
                 {
                     int returncode = RequisicoesDAO.InsertReq(req);
-                    MPE_NewReq.Hide();
                     if (returncode == -1)
                     {
                         lbMensagem.Text = "Ja existem uma reserva deste equipamento para essa data.";
@@ -252,7 +251,7 @@ namespace PAP.Site.Admins
             {
                 if (equip.disp == false)
                 {
-                    str = "<script>alertify.error('Alteração feita sem sucesso!');</script>";
+                    str = "<script>alertify.error('Inserção feita sem sucesso!');</script>";
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
                 }
                 else
@@ -271,7 +270,6 @@ namespace PAP.Site.Admins
                             id_user = user.id_User
                         };
                         int returncode = RequisicoesDAO.InsertReq(req);
-                        MPE_NewReq.Hide();
                         if (returncode == -1)
                         {
                             lbMensagem.Text = "Ja existe uma reserva deste equipamento para essas datas.";
@@ -288,6 +286,7 @@ namespace PAP.Site.Admins
                     }
                 }
             }
+            MPE_NewReq.Hide();
             btSimReq.CausesValidation = false;
             rfvData.Enabled = false;
             rfvDataIni.Enabled = false;
@@ -675,6 +674,7 @@ namespace PAP.Site.Admins
 
         protected void btLimparFiltros_Click(object sender, EventArgs e)
         {
+            tbxPesq.Text = "";
             DataBindGrid();
         }
 

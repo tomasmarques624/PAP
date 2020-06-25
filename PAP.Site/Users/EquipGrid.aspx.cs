@@ -6,6 +6,8 @@ using PAP.DataAccess.UserDA;
 using PAP.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
@@ -48,6 +50,8 @@ namespace PAP.Site.Users
 
         protected void btSimReq_Click(object sender, EventArgs e)
         {
+            String str;
+            Equip equip = EquipDAO.GetEquipByID(Convert.ToInt32(id_equip.Value));
             if (ddlNDias.SelectedValue == "1")
             {
                 User user = UserDAO.GetUserByEmail(Session["email"].ToString());
@@ -59,39 +63,65 @@ namespace PAP.Site.Users
                     estado = false,
                     id_user = user.id_User
                 };
-                int returncode = RequisicoesDAO.InsertReq(req);
-                MPE_NewReq.Hide();
-                if (returncode == -1)
+                if (equip.disp == false)
                 {
-                    // alerta
+                    str = "<script>alertify.error('Inserção feita sem sucesso!');</script>";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
                 }
                 else
                 {
-                    // alerta
+                    int returncode = RequisicoesDAO.InsertReq(req);
+                    if (returncode == -1)
+                    {
+                        lbMensagem.Text = "Ja existe uma reserva deste equipamento para essa data.";
+                    }
+                    else
+                    {
+                        str = "<script>alertify.success('Inserção feita com sucesso!');</script>";
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                    }
                 }
             }
             else
             {
-                User user = UserDAO.GetUserByEmail(Session["email"].ToString());
-                Requisicoes req = new Requisicoes()
+                if (equip.disp == false)
                 {
-                    id_equip = Convert.ToInt32(id_equip.Value),
-                    data_requisicao = Convert.ToDateTime(tbxDataReqIni.Text),
-                    data_requisicao_final = Convert.ToDateTime(tbxDataReqFin.Text),
-                    estado = false,
-                    id_user = user.id_User
-                };
-                int returncode = RequisicoesDAO.InsertReq(req);
-                MPE_NewReq.Hide();
-                if (returncode == -1)
-                {
-                    // alerta
+                    str = "<script>alertify.error('Inserção feita sem sucesso!');</script>";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
                 }
                 else
                 {
-                    // alerta
+                    var dataIni = Convert.ToDateTime(tbxDataReqIni.Text);
+                    var dataFin = Convert.ToDateTime(tbxDataReqFin.Text);
+                    if (dataIni < dataFin)
+                    {
+                        User user = UserDAO.GetUserByEmail(Session["email"].ToString());
+                        Requisicoes req = new Requisicoes()
+                        {
+                            id_equip = Convert.ToInt32(id_equip.Value),
+                            data_requisicao = Convert.ToDateTime(tbxDataReqIni.Text),
+                            data_requisicao_final = Convert.ToDateTime(tbxDataReqFin.Text),
+                            estado = false,
+                            id_user = user.id_User
+                        };
+                        int returncode = RequisicoesDAO.InsertReq(req);
+                        if (returncode == -1)
+                        {
+                            lbMensagem.Text = "Ja existe uma reserva deste equipamento para essas datas.";
+                        }
+                        else
+                        {
+                            str = "<script>alertify.success('Inserção feita com sucesso!');</script>";
+                            Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                        }
+                    }
+                    else
+                    {
+                        lbMensagem.Text = "A data final tem de ser superior à inicial.";
+                    }
                 }
             }
+            MPE_NewReq.Hide();
             btSimReq.CausesValidation = false;
             rfvData.Enabled = false;
             rfvDataIni.Enabled = false;
@@ -152,6 +182,163 @@ namespace PAP.Site.Users
             FormsAuthentication.SignOut();
             Session.Abandon();
             Response.Redirect("~/Authentication/Login.aspx");
+        }
+
+        protected void rblPesq_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            tbxPesq.Text = "";
+            DataBindGrid();
+        }
+
+        protected void tbxPesq_TextChanged(object sender, EventArgs e)
+        {
+            if (tbxPesq.Text != "")
+            {
+                List<Equip> listEquips = null;
+
+                using (SqlConnection connection = new SqlConnection())
+                {
+                    connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        if (rblPesq.SelectedValue == "1")
+                        {
+                            command.CommandText = "SELECT * FROM tblEquip WHERE descri LIKE '" + tbxPesq.Text + "%';";
+                        }
+                        else if (rblPesq.SelectedValue == "2")
+                        {
+                            command.CommandText = "SELECT tblEquip.id_equip,tblEquip.descri,tblEquip.disp,tblEquip.id_cat,tblEquip.id_sala FROM tblEquip,tblCat WHERE tblCat.Nome LIKE " + tbxPesq.Text + "%' AND tblEquip.id_cat = tblCat.id_cat;";
+                        }
+                        else
+                        {
+                            command.CommandText = "SELECT tblEquip.id_equip,tblEquip.descri,tblEquip.disp,tblEquip.id_cat,tblEquip.id_sala FROM tblEquip,tblSalas WHERE tblSalas.nome_sala LIKE " + tbxPesq.Text + "%' AND tblEquip.id_sala = tblCat.id_sala;";
+                        }
+
+                        connection.Open();
+
+                        using (SqlDataReader dataReader = command.ExecuteReader())
+                        {
+                            if (dataReader.HasRows)
+                            {
+                                listEquips = new List<Equip>();
+                                while (dataReader.Read())
+                                {
+                                    listEquips.Add(new Equip()
+                                    {
+                                        descri = dataReader["descri"].ToString(),
+                                        disp = Convert.ToBoolean(dataReader["disp"]),
+                                        id_cat = Convert.ToInt32(dataReader["id_cat"]),
+                                        id_sala = Convert.ToInt32(dataReader["id_sala"]),
+                                        id_equip = Convert.ToInt32(dataReader["id_equip"])
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+                gvEquipList.DataSource = listEquips;
+                gvEquipList.DataBind();
+            }
+        }
+
+        protected void btLimparFiltros_Click(object sender, EventArgs e)
+        {
+            tbxPesq.Text = "";
+            DataBindGrid();
+        }
+
+        protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
+        {
+            List<Equip> listEquips = null;
+
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    if (Convert.ToInt32(ordcat.Value) == 1)
+                    {
+                        command.CommandText = "SELECT * FROM tblEquip ORDER BY id_cat;";
+                        ordcat.Value = "2";
+                    }
+                    else
+                    {
+                        command.CommandText = "SELECT * FROM tblEquip ORDER BY id_cat DESC;";
+                        ordcat.Value = "1";
+                    }
+
+                    connection.Open();
+
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        if (dataReader.HasRows)
+                        {
+                            listEquips = new List<Equip>();
+                            while (dataReader.Read())
+                            {
+                                listEquips.Add(new Equip()
+                                {
+                                    descri = dataReader["descri"].ToString(),
+                                    disp = Convert.ToBoolean(dataReader["disp"]),
+                                    id_cat = Convert.ToInt32(dataReader["id_cat"]),
+                                    id_sala = Convert.ToInt32(dataReader["id_sala"]),
+                                    id_equip = Convert.ToInt32(dataReader["id_equip"])
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            gvEquipList.DataSource = listEquips;
+            gvEquipList.DataBind();
+        }
+
+        protected void ImageButton2_Click(object sender, ImageClickEventArgs e)
+        {
+            List<Equip> listEquips = null;
+
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    if (Convert.ToInt32(ordsala.Value) == 1)
+                    {
+                        command.CommandText = "SELECT * FROM tblEquip ORDER BY id_sala;";
+                        ordsala.Value = "2";
+                    }
+                    else
+                    {
+                        command.CommandText = "SELECT * FROM tblEquip ORDER BY id_sala DESC;";
+                        ordsala.Value = "1";
+                    }
+                    connection.Open();
+
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        if (dataReader.HasRows)
+                        {
+                            listEquips = new List<Equip>();
+                            while (dataReader.Read())
+                            {
+                                listEquips.Add(new Equip()
+                                {
+                                    descri = dataReader["descri"].ToString(),
+                                    disp = Convert.ToBoolean(dataReader["disp"]),
+                                    id_cat = Convert.ToInt32(dataReader["id_cat"]),
+                                    id_sala = Convert.ToInt32(dataReader["id_sala"]),
+                                    id_equip = Convert.ToInt32(dataReader["id_equip"])
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            gvEquipList.DataSource = listEquips;
+            gvEquipList.DataBind();
         }
     }
 }

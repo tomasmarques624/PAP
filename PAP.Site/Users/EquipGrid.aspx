@@ -5,65 +5,88 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <title>Inventário</title>
     <link href="../Content/bootstrap.min.css" rel="stylesheet" />
-    <link href="../Content/CustomStyles/LibraryStyles/custom_style.css" rel="stylesheet" />
     <link href="../Content/CustomStyles/LoginRegisterStyles/loginregister.css" rel="stylesheet" />
+    <link href="../Content/CustomStyles/LibraryStyles/custom_style.css" rel="stylesheet" />
+    <link href="../Content/alertifyjs/alertify.css" rel="stylesheet" />
+    <script src="../../Scripts/alertify.js"></script>
 </head>
 <body>
     <form id="form1" runat="server">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">G.E.T</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
-                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+        <asp:HiddenField ID="id_equip" runat="server" />
+        <asp:HiddenField ID="ordcat" runat="server" Value="1" />
+        <asp:HiddenField ID="ordsala" runat="server" Value="1" />
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <a class="navbar-brand" href="HomeUser.aspx">G.E.T</a>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item dropdown" id="navLinkHome" runat="server">
                         <a class="nav-link" href="#">Equipamentos<span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../Users/ResDenu.aspx">Reservas & Denuncias</a>
+                    <li class="nav-item active" id="navLinkDenuncias" runat="server">
+                        <a class="nav-link" href="ResDenu.aspx">Reservas & Denuncias</a>
                     </li>
                 </ul>
                 <span class="navbar-text">Bem vindo(a) <%= Session["username"].ToString() %>
                 </span>
             </div>
             <div style="padding-left: 1rem">
-                <asp:Button ID="buttonLogout" Text="Logout" CssClass="btn btn-secondary" runat="server" OnClick="buttonLogout_Click" CausesValidation="False" />
+                <asp:Button ID="button1" Text="Logout" CssClass="btn btn-secondary" runat="server" OnClick="buttonLogout_Click" CausesValidation="False" />
             </div>
         </nav>
-        <div class="jumbotron">
-            <h2>G.E.T - Gestor de Equipamento Informatico</h2>
-        </div>
-        <asp:HiddenField ID="id_equip" runat="server" />
-        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+        
         <div>
             <div id="content-page">
-                <h3>Inventario</h3>
+                <h2>Inventário</h2>
                 <h5>Filtros</h5>
+                <asp:Label ID="lbPesq" runat="server" Text="Pesquisar por:"></asp:Label>
+                <asp:RadioButtonList ID="rblPesq" runat="server" RepeatDirection="Horizontal" OnSelectedIndexChanged="rblPesq_SelectedIndexChanged">
+                    <asp:ListItem Text="Descrição" Value="1" Selected="True" />
+                    <asp:ListItem Text="Categoria" Value="2" />
+                    <asp:ListItem Text="Sala" Value="3" />
+                </asp:RadioButtonList>
+                <asp:TextBox ID="tbxPesq" runat="server" Text="" CssClass="form-control" Width="351px" OnTextChanged="tbxPesq_TextChanged" AutoPostBack="true" />
+                <asp:Button ID="btLimparFiltros" Text="Limpar" runat="server" CssClass="btn btn-primary" CausesValidation="False" OnClick="btLimparFiltros_Click" />
             </div>
             <br />
             <div style="margin-left: 20px">
                 <asp:GridView ID="gvEquipList" AutoGenerateColumns="False" DataKeyNames="id_equip" EmptyDataText="Sem registos" runat="server" ViewStateMode="Enabled"
                     CssClass="mydatagrid" HeaderStyle-CssClass="header" RowStyle-CssClass="rows" Height="170px" OnRowDataBound="gvEquipList_RowDataBound">
+
                     <Columns>
                         <asp:BoundField DataField="id_equip" ReadOnly="true" HeaderText="ID" />
-                        <asp:BoundField DataField="descri" HeaderText="Descricao" />
+                        <asp:BoundField DataField="descri" HeaderText="Descrição" />
+                    </Columns>
 
-                        <asp:TemplateField HeaderText="Categoria">
+                    <Columns>
+                        <asp:TemplateField>
+                            <HeaderTemplate>
+                                <asp:Label Text="Categoria" runat="server" />
+                                &nbsp;
+                        <asp:ImageButton runat="server" ImageUrl="../Content/Imagens/Setas.png" Width="15" Height="15" ID="ImageButton1" OnClick="ImageButton1_Click" />
+                            </HeaderTemplate>
                             <ItemTemplate>
                                 <asp:Label runat="server" ID="lbCategoria" />
                             </ItemTemplate>
                         </asp:TemplateField>
+                    </Columns>
 
-                        <asp:TemplateField HeaderText="Sala">
+                    <Columns>
+                        <asp:TemplateField>
+                            <HeaderTemplate>
+                                <asp:Label Text="Sala" runat="server" />
+                                &nbsp;
+                        <asp:ImageButton Text="Sala" runat="server" ImageUrl="../Content/Imagens/Setas.png" Width="15" Height="15" ID="ImageButton2" OnClick="ImageButton2_Click" />
+                            </HeaderTemplate>
                             <ItemTemplate>
                                 <asp:Label runat="server" ID="lbSala" />
                             </ItemTemplate>
                         </asp:TemplateField>
-
+                    </Columns>
+                    <Columns>
                         <asp:TemplateField HeaderText="Reservar">
                             <ItemTemplate>
                                 <asp:LinkButton ID="lkReservar" runat="server" Text="Reservar" OnClick="lkReservar_Click" CausesValidation="False" />
@@ -73,6 +96,7 @@
                 </asp:GridView>
             </div>
         </div>
+        <p></p>
         <!-- Modal Nova Requisicao -->
         <asp:Button ID="btNewReq" runat="server" Style="display: none;" />
         <cc1:ModalPopupExtender ID="MPE_NewReq" runat="server" BehaviorID="MPE_NewReq"
@@ -124,6 +148,11 @@
                 </tr>
                 <tr>
                     <td>
+                        <asp:Label Text="" ID="lbMensagem" runat="server" ForeColor="Red" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         <asp:Button ID="btSimReq" Text="Inserir" runat="server" OnClick="btSimReq_Click" CssClass="btn btn-success" CausesValidation="False" />
                         <asp:Button ID="btNaoReq" Text="Cancelar" runat="server" CssClass="btn btn-danger" CausesValidation="False" OnClick="btNaoReq_Click" />
                     </td>
@@ -131,8 +160,8 @@
             </table>
         </asp:Panel>
     </form>
-    <script src="../Scripts/bootstrap.min.js"></script>
-    <script src="../Scripts/jquery-3.4.1.min.js"></script>
-    <script src="../Scripts/popper.min.js"></script>
+    <script src="../../Scripts/jquery-3.5.1.min.js"></script>
+    <script src="../../Scripts/popper.min.js"></script>
+    <script src="../../Scripts/bootstrap.min.js"></script>
 </body>
 </html>

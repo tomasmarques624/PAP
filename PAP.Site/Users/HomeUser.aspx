@@ -4,15 +4,13 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Home</title>
+    <title>Página Inicial</title>
     <link href="../Content/bootstrap.min.css" rel="stylesheet" />
-    <link href="../Content/CustomStyles/LibraryStyles/styles.css" rel="stylesheet" />
     <link href="../Content/CustomStyles/LoginRegisterStyles/loginregister.css" rel="stylesheet" />
+    <link href="../Content/CustomStyles/LibraryStyles/custom_style.css" rel="stylesheet" />
+    <link href="../Content/alertifyjs/alertify.css" rel="stylesheet" />
+    <script src="../../Scripts/alertify.js"></script>
 
-    <script src="../Scripts/jquery-3.5.1.min.js"></script>
-    <script src="../Scripts/popper.min.js"></script>
-    <script src="../Scripts/bootstrap.min.js"></script>
-    
     <script type="text/javascript">
         $(document).ready(function () {
             $('.menu a').hover(function () {
@@ -35,9 +33,19 @@
             <h4>Menu - Bem vindo(a) <%= Session["username"].ToString() %></h4>
         </div>
         <div class="menu">
-            <a href="../Users/EquipGrid.aspx" class="yellow">Inventario</a>
-            <a href="../Users/ResDenu.aspx" class="green">Reservas     &    Denuncias</a>
+            <a href="EquipGrid.aspx" class="yellow" style="height: 246px;line-height:123px;">
+                <img style="width: 94px; height: 86px" src="../Content/Imagens/Equips.png"/>
+                Equipamentos
+            </a>
+            <a href="ResDenu.aspx" class="green">
+                <img style="width: 94px; height: 86px" src="../Content/Imagens/Reservas.png"/>
+                Denuncias & Reservas
+            </a>
         </div>
     </form>
+
+    <script src="../../Scripts/jquery-3.5.1.min.js"></script>
+    <script src="../../Scripts/popper.min.js"></script>
+    <script src="../../Scripts/bootstrap.min.js"></script>
 </body>
 </html>
