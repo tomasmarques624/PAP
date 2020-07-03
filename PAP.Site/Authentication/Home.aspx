@@ -42,7 +42,7 @@
                     <div class="col-lg-6">
                         <asp:Label Text="G.E.T" CssClass="mt-5 shadow" runat="server" Font-Size="60pt" Font-Bold="True" />
                         <br />
-                        <asp:Label Text="(Arranjar uma Descricao)" CssClass="mt-5 shadow" runat="server" Font-Size="20pt" Font-Bold="True" />
+                        <asp:Label Text="Gestor de Equipamento Tecnológico" CssClass="mt-5 shadow" runat="server" Font-Size="20pt" Font-Bold="True" />
                         
                     </div>
                 </div>
