@@ -11,6 +11,10 @@ namespace PAP.Site.Admins
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["role"].ToString() == "U")
+            {
+                Response.Redirect("~/AcessoNegado.aspx");
+            }
         }
     }
 }

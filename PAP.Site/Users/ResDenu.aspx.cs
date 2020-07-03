@@ -27,6 +27,7 @@ namespace PAP.Site.Users
             if (!Page.IsPostBack)
             {
                 DataBindGrid();
+                DataBindGridDenu();
             }
         }
         public void DataBindGrid()
@@ -56,12 +57,18 @@ namespace PAP.Site.Users
                     Label lbEstado = (Label)e.Row.FindControl("lbEstado");
                     lbEstado.Text = "N/A";
                     lbEstado.ForeColor = System.Drawing.Color.Red;
+                    LinkButton lkDenu = (LinkButton)e.Row.FindControl("lkDenu");
+                    lkDenu.Text = "Não disponível";
+                    lkDenu.Enabled = false;
                 }
                 else
                 {
                     Label lbEstado = (Label)e.Row.FindControl("lbEstado");
                     lbEstado.Text = "Aprovada";
                     lbEstado.ForeColor = System.Drawing.Color.Green;
+                    LinkButton lkDenu = (LinkButton)e.Row.FindControl("lkDenu");
+                    lkDenu.Text = "Denunciar";
+                    lkDenu.Enabled = true;
                 }
 
                 Equip equip = EquipDAO.GetEquipByID(req.id_equip);
@@ -246,7 +253,7 @@ namespace PAP.Site.Users
             mailMessage.From = new MailAddress("likedat6969@gmail.com");
             mailMessage.To.Add(user.Email);
             mailMessage.Subject = "Cancelamento de uma requisicao.";
-            mailMessage.Body = "Vimos por este meio informar que a sua reserva do seguinte equipamento : <br/>" + equip.descri + "<br/> Foi cancelada. <br/> Para mais informacoes contacte um administrador.";
+            mailMessage.Body = "<h3>G.E.T</h3><br/>Vimos por este meio informar que a sua reserva do seguinte equipamento : <br/>" + equip.descri + "<br/> Foi cancelada. <br/> Para mais informacoes contacte um administrador.";
             mailMessage.IsBodyHtml = true;
 
             SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
@@ -513,7 +520,6 @@ namespace PAP.Site.Users
 
             LinkButton lkFoto = (LinkButton)gvDenuList.Rows[index].FindControl("lkFoto");
             int id_denuncia = Convert.ToInt32(gvDenuList.Rows[index].Cells[0].Text);
-            id_denu.Value = id_denuncia.ToString();
             Models.Denuncias denuncia = DenunciasDAO.GetDenunciaByID(id_denuncia);
             Equip equip = EquipDAO.GetEquipByID(denuncia.id_equip);
             string jpg = "/Content/Imagens/Denuncias/" + equip.descri + "_" + denuncia.data_denuncia.ToString("MM-dd-yyyy") + ".jpg";

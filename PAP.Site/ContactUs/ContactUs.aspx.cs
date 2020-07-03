@@ -22,7 +22,7 @@ namespace PAP.Site.ContactUs
             mailMessage.From = new MailAddress("likedat6969@gmail.com");
             mailMessage.To.Add("likedat6969@gmail.com");
             mailMessage.Subject = tbxAssunto.Text;
-            mailMessage.Body = "<b>Remente: </b>" + tbxNome.Text + "<br/>" + "<b>Email do remetente: </b>" + tbxEmail.Text + "<br/>" + "<b>Mensagem: </b>" + tbxMensagem.Text;
+            mailMessage.Body = "<h3>G.E.T</h3><br/><b>Remente: </b>" + tbxNome.Text + "<br/>" + "<b>Email do remetente: </b>" + tbxEmail.Text + "<br/>" + "<b>Mensagem: </b>" + tbxMensagem.Text;
             mailMessage.IsBodyHtml = true;
 
             SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);

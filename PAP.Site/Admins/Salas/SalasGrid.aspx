@@ -6,21 +6,16 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-    <div id="content-page">
+    <div id="content-page" style="margin-left: 20px">
         <h2>Salas</h2>
-        <h5>Filtros</h5>
-        <asp:TextBox ID="tbxPesq" runat="server" ForeColor="Silver" Text="Pesquisar..." CssClass="form-control" Width="351px" />
-    </div>
-    <div>
-        &nbsp&nbsp&nbsp
-       
-        <asp:Button ID="btNovaSala" Text="Adicionar Sala" runat="server" CssClass="btn btn-primary" OnClick="btNovaSala_Click" />
+        <asp:Label ID="lbPesq" runat="server" Text="Pesquisar :"></asp:Label>
+        <asp:TextBox ID="tbxPesq" runat="server" Text="" CssClass="form-control" Width="351px" OnTextChanged="tbxPesq_TextChanged" AutoPostBack="true" />
     </div>
     <br />
-    <div style="margin-left: 20px">
+    <div style="margin-left: 50px">
         <asp:GridView ID="gvSalaList" AutoGenerateColumns="false" EmptyDataText="Sem registos" runat="server" ViewStateMode="Enabled"
             CssClass="mydatagrid" HeaderStyle-CssClass="header" RowStyle-CssClass="rows" OnRowCancelingEdit="gvSalaList_RowCancelingEdit"
-            OnRowEditing="gvSalaList_RowEditing" OnRowUpdating="gvSalaList_RowUpdating" Width="832px">
+            OnRowEditing="gvSalaList_RowEditing" OnRowUpdating="gvSalaList_RowUpdating" Width="832px" DataKeyNames="id_sala">
 
             <Columns>
                 <asp:BoundField DataField="id_sala" ReadOnly="true" HeaderText="ID" />
@@ -29,7 +24,8 @@
 
                 <asp:TemplateField HeaderText="Remover Salas">
                     <ItemTemplate>
-                        <asp:CheckBox runat="server" ID="chbxEliminar" Text=" Eliminar" />
+                        <asp:CheckBox runat="server" ID="chbxEliminar" />
+                        <label> Remover</label>
                     </ItemTemplate>
                 </asp:TemplateField>
 
@@ -42,6 +38,7 @@
     &nbsp&nbsp&nbsp
    
     <asp:Button ID="btRemover" Text="Remover as salas selecionadas" runat="server" CssClass="btn btn-danger" CausesValidation="false" OnClick="btRemover_Click" />
+
      <!-- Modal Remover -->
     <asp:Button ID="btRem" runat="server" Style="display: none;" />
     <cc1:ModalPopupExtender ID="MPE_Rem" runat="server" BehaviorID="btRemover_ModalPopupExtender"

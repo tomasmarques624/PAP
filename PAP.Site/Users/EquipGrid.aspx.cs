@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
@@ -339,6 +340,29 @@ namespace PAP.Site.Users
             }
             gvEquipList.DataSource = listEquips;
             gvEquipList.DataBind();
+        }
+
+        protected void lkFoto_Click(object sender, EventArgs e)
+        {
+            LinkButton drp = (LinkButton)sender;
+
+            GridViewRow gv = (GridViewRow)drp.NamingContainer;
+
+            int index = gv.RowIndex;
+
+            LinkButton lkFoto = (LinkButton)gvEquipList.Rows[index].FindControl("lkFoto");
+            int id_equip = Convert.ToInt32(gvEquipList.Rows[index].Cells[0].Text);
+            MPE_Foto.Show();
+            Equip equip = EquipDAO.GetEquipByID(id_equip);
+            string jpg = "/Content/Imagens/Equips/" + equip.descri + ".jpg";
+            if (File.Exists(Server.MapPath(jpg)))
+            {
+                imgFoto.ImageUrl = jpg;
+            }
+            else
+            {
+                imgFoto.ImageUrl = "../../Content/Imagens/ImgNotFound.png";
+            }
         }
     }
 }

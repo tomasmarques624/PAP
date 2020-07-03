@@ -68,14 +68,23 @@ namespace PAP.Site.Admins
                 int id_requisicao = requisicoes.id_requisicao;
                 if (((CheckBox)gvReqList.Rows[i].FindControl("chbxCancelar")).Checked)
                 {
+                    a = true;
                     User user = UserDAO.GetUserByID(requisicoes.id_user);
                     Equip equip = EquipDAO.GetEquipByID(requisicoes.id_equip);
 
                     MailMessage mailMessage = new MailMessage();
                     mailMessage.From = new MailAddress("likedat6969@gmail.com");
                     mailMessage.To.Add(user.Email);
-                    mailMessage.Subject = "Cancelamento de uma requisição.";
-                    mailMessage.Body = "Vimos por este meio informar que a sua reserva do seguinte equipamento : <br/>" + equip.descri + "<br/> Foi cancelada. <br/> Para mais informações contacte um administrador.";
+                    mailMessage.Subject = "Cancelamento de uma reserva.";
+                    if(tbxRazao.Text != "")
+                    {
+                        mailMessage.Body = "<h3>G.E.T</h3><br/>Vimos por este meio informar que a sua reserva do seguinte equipamento : " + equip.descri + "<br/>Foi cancelada.<br/>Razão: "+ tbxRazao.Text +"<br/>Para mais informações contacte um administrador.";
+                    }
+                    else
+                    {
+                        mailMessage.Body = "<h3>G.E.T</h3><br/>Vimos por este meio informar que a sua reserva do seguinte equipamento : " + equip.descri + "<br/>Foi cancelada.<br/>Para mais informações contacte um administrador.";
+                    }
+                    
                     mailMessage.IsBodyHtml = true;
 
                     SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
@@ -158,8 +167,8 @@ namespace PAP.Site.Admins
                 MailMessage mailMessage = new MailMessage();
                 mailMessage.From = new MailAddress("likedat6969@gmail.com");
                 mailMessage.To.Add(user.Email);
-                mailMessage.Subject = "Alteração do estado de uma requisição.";
-                mailMessage.Body = "Vimos por este meio informar que o estado da sua reserva do seguinte equipamento : <br/>" + equip.descri + "<br/> Foi alterado para "+ esta +". <br/> Para mais informações contacte um administrador.";
+                mailMessage.Subject = "Alteração do estado de uma reserva.";
+                mailMessage.Body = "<h3>G.E.T</h3><br/>Vimos por este meio informar que o estado da sua reserva do seguinte equipamento : " + equip.descri + "<br/>Foi alterado para "+ esta +". <br/>Para mais informações contacte um administrador.";
                 mailMessage.IsBodyHtml = true;
 
                 SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
@@ -290,11 +299,11 @@ namespace PAP.Site.Admins
                         command.Connection = connection;
                         if (rblPesq.SelectedValue == "1")
                         {
-                            command.CommandText = "SELECT * FROM tblRequisicoes WHERE data_requisicao LIKE '" + Convert.ToDateTime(tbxPesq.Text).ToString("MM/dd/yyyy") + "%';";
+                            command.CommandText = "SELECT * FROM tblRequisicoes WHERE data_requisicao = '" + Convert.ToDateTime(tbxPesq.Text).ToString("M/d/yyyy") + "';";
                         }
                         else if (rblPesq.SelectedValue == "2")
                         {
-                            command.CommandText = "SELECT * FROM tblRequisicoes WHERE data_requisicao_final = '" + Convert.ToDateTime(tbxPesq.Text).ToString("MM/dd/yyyy") + "';";
+                            command.CommandText = "SELECT * FROM tblRequisicoes WHERE data_requisicao_final = '" + Convert.ToDateTime(tbxPesq.Text).ToString("M/d/yyyy") + "';";
                         }
                         else if (rblPesq.SelectedValue == "3")
                         {
@@ -478,5 +487,6 @@ namespace PAP.Site.Admins
             tbxPesq.Text = "";
             DataBindGrid();
         }
+
     }
 }

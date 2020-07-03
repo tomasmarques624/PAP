@@ -19,10 +19,10 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="Home.aspx">Home</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item active">
                         <a class="nav-link" href="Login.aspx">Login</a>
                     </li>
                     <li class="nav-item">
@@ -34,9 +34,9 @@
     </nav>
     <div class="sidenav" runat="server">
         <div class="login-main-text">
-            <h2>G.E.T</h2>
+            <h1>G.E.T</h1>
             <br />
-            <h3>Gestor de equipamento informático</h3>
+            <h3>Gestor de Equipamento Tecnológico</h3>
             <p>Faça Login para aceder à aplicação.</p>
         </div>
     </div>

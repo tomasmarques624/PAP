@@ -67,8 +67,8 @@ namespace PAP.Site.Admins.Equips
 
                     String str = "<script>alertify.success('Inserção feita com sucesso!');</script>";
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
-                    
 
+                    btCancelar.Attributes.Add("onclick", "history.go(-4);location.reload();");
                     btCancelar.Text = "Voltar";
                     fluFoto.Enabled = false;
                     tbxDesc.Enabled = false;

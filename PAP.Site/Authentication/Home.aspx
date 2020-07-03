@@ -49,8 +49,8 @@
             </div>
         </section>
     </form>
-    <script src="../Scripts/jquery-3.4.1.min.js"></script>
+    <script src="../Scripts/jquery-3.5.1.min.js"></script>
     <script src="../Scripts/bootstrap.bundle.min.js"></script>
-
+    <script src="../Scripts/bootstrap.min.js"></script>
 </body>
 </html>

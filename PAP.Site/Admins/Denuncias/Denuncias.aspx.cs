@@ -105,7 +105,7 @@ namespace PAP.Site.Admins
                     mailMessage.From = new MailAddress("likedat6969@gmail.com");
                     mailMessage.To.Add(user.Email);
                     mailMessage.Subject = "Cancelamento de uma denuncia.";
-                    mailMessage.Body = "Vimos por este meio informar que a sua denuncia do seguinte equipamento : <br/>" + equip.descri + "<br/> Foi removida. <br/> Para mais informações contacte um administrador.";
+                    mailMessage.Body = "<h3>G.E.T</h3><br/>Vimos por este meio informar que a sua denuncia do seguinte equipamento : " + equip.descri + "<br/>Foi removida. <br/>Para mais informações contacte um administrador.";
                     mailMessage.IsBodyHtml = true;
 
                     SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
@@ -174,7 +174,7 @@ namespace PAP.Site.Admins
             else if (estado.Value == "2")
             {
                 est = 'P';
-                int a = EquipDAO.UpdateEquipDisp(Convert.ToInt32(denuncia.id_equip), Convert.ToBoolean(0));
+                EquipDAO.UpdateEquipDisp(Convert.ToInt32(denuncia.id_equip), Convert.ToBoolean(0));
             }
             else
             {
@@ -192,10 +192,10 @@ namespace PAP.Site.Admins
                 User user = UserDAO.GetUserByID(denuncia.id_user);
                 Equip equip = EquipDAO.GetEquipByID(denuncia.id_equip);
                 string esta;
-                if (denuncia.estado == 'V')
+                if (est == 'V')
                 {
                     esta = "Por ver";
-                }else if(denuncia.estado == 'P')
+                }else if(est == 'P')
                 {
                     esta = "Por resolver";
                 }
@@ -207,8 +207,8 @@ namespace PAP.Site.Admins
                 MailMessage mailMessage = new MailMessage();
                 mailMessage.From = new MailAddress("likedat6969@gmail.com");
                 mailMessage.To.Add(user.Email);
-                mailMessage.Subject = "Alteracao do estado de uma denuncia.";
-                mailMessage.Body = "Vimos por este meio informar que o estado da sua denuncia do seguinte equipamento : <br/>" + equip.descri + "<br/> Foi alterado para " + esta + ". <br/> Para mais informacoes contacte um administrador.";
+                mailMessage.Subject = "Alteração do estado de uma denuncia.";
+                mailMessage.Body = "<h3>G.E.T</h3><br/>Vimos por este meio informar que o estado da sua denuncia do seguinte equipamento: " + equip.descri + "<br/>Foi alterado para: " + esta + ".<br/>Para mais informações contacte um administrador.";
                 mailMessage.IsBodyHtml = true;
 
                 SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
@@ -343,7 +343,7 @@ namespace PAP.Site.Admins
                         }
                         else if (rblPesq.SelectedValue == "2")
                         {
-                            command.CommandText = "SELECT * FROM tblDenuncias WHERE data_denuncia = '" + Convert.ToDateTime(tbxPesq.Text).ToString("MM/dd/yyyy") + "';";
+                            command.CommandText = "SELECT * FROM tblDenuncias WHERE data_denuncia = '" + Convert.ToDateTime(tbxPesq.Text).ToString("M/d/yyyy") + "';";
                         }
                         else if (rblPesq.SelectedValue == "3")
                         {
@@ -614,7 +614,7 @@ namespace PAP.Site.Admins
             mailMessage.From = new MailAddress("likedat6969@gmail.com");
             mailMessage.To.Add(lbEmail.Text);
             mailMessage.Subject = tbxAssunto.Text;
-            mailMessage.Body = tbxMensagem.Text;
+            mailMessage.Body = "<h3>G.E.T</h3><br/>" + tbxMensagem.Text;
             mailMessage.IsBodyHtml = true;
 
             SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);

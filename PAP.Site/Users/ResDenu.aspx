@@ -23,11 +23,11 @@
             <a class="navbar-brand" href="HomeUser.aspx">G.E.T</a>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item dropdown" id="navLinkHome" runat="server">
-                        <a class="nav-link" href="#">Equipamentos<span class="sr-only">(current)</span></a>
+                    <li class="nav-item" id="navLinkHome" runat="server">
+                        <a class="nav-link" href="EquipGrid.aspx">Equipamentos</a>
                     </li>
                     <li class="nav-item active" id="navLinkDenuncias" runat="server">
-                        <a class="nav-link" href="ResDenu.aspx">Reservas & Denuncias</a>
+                        <a class="nav-link" href="#">Reservas & Denuncias<span class="sr-only">(current)</span></a>
                     </li>
                 </ul>
                 <span class="navbar-text">Bem vindo(a) <%= Session["username"].ToString() %>
@@ -38,7 +38,7 @@
             </div>
         </nav>
         <div>
-            <div id="content-page">
+            <div id="content-page" style="margin-left: 20px">
                 <h2>Reservas</h2>
                 <h5>Filtros</h5>
                 <asp:Label ID="lbPesq" runat="server" Text="Pesquisar por:"></asp:Label>
@@ -48,10 +48,11 @@
                     <asp:ListItem Text="Equipamento" Value="3" />
                 </asp:RadioButtonList>
                 <asp:TextBox ID="tbxPesq" runat="server" Text="" CssClass="form-control" Width="351px" OnTextChanged="tbxPesq_TextChanged" AutoPostBack="true" />
+                <p></p>
                 <asp:Button ID="btLimparFiltros" Text="Limpar" runat="server" CssClass="btn btn-primary" CausesValidation="False" OnClick="btLimparFiltros_Click" />
             </div>
             <br />
-            <div style="margin-left: 20px">
+            <div style="margin-left: 50px">
                 <asp:GridView ID="gvReqList" DataKeyNames="id_requisicao" AutoGenerateColumns="false" EmptyDataText="Sem registos" runat="server" ViewStateMode="Enabled"
                     OnRowDataBound="gvReqList_RowDataBound"
                     CssClass="mydatagrid" HeaderStyle-CssClass="header" RowStyle-CssClass="rows" Height="150px">
@@ -108,7 +109,7 @@
             </div>
         </div>
         <div>
-            <div id="content-page">
+            <div id="content-page" style="margin-left: 20px">
                 <h2>Denuncias</h2>
                 <h5>Filtros</h5>
                 <asp:Label ID="Label1" runat="server" Text="Pesquisar por:"></asp:Label>
@@ -118,10 +119,11 @@
                     <asp:ListItem Text="Equipamento" Value="3" />
                 </asp:RadioButtonList>
                 <asp:TextBox ID="tbxPesqDenu" runat="server" Text="" CssClass="form-control" Width="351px" AutoPostBack="true" OnTextChanged="tbxPesqDenu_TextChanged" />
+                <p></p>
                 <asp:Button ID="btLimparFiltrosDenu" Text="Limpar" runat="server" CssClass="btn btn-primary" CausesValidation="False" OnClick="btLimparFiltrosDenu_Click" />
             </div>
             <br />
-            <div style="margin-left: 20px">
+            <div style="margin-left: 50px">
                 <asp:GridView ID="gvDenuList" AutoGenerateColumns="false" EmptyDataText="Sem registos" runat="server" ViewStateMode="Enabled"
                     CssClass="mydatagrid" HeaderStyle-CssClass="header" RowStyle-CssClass="rows" OnRowDataBound="gvDenuList_RowDataBound" Height="170px">
 
@@ -168,6 +170,7 @@
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
+                     <EmptyDataTemplate>no Records Found</EmptyDataTemplate>
                 </asp:GridView>
             </div>
         </div>
@@ -192,7 +195,7 @@
             CancelControlID="btNaoDenu" BackgroundCssClass="popupbg">
         </cc1:ModalPopupExtender>
         <asp:Panel ID="pnlDenu" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
-            <h3>Reservar Equipamento</h3>
+            <h3>Denunciar Equipamento</h3>
             <br />
             <table>
                 <tr>
@@ -215,7 +218,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <asp:Button ID="btSimDenu" Text="Inserir" runat="server" CssClass="btn btn-success" CausesValidation="False" OnClick="btSimDenu_Click" />
+                        <asp:Button ID="btSimDenu" Text="Denunciar" runat="server" CssClass="btn btn-success" CausesValidation="False" OnClick="btSimDenu_Click" />
                         <asp:Button ID="btNaoDenu" Text="Cancelar" runat="server" CssClass="btn btn-danger" CausesValidation="False" OnClick="btNaoDenu_Click" />
                     </td>
                 </tr>

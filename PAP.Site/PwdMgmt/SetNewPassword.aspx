@@ -10,11 +10,33 @@
     <link href="../Content/CustomStyles/LoginRegisterStyles/loginregister.css" rel="stylesheet" />
 </head>
 <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-bottom">
+        <div class="container">
+            <a class="navbar-brand" href="#">G.E.T</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../Authentication/Home.aspx">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../Authentication/Login.aspx">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../ContactUs/ContactUs.aspx">Contacte-nos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <div class="sidenav" runat="server">
          <div class="login-main-text">
-            <h2>G.E.T</h2>
+             <h1>G.E.T</h1>
              <br />
-             <h3> Gestor de equipamento informatico</h3>
+             <h3>Gestor de Equipamento Tecnológico</h3>
             <p>Introduza a sua nova password.</p>
          </div>
       </div>
@@ -39,12 +61,11 @@
                    <br />
                    <br />
                   <asp:Button id="btConfirmar" Text="Confirmar" runat="server" CssClass="btn btn-primary" onclick="btConfirmar_Click" />
-                  <asp:HyperLink ID="hlLogin" runat="server" CssClass="btn btn-secondary" Text="Cancelar" NavigateUrl="~/Authentication/Login.aspx"/>
                </form>
             </div>
          </div>
       </div>
 </body>
-<script src="../Scripts/jquery-3.4.1.min.js"></script>
+<script src="../Scripts/jquery-3.5.1.min.js"></script>
 <script src="../Scripts/bootstrap.min.js"></script>
 </html>

@@ -23,10 +23,10 @@
             <a class="navbar-brand" href="HomeUser.aspx">G.E.T</a>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item dropdown" id="navLinkHome" runat="server">
+                    <li class="nav-item active" id="navLinkHome" runat="server">
                         <a class="nav-link" href="#">Equipamentos<span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item active" id="navLinkDenuncias" runat="server">
+                    <li class="nav-item" id="navLinkDenuncias" runat="server">
                         <a class="nav-link" href="ResDenu.aspx">Reservas & Denuncias</a>
                     </li>
                 </ul>
@@ -39,20 +39,21 @@
         </nav>
         
         <div>
-            <div id="content-page">
+            <div id="content-page" style="margin-left: 20px">
                 <h2>Inventário</h2>
                 <h5>Filtros</h5>
                 <asp:Label ID="lbPesq" runat="server" Text="Pesquisar por:"></asp:Label>
-                <asp:RadioButtonList ID="rblPesq" runat="server" RepeatDirection="Horizontal" OnSelectedIndexChanged="rblPesq_SelectedIndexChanged">
+                <asp:RadioButtonList ID="rblPesq" runat="server" RepeatDirection="Horizontal" OnSelectedIndexChanged="rblPesq_SelectedIndexChanged" AutoPostBack="true">
                     <asp:ListItem Text="Descrição" Value="1" Selected="True" />
                     <asp:ListItem Text="Categoria" Value="2" />
                     <asp:ListItem Text="Sala" Value="3" />
                 </asp:RadioButtonList>
                 <asp:TextBox ID="tbxPesq" runat="server" Text="" CssClass="form-control" Width="351px" OnTextChanged="tbxPesq_TextChanged" AutoPostBack="true" />
+                <p></p>
                 <asp:Button ID="btLimparFiltros" Text="Limpar" runat="server" CssClass="btn btn-primary" CausesValidation="False" OnClick="btLimparFiltros_Click" />
             </div>
             <br />
-            <div style="margin-left: 20px">
+            <div style="margin-left: 50px">
                 <asp:GridView ID="gvEquipList" AutoGenerateColumns="False" DataKeyNames="id_equip" EmptyDataText="Sem registos" runat="server" ViewStateMode="Enabled"
                     CssClass="mydatagrid" HeaderStyle-CssClass="header" RowStyle-CssClass="rows" Height="170px" OnRowDataBound="gvEquipList_RowDataBound">
 
@@ -90,6 +91,13 @@
                         <asp:TemplateField HeaderText="Reservar">
                             <ItemTemplate>
                                 <asp:LinkButton ID="lkReservar" runat="server" Text="Reservar" OnClick="lkReservar_Click" CausesValidation="False" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                    <Columns>
+                        <asp:TemplateField HeaderText="Foto">
+                            <ItemTemplate>
+                                <asp:LinkButton ID="lkFoto" runat="server" Text="Ver Foto" OnClick="lkFoto_Click" CausesValidation="False"/>
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
@@ -158,6 +166,18 @@
                     </td>
                 </tr>
             </table>
+        </asp:Panel>
+
+        <!-- Modal Foto -->
+        <asp:Button ID="btFoto" runat="server" Style="display: none;" />
+        <cc1:ModalPopupExtender ID="MPE_Foto" runat="server" BehaviorID="MPE_Foto"
+            DynamicServicePath="" TargetControlID="btFoto" PopupControlID="pnlFoto"
+            CancelControlID="btFechar" BackgroundCssClass="popupbg">
+        </cc1:ModalPopupExtender>
+        <asp:Panel ID="pnlFoto" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
+            <asp:Image ImageUrl="../Content/Imagens/ImgNotFound.png" runat="server" ID="imgFoto" CssClass="img-fluid" />
+            <p></p>
+            <asp:Button ID="btFechar" Text="Fechar" runat="server" CssClass="btn btn-secondary" CausesValidation="False" />
         </asp:Panel>
     </form>
     <script src="../../Scripts/jquery-3.5.1.min.js"></script>

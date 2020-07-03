@@ -12,7 +12,7 @@
     <asp:HiddenField ID="ordestado" runat="server" Value="1" />
     <asp:HiddenField ID="orduti" runat="server" Value="1" />
     <asp:HiddenField ID="ordquip" runat="server" Value="1" />
-    <div id="content-page">
+    <div id="content-page" style="margin-left: 20px">
         <h2>Denuncias</h2>
         <h5>Filtros</h5>
         <asp:Label ID="lbPesq" runat="server" Text="Pesquisar por:"></asp:Label>
@@ -26,7 +26,7 @@
         <asp:Button ID="btLimparFiltros" Text="Limpar" runat="server" CssClass="btn btn-primary" CausesValidation="False" OnClick="btLimparFiltros_Click" />
     </div>
     <br />
-    <div style="margin-left: 20px">
+    <div style="margin-left: 50px">
         <asp:GridView ID="gvDenuList" AutoGenerateColumns="false" EmptyDataText="Sem registos" runat="server" ViewStateMode="Enabled" DataKeyNames="id_denuncia"
             CssClass="mydatagrid" HeaderStyle-CssClass="header" RowStyle-CssClass="rows" OnRowDataBound="gvDenuList_RowDataBound" Height="170px">
 
@@ -39,7 +39,7 @@
             </Columns>
 
             <Columns>
-                <asp:BoundField DataField="data_denuncia" HeaderText="Data da Denuncia" DataFormatString="{0:MM/dd/yyyy}" />
+                <asp:BoundField DataField="data_denuncia" HeaderText="Data da Denuncia" DataFormatString="{0:dd/MM/yyyy}" />
             </Columns>
 
             <Columns>
@@ -106,7 +106,8 @@
             <Columns>
                 <asp:TemplateField HeaderText="Remover Denuncia">
                     <ItemTemplate>
-                        <asp:CheckBox runat="server" ID="chbxEliminar" Text=" Eliminar" />
+                        <asp:CheckBox runat="server" ID="chbxEliminar" />
+                        <label> Remover</label>
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
@@ -114,7 +115,7 @@
             <Columns>
                 <asp:TemplateField HeaderText="QR Code">
                     <ItemTemplate>
-                        <asp:LinkButton ID="lkQrCode" runat="server" Text="Ver QR Code" OnClick="lkQrCode_Click" />
+                        <asp:LinkButton ID="lkQrCode" runat="server" Text="Ver QR Code" OnClick="lkQrCode_Click" CausesValidation="false"/>
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
@@ -122,7 +123,7 @@
             <Columns>
                 <asp:TemplateField HeaderText="Foto & Comentários">
                     <ItemTemplate>
-                        <asp:LinkButton ID="lkFoto" runat="server" Text="Ver Foto/Comentários" OnClick="lkFoto_Click" />
+                        <asp:LinkButton ID="lkFoto" runat="server" Text="Ver Foto/Comentários" OnClick="lkFoto_Click"  CausesValidation="false"/>
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>

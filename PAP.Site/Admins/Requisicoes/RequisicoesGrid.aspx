@@ -11,7 +11,7 @@
     <asp:HiddenField ID="ordequip" runat="server" Value="1" />
     <asp:HiddenField ID="orduti" runat="server" Value="1" />
 
-    <div id="content-page">
+    <div id="content-page" style="margin-left: 20px">
         <h2>Reservas</h2>
         <h5>Filtros</h5>
         <asp:Label ID="lbPesq" runat="server" Text="Pesquisar por:"></asp:Label>
@@ -21,11 +21,11 @@
             <asp:ListItem Text="Utilizador" Value="3" />
             <asp:ListItem Text="Equipamento" Value="4" />
         </asp:RadioButtonList>
-        <asp:TextBox ID="tbxPesq" runat="server" Text="" CssClass="form-control" Width="351px" OnTextChanged="tbxPesq_TextChanged" AutoPostBack="true" />
-        <asp:Button ID="btLimparFiltros" Text="Limpar" runat="server" CssClass="btn btn-primary" CausesValidation="False" OnClick="btLimparFiltros_Click1"/>
+        <asp:TextBox ID="tbxPesq" runat="server" Text="" CssClass="form-control" Width="351px" OnTextChanged="tbxPesq_TextChanged" AutoPostBack="true" TextMode="Date" />
+        <p></p>
+        <asp:Button ID="btLimparFiltros" Text="Limpar" runat="server" CssClass="btn btn-primary" CausesValidation="False" OnClick="btLimparFiltros_Click" />
     </div>
-    <br />
-    <div style="margin-left: 20px">
+    <div style="margin-left: 50px">
         <asp:GridView ID="gvReqList" DataKeyNames="id_requisicao" AutoGenerateColumns="false" EmptyDataText="Sem registos" runat="server" ViewStateMode="Enabled"
             OnRowDataBound="gvReqList_RowDataBound"
             CssClass="mydatagrid" HeaderStyle-CssClass="header" RowStyle-CssClass="rows" Height="150px">
@@ -35,18 +35,19 @@
             </Columns>
 
             <Columns>
-                <asp:BoundField DataField="data_requisicao" HeaderText="Data Inicial da Reserva" DataFormatString="{0:MM/dd/yyyy}" />
+                <asp:BoundField DataField="data_requisicao" HeaderText="Data Inicial da Reserva" DataFormatString="{0:dd/MM/yyyy}" />
             </Columns>
 
             <Columns>
-                <asp:BoundField DataField="data_requisicao_final" HeaderText="Data Final da Reserva" DataFormatString="{0:MM/dd/yyyy}" />
+                <asp:BoundField DataField="data_requisicao_final" HeaderText="Data Final da Reserva" DataFormatString="{0:dd/MM/yyyy}" />
             </Columns>
 
             <Columns>
                 <asp:TemplateField>
                     <HeaderTemplate>
-                        <asp:Label Text="Estado" runat="server" />	&nbsp;
-                        <asp:ImageButton runat="server" ImageUrl="../../Content/Imagens/Setas.png" Width="15" Height="15" ID="OrdEstado" OnClick="OrdEstado_Click"/>
+                        <asp:Label Text="Estado" runat="server" />
+                        &nbsp;
+                        <asp:ImageButton runat="server" ImageUrl="../../Content/Imagens/Setas.png" Width="15" Height="15" ID="OrdEstado" OnClick="OrdEstado_Click" />
                     </HeaderTemplate>
                     <ItemTemplate>
                         <asp:DropDownList ID="ddlEstado" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlEstado_SelectedIndexChanged">
@@ -61,7 +62,8 @@
             <Columns>
                 <asp:TemplateField>
                     <HeaderTemplate>
-                        <asp:Label Text="Utilizador" runat="server" />	&nbsp;
+                        <asp:Label Text="Utilizador" runat="server" />
+                        &nbsp;
                         <asp:ImageButton runat="server" ImageUrl="../../Content/Imagens/Setas.png" Width="15" Height="15" ID="OrdUti" OnClick="OrdUti_Click" />
                     </HeaderTemplate>
                     <ItemTemplate>
@@ -73,19 +75,21 @@
             <Columns>
                 <asp:TemplateField>
                     <HeaderTemplate>
-                        <asp:Label Text="Equipamento" runat="server" />	&nbsp;
+                        <asp:Label Text="Equipamento" runat="server" />
+                        &nbsp;
                         <asp:ImageButton runat="server" ImageUrl="../../Content/Imagens/Setas.png" Width="15" Height="15" ID="OrdEquip" OnClick="OrdEquip_Click" />
                     </HeaderTemplate>
                     <ItemTemplate>
-                         <asp:Button runat="server" ForeColor="Black" CssClass="btn btn-link" ID="btEquip" OnClick="btEquip_Click"/>
+                        <asp:Button runat="server" ForeColor="Black" CssClass="btn btn-link" ID="btEquip" OnClick="btEquip_Click" />
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
 
             <Columns>
-                <asp:TemplateField HeaderText="Cancelar Requisição">
+                <asp:TemplateField HeaderText="Cancelar Reserva">
                     <ItemTemplate>
-                        <asp:CheckBox runat="server" ID="chbxCancelar" Text=" Cancelar" />
+                        <asp:CheckBox runat="server" ID="chbxCancelar" />
+                        <label>Cancelar</label>
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
@@ -93,8 +97,10 @@
     </div>
     <br />
     &nbsp&nbsp&nbsp
-     <!-- Modal Remover -->
-    <asp:Button ID="btRemover" Text="Remover reservas" runat="server" CssClass="btn btn-danger" />
+    
+    <asp:Button ID="btRemover" Text="Remover reservas selecionadas" runat="server" CssClass="btn btn-danger" />
+
+    <!-- Modal Remover -->
     <cc1:ModalPopupExtender ID="MPE_Rem" runat="server" BehaviorID="btRemover_ModalPopupExtender"
         DynamicServicePath="" TargetControlID="btRemover" PopupControlID="pnlRemover"
         CancelControlID="btNaoRe" BackgroundCssClass="popupbg">
@@ -103,6 +109,13 @@
     <asp:Panel ID="pnlRemover" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
         <asp:Label ID="lblRemover" runat="server" Text="Tem a certeza que pretende remover estas reservas?"></asp:Label>
         <br />
+
+        <div class="form-group">
+            <label>Razão (Opcional)</label>
+            <asp:TextBox ID="tbxRazao" CssClass="form-control" runat="server" Height="145px" Width="100%" TextMode="MultiLine"></asp:TextBox>
+        </div>
+
+        <p></p>
         <asp:Button ID="btSimRe" Text="Sim" runat="server" OnClick="btSimRe_Click" CssClass="btn btn-success" CausesValidation="False" />
         <asp:Button ID="btNaoRe" Text="Não" runat="server" CssClass="btn btn-danger" CausesValidation="False" OnClick="btNaoRe_Click" />
     </asp:Panel>
@@ -132,10 +145,10 @@
         <br />
         <asp:Label ID="lbNomeUser" Text="" runat="server" />
         <br />
-        
+
         <asp:Label ID="lbEmail" Text="" runat="server" />
 
-        <div id="divContactar" visible="false" runat="server" style="border:3px solid">
+        <div id="divContactar" visible="false" runat="server" style="border: 3px solid">
             <div class="form-group">
                 <label>Assunto</label>
                 <asp:TextBox ID="tbxAssunto" CssClass="form-control" runat="server"></asp:TextBox>
@@ -151,7 +164,7 @@
             &nbsp&nbsp&nbsp
             <asp:Label Text="" ID="lbMensagem" runat="server" ForeColor="Red" />
             <br />
-            <asp:Button ID="btEnviar" CssClass="btn btn-primary" runat="server" Text="Enviar" OnClick="btEnviar_Click"/>
+            <asp:Button ID="btEnviar" CssClass="btn btn-primary" runat="server" Text="Enviar" OnClick="btEnviar_Click" />
             <asp:Button ID="btCancelar" Text="Cancelar" runat="server" CssClass="btn btn-secondary" CausesValidation="False" OnClick="btCancelar_Click" />
         </div>
         <br />
@@ -174,6 +187,6 @@
         <br />
         <asp:Label ID="lbSala" Text="" runat="server" />
         <br />
-        <asp:Button ID="btFecharEquip" Text="Fechar" runat="server" CssClass="btn btn-secondary" CausesValidation="False"  />
+        <asp:Button ID="btFecharEquip" Text="Fechar" runat="server" CssClass="btn btn-secondary" CausesValidation="False" />
     </asp:Panel>
 </asp:Content>

@@ -30,19 +30,23 @@ namespace PAP.Site.Admins
                 int returncode = UserDAO.RegisterUser(user);
                 if (returncode == -1)
                 {
-                    lbMensagem.ForeColor = System.Drawing.Color.Red;
-                    lbMensagem.Text = "Adicao falhada!<br />Tente novamente mais tarde.";
+                    String str = "<script>alertify.error('Inserção feita sem sucesso!');</script>";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                    lbErro.Text = "Ja existe uma sala com este nome.";
+                    MPE_Erro.Show();
                 }
                 else
                 {
-                    lbMensagem.ForeColor = System.Drawing.Color.Green;
-                    lbMensagem.Text = "Adicao Efetuada com sucesso!";
+                    String str = "<script>alertify.success('Inserção feita com sucesso!');</script>";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+
+                    btCancelar.Attributes.Add("onclick", "history.go(-4);location.reload();");
+                    btCancelar.Text = "Voltar";
 
                     tbxUsername.Enabled = false;
                     tbxPassword.Enabled = false;
                     tbxConfirmPassword.Enabled = false;
                     tbxEmail.Enabled = false;
-                    btCancelar.Text = "Voltar";
                     btRegistar.Enabled = false;
                 }
             }

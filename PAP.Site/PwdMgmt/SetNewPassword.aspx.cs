@@ -27,7 +27,6 @@ namespace PAP.Site.PwdMgmt
                 tbxConfirmPassword.Enabled = false;
                 tbxPassword.Enabled = false;
                 btConfirmar.Enabled = false;
-                hlLogin.Text = "Voltar";
             }
             else
             {
@@ -41,7 +40,6 @@ namespace PAP.Site.PwdMgmt
                     tbxConfirmPassword.Enabled = false;
                     tbxPassword.Enabled = false;
                     btConfirmar.Enabled = false;
-                    hlLogin.Text = "Voltar";
                 }
                 else
                 {
@@ -53,7 +51,6 @@ namespace PAP.Site.PwdMgmt
                         tbxConfirmPassword.Enabled = false;
                         tbxPassword.Enabled = false;
                         btConfirmar.Enabled = false;
-                        hlLogin.Text = "Voltar";
                     }
                     else
                     {
@@ -62,7 +59,6 @@ namespace PAP.Site.PwdMgmt
                         tbxConfirmPassword.Enabled = false;
                         tbxPassword.Enabled = false;
                         btConfirmar.Enabled = false;
-                        hlLogin.Text = "Voltar";
                     }
                 }
             }

@@ -15,6 +15,15 @@ namespace PAP.Site.Admins
     {
 
         /// <summary>
+        /// ScriptManager1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.ScriptManager ScriptManager1;
+
+        /// <summary>
         /// tbxUsername control.
         /// </summary>
         /// <remarks>
@@ -51,15 +60,6 @@ namespace PAP.Site.Admins
         protected global::System.Web.UI.WebControls.TextBox tbxConfirmPassword;
 
         /// <summary>
-        /// lbMensagem control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbMensagem;
-
-        /// <summary>
         /// btRegistar control.
         /// </summary>
         /// <remarks>
@@ -76,5 +76,50 @@ namespace PAP.Site.Admins
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btCancelar;
+
+        /// <summary>
+        /// btErro control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btErro;
+
+        /// <summary>
+        /// MPE_Erro control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.ModalPopupExtender MPE_Erro;
+
+        /// <summary>
+        /// pnlErro control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlErro;
+
+        /// <summary>
+        /// lbErro control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbErro;
+
+        /// <summary>
+        /// btOkErro control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btOkErro;
     }
 }

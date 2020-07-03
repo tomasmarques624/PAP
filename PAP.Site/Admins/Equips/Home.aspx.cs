@@ -232,13 +232,26 @@ namespace PAP.Site.Admins
                 {
                     str = "<script>alertify.error('Inserção feita sem sucesso!');</script>";
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                    MPE_NewReq.Hide();
+                    tbxDataReqFin.Text = "";
+                    tbxDataReqIni.Text = "";
+                    tbxDataReserva.Text = "";
+                    MPE_Erro.Show();
+                    lbErro.Text = "O equipamento não se encontra disponível.";
                 }
                 else
                 {
                     int returncode = RequisicoesDAO.InsertReq(req);
                     if (returncode == -1)
                     {
-                        lbMensagem.Text = "Ja existem uma reserva deste equipamento para essa data.";
+                        str = "<script>alertify.error('Inserção feita sem sucesso!');</script>";
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                        MPE_NewReq.Hide();
+                        tbxDataReqFin.Text = "";
+                        tbxDataReqIni.Text = "";
+                        tbxDataReserva.Text = "";
+                        MPE_Erro.Show();
+                        lbErro.Text = "Ja existe uma reserva deste equipamento para essa(s) data(s).";
                     }
                     else
                     {
@@ -253,6 +266,11 @@ namespace PAP.Site.Admins
                 {
                     str = "<script>alertify.error('Inserção feita sem sucesso!');</script>";
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                    tbxDataReqFin.Text = "";
+                    tbxDataReqIni.Text = "";
+                    tbxDataReserva.Text = "";
+                    MPE_Erro.Show();
+                    lbErro.Text = "O equipamento não se encontra disponível.";
                 }
                 else
                 {
@@ -272,7 +290,14 @@ namespace PAP.Site.Admins
                         int returncode = RequisicoesDAO.InsertReq(req);
                         if (returncode == -1)
                         {
-                            lbMensagem.Text = "Ja existe uma reserva deste equipamento para essas datas.";
+                            str = "<script>alertify.error('Inserção feita sem sucesso!');</script>";
+                            Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                            MPE_NewReq.Hide();
+                            tbxDataReqFin.Text = "";
+                            tbxDataReqIni.Text = "";
+                            tbxDataReserva.Text = "";
+                            MPE_Erro.Show();
+                            lbErro.Text = "Ja existe uma reserva deste equipamento para essa(s) data(s).";
                         }
                         else
                         {
@@ -287,6 +312,9 @@ namespace PAP.Site.Admins
                 }
             }
             MPE_NewReq.Hide();
+            tbxDataReqFin.Text = "";
+            tbxDataReqIni.Text = "";
+            tbxDataReserva.Text = "";
             btSimReq.CausesValidation = false;
             rfvData.Enabled = false;
             rfvDataIni.Enabled = false;
@@ -492,11 +520,11 @@ namespace PAP.Site.Admins
                         }
                         else if (rblPesq.SelectedValue == "2")
                         {
-                            command.CommandText = "SELECT tblEquip.id_equip,tblEquip.descri,tblEquip.disp,tblEquip.id_cat,tblEquip.id_sala FROM tblEquip,tblCat WHERE tblCat.Nome LIKE " + tbxPesq.Text + "%' AND tblEquip.id_cat = tblCat.id_cat;";
+                            command.CommandText = "SELECT tblEquip.id_equip,tblEquip.descri,tblEquip.disp,tblEquip.id_cat,tblEquip.id_sala FROM tblEquip,tblCat WHERE tblCat.Nome LIKE '" + tbxPesq.Text + "%' AND tblEquip.id_cat = tblCat.id_cat;";
                         }
                         else
                         {
-                            command.CommandText = "SELECT tblEquip.id_equip,tblEquip.descri,tblEquip.disp,tblEquip.id_cat,tblEquip.id_sala FROM tblEquip,tblSalas WHERE tblSalas.nome_sala LIKE " + tbxPesq.Text + "%' AND tblEquip.id_sala = tblCat.id_sala;";
+                            command.CommandText = "SELECT tblEquip.id_equip,tblEquip.descri,tblEquip.disp,tblEquip.id_cat,tblEquip.id_sala FROM tblEquip,tblSalas WHERE tblSalas.nome_sala LIKE '" + tbxPesq.Text + "%' AND tblEquip.id_sala = tblSalas.id_sala;";
                         }
 
                         connection.Open();
@@ -523,6 +551,10 @@ namespace PAP.Site.Admins
                 }
                 gvEquipList.DataSource = listEquips;
                 gvEquipList.DataBind();
+            }
+            else
+            {
+                DataBindGrid();
             }
         }
 

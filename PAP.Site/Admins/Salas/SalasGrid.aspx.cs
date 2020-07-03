@@ -1,6 +1,8 @@
 ﻿using PAP.DataAccess.SalasDA;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -28,11 +30,6 @@ namespace PAP.Site.Admins
         protected void btRemover_Click(object sender, EventArgs e)
         {
             MPE_Rem.Show();
-        }
-
-        protected void btNovaSala_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("../Salas/NewSala.aspx");
         }
 
         protected void gvSalaList_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
@@ -101,6 +98,41 @@ namespace PAP.Site.Admins
                 String str = "<script>alertify.error('Não há nada para remover!');</script>";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
             }
+        }
+
+        protected void tbxPesq_TextChanged(object sender, EventArgs e)
+        {
+            List<Models.Salas> listSalas = null;
+
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandText = "SELECT * FROM tblCat WHERE Nome LIKE '" + tbxPesq.Text + "%';";
+
+                    connection.Open();
+
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        if (dataReader.HasRows)
+                        {
+                            listSalas = new List<Models.Salas>();
+                            while (dataReader.Read())
+                            {
+                                listSalas.Add(new Models.Salas()
+                                {
+                                    nome_sala = dataReader["nome_sala"].ToString(),
+                                    id_sala = Convert.ToInt32(dataReader["id_sala"])
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            gvSalaList.DataSource = listSalas;
+            gvSalaList.DataBind();
         }
     }
 }

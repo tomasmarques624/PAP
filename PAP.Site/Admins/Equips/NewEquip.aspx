@@ -4,13 +4,13 @@
 
 <asp:content id="Content2"  ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-            <div id="content-page">
-                <h4>Novo Equipamento</h4>
+            <div id="content-page" style="margin-left: 20px">
+                <h2>Novo Equipamento</h2>
             </div>
-            <div>
+            <div style="margin-left: 50px">
             <table>
                 <tr>
-                    <td>Descrição :</td>
+                    <td>Descrição</td>
                     <td> 
                         <asp:TextBox CssClass="form-control" id="tbxDesc" runat="server" />
                         <asp:RequiredFieldValidator runat="server" ErrorMessage="É necessário uma descricao." Text="*" ControlToValidate="tbxDesc" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -43,6 +43,11 @@
                 <tr>
                     <td>
                         <asp:ValidationSummary HeaderText="<div class='validationheader'>&nbsp;Erros: </div>" ForeColor="Red" runat="server" displaymode="BulletList" CssClass="validationsummary"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p></p>
                     </td>
                 </tr>
                 <tr>

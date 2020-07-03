@@ -19,7 +19,7 @@ namespace PAP.DataAccess.PasswordDA
         {
             using (SqlConnection connection = new SqlConnection())
             {
-                connection.ConnectionString = ConfigurationManager.ConnectionStrings["GameLibraryDBCS"].ConnectionString;
+                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
                 using (SqlCommand command = new SqlCommand())
                 {
                     command.Connection = connection;
@@ -43,7 +43,7 @@ namespace PAP.DataAccess.PasswordDA
         {
             using (SqlConnection connection = new SqlConnection())
             {
-                connection.ConnectionString = ConfigurationManager.ConnectionStrings["GameLibraryDBCS"].ConnectionString;
+                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
                 using (SqlCommand command = new SqlCommand())
                 {
                     command.Connection = connection;
@@ -62,7 +62,7 @@ namespace PAP.DataAccess.PasswordDA
         {
             using (SqlConnection connection = new SqlConnection())
             {
-                connection.ConnectionString = ConfigurationManager.ConnectionStrings["GameLibraryDBCS"].ConnectionString;
+                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
                 using (SqlCommand command = new SqlCommand())
                 {
                     command.Connection = connection;
@@ -100,7 +100,7 @@ namespace PAP.DataAccess.PasswordDA
         {
             using (SqlConnection connection = new SqlConnection())
             {
-                connection.ConnectionString = ConfigurationManager.ConnectionStrings["GameLibraryDBCS"].ConnectionString;
+                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
                 using (SqlCommand command = new SqlCommand())
                 {
                     command.Connection = connection;

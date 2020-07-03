@@ -14,20 +14,20 @@
     <asp:HiddenField ID="ordsala" runat="server" Value="1" />
     <asp:HiddenField ID="orddisp" runat="server" Value="1" />
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-    <div id="content-page">
+    <div id="content-page" style="margin-left: 20px">
         <h2>Inventario</h2>
         <h5>Filtros</h5>
         <asp:Label ID="lbPesq" runat="server" Text="Pesquisar por:"></asp:Label>
-        <asp:RadioButtonList ID="rblPesq" runat="server" RepeatDirection="Horizontal" OnSelectedIndexChanged="rblPesq_SelectedIndexChanged">
+        <asp:RadioButtonList ID="rblPesq" runat="server" RepeatDirection="Horizontal" OnSelectedIndexChanged="rblPesq_SelectedIndexChanged" AutoPostBack="true">
             <asp:ListItem Text="Descrição" Value="1" Selected="True" />
             <asp:ListItem Text="Categoria" Value="2" />
             <asp:ListItem Text="Sala" Value="3" />
         </asp:RadioButtonList>
         <asp:TextBox ID="tbxPesq" runat="server" Text="" CssClass="form-control" Width="351px" OnTextChanged="tbxPesq_TextChanged" AutoPostBack="true" />
+        <p></p>
         <asp:Button ID="btLimparFiltros" Text="Limpar" runat="server" CssClass="btn btn-primary" CausesValidation="False" OnClick="btLimparFiltros_Click" />
     </div>
-    <br />
-    <div style="margin-left: 20px">
+    <div style="margin-left: 50px">
         <asp:GridView ID="gvEquipList" AutoGenerateColumns="False" DataKeyNames="id_equip" EmptyDataText="Sem registos" runat="server" ViewStateMode="Enabled"
             CssClass="mydatagrid" HeaderStyle-CssClass="header" RowStyle-CssClass="rows" OnRowDataBound="gvEquipList_RowDataBound" OnRowCancelingEdit="gvEquipList_RowCancelingEdit" OnRowEditing="gvEquipList_RowEditing"
             OnRowUpdating="gvEquipList_RowUpdating" Height="170px" >
@@ -70,12 +70,13 @@
             <Columns>
                 <asp:TemplateField>
                     <HeaderTemplate>
-                        <asp:Label Text="Disponivel" runat="server" />
+                        <asp:Label Text="Disponível" runat="server" />
                         &nbsp;
                         <asp:ImageButton runat="server" ImageUrl="../../Content/Imagens/Setas.png" Width="15" Height="15" ID="OrdDisp" OnClick="OrdDisp_Click" />
                     </HeaderTemplate>
                     <ItemTemplate>
-                            <asp:CheckBox runat="server" ID="chbxDisponivel" Text=" Disponivel" OnCheckedChanged="chbxDisponivel_CheckedChanged" AutoPostBack="true" />
+                        <asp:CheckBox runat="server" ID="chbxDisponivel" OnCheckedChanged="chbxDisponivel_CheckedChanged" AutoPostBack="true" />
+                        <label> Disponível</label>
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
@@ -83,7 +84,8 @@
             <Columns>
                 <asp:TemplateField HeaderText="Remover Equipamentos">
                     <ItemTemplate>
-                        <asp:CheckBox runat="server" ID="chbxEliminar" Text=" Eliminar" />
+                        <asp:CheckBox runat="server" ID="chbxEliminar" />
+                        <label> Remover</label>
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
@@ -111,7 +113,7 @@
             <Columns>
                 <asp:TemplateField HeaderText="Foto">
                     <ItemTemplate>
-                        <asp:LinkButton ID="lkFoto" runat="server" Text="Ver Foto" OnClick="lkFoto_Click"/>
+                        <asp:LinkButton ID="lkFoto" runat="server" Text="Ver Foto" OnClick="lkFoto_Click" CausesValidation="false"/>
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
@@ -233,7 +235,7 @@
             </tr>
             <tr>
                 <td>
-                    <asp:Button ID="btSimReq" Text="Inserir" runat="server" OnClick="btSimReq_Click" CssClass="btn btn-success" CausesValidation="False" />
+                    <asp:Button ID="btSimReq" Text="Reservar" runat="server" OnClick="btSimReq_Click" CssClass="btn btn-success" CausesValidation="False" />
                     <asp:Button ID="btNaoReq" Text="Cancelar" runat="server" CssClass="btn btn-danger" CausesValidation="False" OnClick="btNaoReq_Click" />
                 </td>
             </tr>
@@ -247,7 +249,7 @@
         CancelControlID="btNaoDenu" BackgroundCssClass="popupbg">
     </cc1:ModalPopupExtender>
     <asp:Panel ID="pnlDenu" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
-        <h3>Reservar Equipamento</h3>
+        <h3>Denunciar Equipamento</h3>
         <br />
         <table>
             <tr>
@@ -270,7 +272,7 @@
             </tr>
             <tr>
                 <td>
-                    <asp:Button ID="btSimDenu" Text="Inserir" runat="server" CssClass="btn btn-success" CausesValidation="False" OnClick="btSimDenu_Click" />
+                    <asp:Button ID="btSimDenu" Text="Denunciar" runat="server" CssClass="btn btn-success" CausesValidation="False" OnClick="btSimDenu_Click" />
                     <asp:Button ID="btNaoDenu" Text="Cancelar" runat="server" CssClass="btn btn-danger" CausesValidation="False" OnClick="btNaoDenu_Click" />
                 </td>
             </tr>
@@ -285,8 +287,7 @@
     </cc1:ModalPopupExtender>
     <asp:Panel ID="pnlFoto" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
         <asp:Image ImageUrl="../../Content/Imagens/ImgNotFound.png" runat="server" ID="imgFoto" CssClass="img-fluid" />
-        <br />
-        <asp:Button ID="btSalvar" Text="Salvar" runat="server" CssClass="btn btn-primary" CausesValidation="False"/>
+        <p></p>
         <asp:Button ID="btFechar" Text="Fechar" runat="server" CssClass="btn btn-secondary" CausesValidation="False" />
     </asp:Panel>
 

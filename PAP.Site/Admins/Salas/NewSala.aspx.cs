@@ -41,6 +41,7 @@ namespace PAP.Site.Admins.Salas
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
                     tbxNome.Enabled = false;
                     btInserir.Enabled = false;
+                    btCancelar.Attributes.Add("onclick", "history.go(-4);location.reload();");
                     btCancelar.Text = "Voltar";
                 }
             }

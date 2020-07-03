@@ -62,11 +62,6 @@ namespace PAP.Site.Admins
             }
         }
 
-        protected void btNovaCat_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("../Cat/NewCat.aspx");
-        }
-
         protected void gvCatList_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
             gvCatList.EditIndex = -1;
@@ -106,7 +101,7 @@ namespace PAP.Site.Admins
 
         protected void tbxPesq_TextChanged(object sender, EventArgs e)
         {
-            List<Categoria> listEquips = null;
+            List<Categoria> listCats = null;
 
             using (SqlConnection connection = new SqlConnection())
             {
@@ -122,7 +117,7 @@ namespace PAP.Site.Admins
                     {
                         if (dataReader.HasRows)
                         {
-                            List<Categoria> listCats = new List<Categoria>();
+                            listCats = new List<Categoria>();
                             while (dataReader.Read())
                             {
                                 listCats.Add(new Categoria()
@@ -135,7 +130,7 @@ namespace PAP.Site.Admins
                     }
                 }
             }
-            gvCatList.DataSource = listEquips;
+            gvCatList.DataSource = listCats;
             gvCatList.DataBind();
         }
     }

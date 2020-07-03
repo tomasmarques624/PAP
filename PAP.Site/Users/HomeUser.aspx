@@ -6,30 +6,14 @@
 <head runat="server">
     <title>Página Inicial</title>
     <link href="../Content/bootstrap.min.css" rel="stylesheet" />
-    <link href="../Content/CustomStyles/LoginRegisterStyles/loginregister.css" rel="stylesheet" />
-    <link href="../Content/CustomStyles/LibraryStyles/custom_style.css" rel="stylesheet" />
-    <link href="../Content/alertifyjs/alertify.css" rel="stylesheet" />
-    <script src="../../Scripts/alertify.js"></script>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('.menu a').hover(function () {
-                $(this).stop().animate({
-                    opacity: 1
-                }, 300);
-            }, function () {
-                $(this).stop().animate({
-                    opacity: 0.3
-                }, 300);
-            });
-        });
-    </script>
+    <link href="../Content/Custom2Styles/LoginRegisterStyles/loginregister.css" rel="stylesheet" />
+    <link href="../Content/CustomStyles/LibraryStyles/styles.css" rel="stylesheet" />
 </head>
 <body>
     <form id="form1" runat="server">
         <br />
         <div style="text-align: center">
-            <h2>G.E.T - Gestor de Equipamento Informatico</h2>
+            <h2>G.E.T - Gestor de Equipamento Tecnológico</h2>
             <h4>Menu - Bem vindo(a) <%= Session["username"].ToString() %></h4>
         </div>
         <div class="menu">
@@ -43,9 +27,22 @@
             </a>
         </div>
     </form>
-
-    <script src="../../Scripts/jquery-3.5.1.min.js"></script>
-    <script src="../../Scripts/popper.min.js"></script>
-    <script src="../../Scripts/bootstrap.min.js"></script>
+     <script src="../Scripts/jquery-3.5.1.min.js"></script>
+    <script src="../Scripts/popper.min.js"></script>
+    <script src="../Scripts/bootstrap.min.js"></script>
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.menu a').hover(function () {
+                $(this).stop().animate({
+                    opacity: 1
+                }, 300);
+            }, function () {
+                $(this).stop().animate({
+                    opacity: 0.3
+                }, 300);
+            });
+        });
+    </script>
 </body>
 </html>

@@ -23,7 +23,6 @@ namespace PAP.Site.PwdMgmt
             {
                 lbMensagem.ForeColor = System.Drawing.Color.Red;
                 lbMensagem.Text = "Email inválido!<br />Contacte o administrador ou tente novamente...";
-                hlLogin.Text = "Voltar";
             }
             else
             {
@@ -32,15 +31,13 @@ namespace PAP.Site.PwdMgmt
 
                 tbxEmail.Enabled = false;
                 btPedir.Enabled = false;
-                hlLogin.Text = "Voltar";
-
                 string guid = PasswordDAO.InsertNewResetPwdRequest(tbxEmail.Text);
 
                 MailMessage mailMessage = new MailMessage();
                 mailMessage.From = new MailAddress("likedat6969@gmail.com");
                 mailMessage.To.Add(tbxEmail.Text);
                 mailMessage.Subject = "Reposição de password";
-                mailMessage.Body = "Clique aqui para repor a sua password : https://localhost:44344/PwdMgmt/SetNewPassword.aspx?guid=" + guid;
+                mailMessage.Body = "Clique aqui para repor a sua password : https://localhost:44355/PwdMgmt/SetNewPassword.aspx?guid=" + guid;
                 mailMessage.IsBodyHtml = true;
                 SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
                 smtpClient.EnableSsl = true;

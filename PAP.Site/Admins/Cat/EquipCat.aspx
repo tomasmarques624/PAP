@@ -4,18 +4,13 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-    <div id="content-page">
+    <div id="content-page" style="margin-left: 20px">
         <h2>Categorias </h2>
-        <h5>Filtros</h5>
         <asp:Label ID="lbPesq" runat="server" Text="Pesquisar :"></asp:Label>
         <asp:TextBox ID="tbxPesq" runat="server" Text="" CssClass="form-control" Width="351px" OnTextChanged="tbxPesq_TextChanged" AutoPostBack="true" />
     </div>
-    <div>
-        &nbsp&nbsp&nbsp
-        <asp:Button ID="btNovaCat" Text="Adicionar Categoria" runat="server" CssClass="btn btn-primary" OnClick="btNovaCat_Click" />
-    </div>
     <br />
-    <div style="margin-left: 20px">
+    <div style="margin-left: 50px">
         <asp:GridView ID="gvCatList" DataKeyNames="id_cat"  AutoGenerateColumns="False" EmptyDataText="Sem registos" runat="server" ViewStateMode="Enabled"
             CssClass="mydatagrid" HeaderStyle-CssClass="header" RowStyle-CssClass="rows" Height="206px" OnRowCancelingEdit="gvCatList_RowCancelingEdit" OnRowEditing="gvCatList_RowEditing" OnRowUpdating="gvCatList_RowUpdating" Width="832px">
             <Columns>
@@ -27,7 +22,8 @@
             <Columns>
                 <asp:TemplateField HeaderText="Remover Categorias">
                     <ItemTemplate>
-                        <asp:CheckBox runat="server" ID="chbxEliminar" Text=" Eliminar" />
+                        <asp:CheckBox runat="server" ID="chbxEliminar" />
+                        <label> Remover</label>
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
