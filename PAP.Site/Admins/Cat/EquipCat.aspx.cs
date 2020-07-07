@@ -84,13 +84,21 @@ namespace PAP.Site.Admins
             };
             int ReturnCode = CatDAO.UpdateCat(cat);
 
-            if (ReturnCode == -1) {
+            if (ReturnCode == -1)
+            {
                 String str = "<script>alertify.error('Alteração feita sem sucesso!');</script>";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
-                lbErro.Text = "Ja existe uma sala com este nome.";
+
+            }
+            else if (ReturnCode == 2)
+            {
+                String str = "<script>alertify.error('Alteração feita sem sucesso!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                lbErro.Text = "Ja existe uma categoria com este nome.";
                 MPE_Erro.Show();
             }
-            else{
+            else
+            {
                 String str = "<script>alertify.success('Alteração feita com sucesso!');</script>";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
             }

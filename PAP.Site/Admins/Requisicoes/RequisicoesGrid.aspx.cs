@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.UI;
@@ -61,7 +62,7 @@ namespace PAP.Site.Admins
 
         protected void btSimRe_Click(object sender, EventArgs e)
         {
-            bool a = false;
+            bool a = false, b = false;
             for (int i = 0; i < gvReqList.Rows.Count; i++)
             {
                 Models.Requisicoes requisicoes = RequisicoesDAO.GetRequisicaoByID(Convert.ToInt32(gvReqList.DataKeys[i].Value));
@@ -71,29 +72,45 @@ namespace PAP.Site.Admins
                     a = true;
                     User user = UserDAO.GetUserByID(requisicoes.id_user);
                     Equip equip = EquipDAO.GetEquipByID(requisicoes.id_equip);
-
-                    MailMessage mailMessage = new MailMessage();
-                    mailMessage.From = new MailAddress("likedat6969@gmail.com");
-                    mailMessage.To.Add(user.Email);
-                    mailMessage.Subject = "Cancelamento de uma reserva.";
-                    if(tbxRazao.Text != "")
+                    try
                     {
-                        mailMessage.Body = "<h3>G.E.T</h3><br/>Vimos por este meio informar que a sua reserva do seguinte equipamento : " + equip.descri + "<br/>Foi cancelada.<br/>Razão: "+ tbxRazao.Text +"<br/>Para mais informações contacte um administrador.";
+                        using (var client = new WebClient())
+                        using (client.OpenRead("http://google.com/generate_204"))
+                            b = true;
+                    }
+                    catch
+                    {
+                        b = false;
+                    }
+                    if (b == true)
+                    {
+                        MailMessage mailMessage = new MailMessage();
+                        mailMessage.From = new MailAddress("likedat6969@gmail.com");
+                        mailMessage.To.Add(user.Email);
+                        mailMessage.Subject = "Cancelamento de uma reserva.";
+                        if (tbxRazao.Text != "")
+                        {
+                            mailMessage.Body = "<h3>G.E.T</h3><br/>Vimos por este meio informar que a sua reserva do seguinte equipamento : " + equip.descri + "<br/>Foi cancelada.<br/>Razão: " + tbxRazao.Text + "<br/>Para mais informações contacte um administrador.";
+                        }
+                        else
+                        {
+                            mailMessage.Body = "<h3>G.E.T</h3><br/>Vimos por este meio informar que a sua reserva do seguinte equipamento : " + equip.descri + "<br/>Foi cancelada.<br/>Para mais informações contacte um administrador.";
+                        }
+
+                        mailMessage.IsBodyHtml = true;
+
+                        SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                        smtpClient.EnableSsl = true;
+                        smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+                        smtpClient.UseDefaultCredentials = false;
+                        smtpClient.Credentials = new System.Net.NetworkCredential("likedat6969@gmail.com", "teste123456");
+                        smtpClient.Send(mailMessage);
                     }
                     else
                     {
-                        mailMessage.Body = "<h3>G.E.T</h3><br/>Vimos por este meio informar que a sua reserva do seguinte equipamento : " + equip.descri + "<br/>Foi cancelada.<br/>Para mais informações contacte um administrador.";
+                        String str = "<script>alertify.error('Sem ligação! Email não enviado.');</script>";
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
                     }
-                    
-                    mailMessage.IsBodyHtml = true;
-
-                    SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
-                    smtpClient.EnableSsl = true;
-                    smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-                    smtpClient.UseDefaultCredentials = false;
-                    smtpClient.Credentials = new System.Net.NetworkCredential("likedat6969@gmail.com", "teste123456");
-                    smtpClient.Send(mailMessage);
-
                     RequisicoesDAO.RemoveRequisicao(id_requisicao);
                     continue;
                 }
@@ -134,8 +151,8 @@ namespace PAP.Site.Admins
 
         protected void btSimEstado_Click(object sender, EventArgs e)
         {
-            bool est;
-            if(estado.Value == "1")
+            bool est, b = false;
+            if (estado.Value == "1")
             {
                 est = false;
             }
@@ -164,24 +181,42 @@ namespace PAP.Site.Admins
                 {
                     esta = "Aprovada";
                 }
-                MailMessage mailMessage = new MailMessage();
-                mailMessage.From = new MailAddress("likedat6969@gmail.com");
-                mailMessage.To.Add(user.Email);
-                mailMessage.Subject = "Alteração do estado de uma reserva.";
-                mailMessage.Body = "<h3>G.E.T</h3><br/>Vimos por este meio informar que o estado da sua reserva do seguinte equipamento : " + equip.descri + "<br/>Foi alterado para "+ esta +". <br/>Para mais informações contacte um administrador.";
-                mailMessage.IsBodyHtml = true;
 
-                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
-                smtpClient.EnableSsl = true;
-                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-                smtpClient.UseDefaultCredentials = false;
-                smtpClient.Credentials = new System.Net.NetworkCredential("likedat6969@gmail.com", "teste123456");
-                smtpClient.Send(mailMessage);
+                try
+                {
+                    using (var client = new WebClient())
+                    using (client.OpenRead("http://google.com/generate_204"))
+                        b = true;
+                }
+                catch
+                {
+                    b = false;
+                }
+                if (b == true)
+                {
+                    MailMessage mailMessage = new MailMessage();
+                    mailMessage.From = new MailAddress("likedat6969@gmail.com");
+                    mailMessage.To.Add(user.Email);
+                    mailMessage.Subject = "Alteração do estado de uma reserva.";
+                    mailMessage.Body = "<h3>G.E.T</h3><br/>Vimos por este meio informar que o estado da sua reserva do seguinte equipamento : " + equip.descri + "<br/>Foi alterado para " + esta + ". <br/>Para mais informações contacte um administrador.";
+                    mailMessage.IsBodyHtml = true;
+
+                    SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                    smtpClient.EnableSsl = true;
+                    smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    smtpClient.UseDefaultCredentials = false;
+                    smtpClient.Credentials = new System.Net.NetworkCredential("likedat6969@gmail.com", "teste123456");
+                    smtpClient.Send(mailMessage);
+                }
+                else
+                {
+                    String str1 = "<script>alertify.error('Sem ligação! Email não enviado.');</script>";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str1, false);
+                }
                 DataBindGrid();
                 String str = "<script>alertify.success('Alteração feita com sucesso!');</script>";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
             }
-
         }
 
         protected void btNaoRe_Click(object sender, EventArgs e)
@@ -409,23 +444,48 @@ namespace PAP.Site.Admins
 
         protected void btEnviar_Click(object sender, EventArgs e)
         {
-            MailMessage mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress("likedat6969@gmail.com");
-            mailMessage.To.Add(lbEmail.Text);
-            mailMessage.Subject = tbxAssunto.Text;
-            mailMessage.Body = tbxMensagem.Text;
-            mailMessage.IsBodyHtml = true;
+            bool b = false;
+            try
+            {
+                using (var client = new WebClient())
+                using (client.OpenRead("http://google.com/generate_204"))
+                    b = true;
+            }
+            catch
+            {
+                b = false;
+            }
+            if (b == true)
+            {
+                MailMessage mailMessage = new MailMessage();
+                mailMessage.From = new MailAddress("likedat6969@gmail.com");
+                mailMessage.To.Add(lbEmail.Text);
+                mailMessage.Subject = tbxAssunto.Text;
+                mailMessage.Body = "<h3>G.E.T</h3><br/>" + tbxMensagem.Text;
+                mailMessage.IsBodyHtml = true;
 
-            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
-            smtpClient.EnableSsl = true;
-            smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-            smtpClient.UseDefaultCredentials = false;
-            smtpClient.Credentials = new System.Net.NetworkCredential("likedat6969@gmail.com", "teste123456");
-            smtpClient.Send(mailMessage);
-
-            divContactar.Visible = false;
-            tbxMensagem.Text = "";
-            tbxAssunto.Text = "";
+                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                smtpClient.EnableSsl = true;
+                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtpClient.UseDefaultCredentials = false;
+                smtpClient.Credentials = new System.Net.NetworkCredential("likedat6969@gmail.com", "teste123456");
+                smtpClient.Send(mailMessage);
+                String str = "<script>alertify.success('Email enviado com sucesso!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                divContactar.Visible = false;
+                tbxMensagem.Text = "";
+                tbxAssunto.Text = "";
+            }
+            else
+            {
+                MPE_User.Hide();
+                divContactar.Visible = false;
+                btContactar.Enabled = false;
+                tbxMensagem.Text = "";
+                tbxAssunto.Text = "";
+                String str1 = "<script>alertify.error('Sem ligação! Email não enviado.');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str1, false);
+            }
         }
 
         protected void btCancelar_Click(object sender, EventArgs e)

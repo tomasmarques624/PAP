@@ -17,6 +17,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using PAP.DataAccess.CatDA;
 using PAP.DataAccess.SalasDA;
+using System.Net;
 
 namespace PAP.Site.Admins
 {
@@ -88,32 +89,50 @@ namespace PAP.Site.Admins
 
         protected void btSimRe_Click(object sender, EventArgs e)
         {
-            bool a = false;
+            bool a = false, b = false;
             for (int i = 0; i < gvDenuList.Rows.Count; i++)
             {
                 Models.Denuncias denuncia = DenunciasDAO.GetDenunciaByID(Convert.ToInt32(gvDenuList.DataKeys[i].Value));
                 if (((CheckBox)gvDenuList.Rows[i].FindControl("chbxEliminar")).Checked)
                 {
                     a = true;
-                    
+
                     int id_denuncia = denuncia.id_denuncia;
 
                     User user = UserDAO.GetUserByID(denuncia.id_user);
                     Equip equip = EquipDAO.GetEquipByID(denuncia.id_equip);
+                    try
+                    {
+                        using (var client = new WebClient())
+                        using (client.OpenRead("http://google.com/generate_204"))
+                            b = true;
+                    }
+                    catch
+                    {
+                        b = false;
+                    }
+                    if (b == true)
+                    {
+                        MailMessage mailMessage = new MailMessage();
+                        mailMessage.From = new MailAddress("likedat6969@gmail.com");
+                        mailMessage.To.Add(user.Email);
+                        mailMessage.Subject = "Cancelamento de uma denuncia.";
+                        mailMessage.Body = "<h3>G.E.T</h3><br/>Vimos por este meio informar que a sua denuncia do seguinte equipamento : " + equip.descri + "<br/>Foi removida. <br/>Para mais informações contacte um administrador.";
+                        mailMessage.IsBodyHtml = true;
 
-                    MailMessage mailMessage = new MailMessage();
-                    mailMessage.From = new MailAddress("likedat6969@gmail.com");
-                    mailMessage.To.Add(user.Email);
-                    mailMessage.Subject = "Cancelamento de uma denuncia.";
-                    mailMessage.Body = "<h3>G.E.T</h3><br/>Vimos por este meio informar que a sua denuncia do seguinte equipamento : " + equip.descri + "<br/>Foi removida. <br/>Para mais informações contacte um administrador.";
-                    mailMessage.IsBodyHtml = true;
+                        SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                        smtpClient.EnableSsl = true;
+                        smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+                        smtpClient.UseDefaultCredentials = false;
+                        smtpClient.Credentials = new System.Net.NetworkCredential("likedat6969@gmail.com", "teste123456");
+                        smtpClient.Send(mailMessage);
+                    }
+                    else
+                    {
+                        String str = "<script>alertify.error('Sem ligação! Email não enviado.');</script>";
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                    }
 
-                    SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
-                    smtpClient.EnableSsl = true;
-                    smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-                    smtpClient.UseDefaultCredentials = false;
-                    smtpClient.Credentials = new System.Net.NetworkCredential("likedat6969@gmail.com", "teste123456");
-                    smtpClient.Send(mailMessage);
 
                     DenunciasDAO.RemoveDenuncia(id_denuncia);
                     continue;
@@ -132,7 +151,7 @@ namespace PAP.Site.Admins
                 String str = "<script>alertify.error('Não há nada para remover!');</script>";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
             }
-            
+
         }
 
         protected void ddlPrioridade_SelectedIndexChanged(object sender, EventArgs e)
@@ -165,6 +184,7 @@ namespace PAP.Site.Admins
 
         protected void btSimEstado_Click(object sender, EventArgs e)
         {
+            bool b = false;
             char est;
             Models.Denuncias denuncia = DenunciasDAO.GetDenunciaByID(Convert.ToInt32(id_denu.Value));
             if (estado.Value == "1")
@@ -195,7 +215,8 @@ namespace PAP.Site.Admins
                 if (est == 'V')
                 {
                     esta = "Por ver";
-                }else if(est == 'P')
+                }
+                else if (est == 'P')
                 {
                     esta = "Por resolver";
                 }
@@ -204,19 +225,37 @@ namespace PAP.Site.Admins
                     esta = "Resolvida";
                 }
 
-                MailMessage mailMessage = new MailMessage();
-                mailMessage.From = new MailAddress("likedat6969@gmail.com");
-                mailMessage.To.Add(user.Email);
-                mailMessage.Subject = "Alteração do estado de uma denuncia.";
-                mailMessage.Body = "<h3>G.E.T</h3><br/>Vimos por este meio informar que o estado da sua denuncia do seguinte equipamento: " + equip.descri + "<br/>Foi alterado para: " + esta + ".<br/>Para mais informações contacte um administrador.";
-                mailMessage.IsBodyHtml = true;
+                try
+                {
+                    using (var client = new WebClient())
+                    using (client.OpenRead("http://google.com/generate_204"))
+                        b = true;
+                }
+                catch
+                {
+                    b = false;
+                }
+                if (b == true)
+                {
+                    MailMessage mailMessage = new MailMessage();
+                    mailMessage.From = new MailAddress("likedat6969@gmail.com");
+                    mailMessage.To.Add(user.Email);
+                    mailMessage.Subject = "Alteração do estado de uma denuncia.";
+                    mailMessage.Body = "<h3>G.E.T</h3><br/>Vimos por este meio informar que o estado da sua denuncia do seguinte equipamento: " + equip.descri + "<br/>Foi alterado para: " + esta + ".<br/>Para mais informações contacte um administrador.";
+                    mailMessage.IsBodyHtml = true;
 
-                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
-                smtpClient.EnableSsl = true;
-                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-                smtpClient.UseDefaultCredentials = false;
-                smtpClient.Credentials = new System.Net.NetworkCredential("likedat6969@gmail.com", "teste123456");
-                smtpClient.Send(mailMessage);
+                    SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                    smtpClient.EnableSsl = true;
+                    smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    smtpClient.UseDefaultCredentials = false;
+                    smtpClient.Credentials = new System.Net.NetworkCredential("likedat6969@gmail.com", "teste123456");
+                    smtpClient.Send(mailMessage);
+                }
+                else
+                {
+                    String str1 = "<script>alertify.error('Sem ligação! Email não enviado.');</script>";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str1, false);
+                }
                 DataBindGrid();
                 String str = "<script>alertify.success('Alteração feita com sucesso!');</script>";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
@@ -285,7 +324,7 @@ namespace PAP.Site.Admins
             MPE_QrCode.Show();
             Models.Denuncias denuncia = DenunciasDAO.GetDenunciaByID(id_denuncia);
             Equip equip = EquipDAO.GetEquipByID(denuncia.id_equip);
-            string code = "Equipamento : "+ equip.descri+"\nProblema :"+denuncia.problema;
+            string code = "Equipamento : " + equip.descri + "\nProblema : " + denuncia.problema;
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
             QRCodeData qrCodeData = qrGenerator.CreateQrCode(code, QRCodeGenerator.ECCLevel.Q);
             System.Web.UI.WebControls.Image imgBarCode = new System.Web.UI.WebControls.Image();
@@ -296,12 +335,13 @@ namespace PAP.Site.Admins
             {
                 using (MemoryStream ms = new MemoryStream())
                 {
-                    bitMap.Save("C:\\Users\\Utilizador\\source\\repos\\PAP\\PAP.Site\\Content\\Imagens\\qrcode.png", System.Drawing.Imaging.ImageFormat.Png);
+                    String path = AppDomain.CurrentDomain.BaseDirectory;
+                    bitMap.Save(path + "Content\\Imagens\\qrcode.png", System.Drawing.Imaging.ImageFormat.Png);
                     bitMap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
                     byte[] byteImage = ms.ToArray();
                     imgBarCode.ImageUrl = "data:image/png;base64," + Convert.ToBase64String(byteImage);
                 }
-                
+
                 PlaceHolder1.Controls.Add(imgBarCode);
             }
         }
@@ -314,7 +354,8 @@ namespace PAP.Site.Admins
         }
         private void PrintPage(object o, PrintPageEventArgs e)
         {
-            System.Drawing.Image img = System.Drawing.Image.FromFile("C:\\Users\\Utilizador\\source\\repos\\PAP\\PAP.Site\\Content\\Imagens\\qrcode.png");
+            String path = AppDomain.CurrentDomain.BaseDirectory;
+            System.Drawing.Image img = System.Drawing.Image.FromFile(path + "Content\\Imagens\\qrcode.png");
             Point loc = new Point(100, 100);
             e.Graphics.DrawImage(img, loc);
             img.Dispose();
@@ -610,23 +651,48 @@ namespace PAP.Site.Admins
 
         protected void btEnviar_Click(object sender, EventArgs e)
         {
-            MailMessage mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress("likedat6969@gmail.com");
-            mailMessage.To.Add(lbEmail.Text);
-            mailMessage.Subject = tbxAssunto.Text;
-            mailMessage.Body = "<h3>G.E.T</h3><br/>" + tbxMensagem.Text;
-            mailMessage.IsBodyHtml = true;
+            bool b = false;
+            try
+            {
+                using (var client = new WebClient())
+                using (client.OpenRead("http://google.com/generate_204"))
+                    b = true;
+            }
+            catch
+            {
+                b = false;
+            }
+            if (b == true)
+            {
+                MailMessage mailMessage = new MailMessage();
+                mailMessage.From = new MailAddress("likedat6969@gmail.com");
+                mailMessage.To.Add(lbEmail.Text);
+                mailMessage.Subject = tbxAssunto.Text;
+                mailMessage.Body = "<h3>G.E.T</h3><br/>" + tbxMensagem.Text;
+                mailMessage.IsBodyHtml = true;
 
-            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
-            smtpClient.EnableSsl = true;
-            smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-            smtpClient.UseDefaultCredentials = false;
-            smtpClient.Credentials = new System.Net.NetworkCredential("likedat6969@gmail.com", "teste123456");
-            smtpClient.Send(mailMessage);
-
-            divContactar.Visible = false;
-            tbxMensagem.Text = "";
-            tbxAssunto.Text = "";
+                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                smtpClient.EnableSsl = true;
+                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtpClient.UseDefaultCredentials = false;
+                smtpClient.Credentials = new System.Net.NetworkCredential("likedat6969@gmail.com", "teste123456");
+                smtpClient.Send(mailMessage);
+                String str = "<script>alertify.success('Email enviado com sucesso!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                divContactar.Visible = false;
+                tbxMensagem.Text = "";
+                tbxAssunto.Text = "";
+            }
+            else
+            {
+                MPE_User.Hide();
+                divContactar.Visible = false;
+                btContactar.Enabled = false;
+                tbxMensagem.Text = "";
+                tbxAssunto.Text = "";
+                String str1 = "<script>alertify.error('Sem ligação! Email não enviado.');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str1, false);
+            }
         }
 
         protected void btCancelar_Click(object sender, EventArgs e)

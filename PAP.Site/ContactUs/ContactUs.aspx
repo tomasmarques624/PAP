@@ -8,6 +8,8 @@
     <link href="../Content/CustomStyles/LibraryStyles/custom_style.css" rel="stylesheet" />
     <link href="../Content/bootstrap.min.css" rel="stylesheet" />
     <link href="../Content/CustomStyles/LoginRegisterStyles/loginregister.css" rel="stylesheet" />
+    <link href="../Content/alertifyjs/alertify.css" rel="stylesheet" />
+    <script src="../../Scripts/alertify.js"></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -33,46 +35,47 @@
         </div>
     </nav>
     <div class="sidenav" runat="server">
-         <div class="login-main-text">
-             <h1>G.E.T</h1>
-             <br />
-             <h3>Gestor de Equipamento Tecnológico</h3>
+        <div class="login-main-text">
+            <h1>G.E.T</h1>
+            <br />
+            <h3>Gestor de Equipamento Tecnológico</h3>
             <p>Contacte-nos para resolver algum problema ou sugerir algo.</p>
-         </div>
-      </div>
-      <div class="main" runat="server">
-         <div class="col-md-2 col-sm-4">
+        </div>
+    </div>
+    <div class="main" runat="server">
+        <div class="col-md-2 col-sm-4">
             <div class="login-form">
-               <form runat="server">
-                  <div class="form-group">
-                     <label>Email</label>
-                     <asp:TextBox ID="tbxEmail" CssClass="form-control" runat="server" Width="250"></asp:TextBox>
-                     <asp:RequiredFieldValidator runat="server" ErrorMessage="É necessário o email" Text="*" ControlToValidate="tbxEmail" ForeColor="Red"></asp:RequiredFieldValidator>
-                  </div>
-                   <div class="form-group">
-                     <label>Nome</label>
-                     <asp:TextBox ID="tbxNome" CssClass="form-control" runat="server" Width="250"></asp:TextBox>
-                     <asp:RequiredFieldValidator runat="server" ErrorMessage="É necessário um nome" Text="*" ControlToValidate="tbxNome" ForeColor="Red"></asp:RequiredFieldValidator>
-                  </div>
-                   <div class="form-group">
-                     <label>Assunto</label>
-                     <asp:TextBox ID="tbxAssunto" CssClass="form-control" runat="server" Width="250"></asp:TextBox>
+                <form runat="server">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <asp:TextBox ID="tbxEmail" CssClass="form-control" runat="server" Width="600"></asp:TextBox>
+                        <asp:RequiredFieldValidator runat="server" ErrorMessage="É necessário o email" Text="*" ControlToValidate="tbxEmail" ForeColor="Red"></asp:RequiredFieldValidator>
+                    </div>
+                    <div class="form-group">
+                        <label>Nome</label>
+                        <asp:TextBox ID="tbxNome" CssClass="form-control" runat="server" Width="600"></asp:TextBox>
+                        <asp:RequiredFieldValidator runat="server" ErrorMessage="É necessário um nome" Text="*" ControlToValidate="tbxNome" ForeColor="Red"></asp:RequiredFieldValidator>
+                    </div>
+                    <div class="form-group">
+                        <label>Assunto</label>
+                        <asp:TextBox ID="tbxAssunto" CssClass="form-control" runat="server" Width="600"></asp:TextBox>
                         <asp:RequiredFieldValidator runat="server" ErrorMessage="É necessário um assunto" Text="*" ControlToValidate="tbxAssunto" ForeColor="Red"></asp:RequiredFieldValidator>
-                  </div>
-                   <div class="form-group">
-                     <label>Mensagem</label>
-                     <asp:TextBox ID="tbxMensagem" CssClass="form-control" runat="server" Height="145px" Width="250" TextMode="MultiLine"></asp:TextBox>
+                    </div>
+                    <div class="form-group">
+                        <label>Mensagem</label>
+                        <asp:TextBox ID="tbxMensagem" CssClass="form-control" runat="server" Height="145px" Width="600" TextMode="MultiLine"></asp:TextBox>
                         <asp:RequiredFieldValidator runat="server" ErrorMessage="É necessário uma mensagem" Text="*" ControlToValidate="tbxMensagem" ForeColor="Red"></asp:RequiredFieldValidator>
-                  </div>
-                   <asp:ValidationSummary HeaderText="Erros" ForeColor="Red" runat="server" Font-Size="12pt" />
-                   <asp:Label Text="" ID="lbMensagem"  runat="server" ForeColor="Red" />
-                   <br />
-                  <asp:Button id="btEnviar" Text="Enviar" runat="server" CssClass="btn btn-primary" onclick="btEnviar_Click" />
-               </form>
+                    </div>
+                    <asp:ValidationSummary HeaderText="Erros" ForeColor="Red" runat="server" Font-Size="12pt" />
+                    <br />
+                    <asp:Button ID="btEnviar" Text="Enviar" runat="server" CssClass="btn btn-primary" OnClick="btEnviar_Click" />
+                </form>
             </div>
-         </div>
-      </div>
+        </div>
+    </div>
 </body>
-<script src="../Scripts/jquery-3.4.1.min.js"></script>
-<script src="../Scripts/bootstrap.min.js"></script>
+<script src="../../Scripts/jquery-3.5.1.min.js"></script>
+<script src="../../Scripts/popper.min.js"></script>
+<script src="../../Scripts/bootstrap.min.js"></script>
+
 </html>

@@ -97,7 +97,7 @@ namespace PAP.Site.Users
             MPE_QrCode.Show();
             Models.Denuncias denuncia = DenunciasDAO.GetDenunciaByID(id_denuncia);
             Equip equip = EquipDAO.GetEquipByID(denuncia.id_equip);
-            string code = "Equipamento : " + equip.descri + "\nProblema :" + denuncia.problema;
+            string code = "Equipamento : " + equip.descri + "\nProblema : " + denuncia.problema;
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
             QRCodeData qrCodeData = qrGenerator.CreateQrCode(code, QRCodeGenerator.ECCLevel.Q);
             System.Web.UI.WebControls.Image imgBarCode = new System.Web.UI.WebControls.Image();
@@ -108,7 +108,8 @@ namespace PAP.Site.Users
             {
                 using (MemoryStream ms = new MemoryStream())
                 {
-                    bitMap.Save("C:\\Users\\Utilizador\\source\\repos\\PAP\\PAP.Site\\Content\\Imagens\\qrcode.png", System.Drawing.Imaging.ImageFormat.Png);
+                    String path = AppDomain.CurrentDomain.BaseDirectory;
+                    bitMap.Save(path + "Content\\Imagens\\qrcode.png", System.Drawing.Imaging.ImageFormat.Png);
                     bitMap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
                     byte[] byteImage = ms.ToArray();
                     imgBarCode.ImageUrl = "data:image/png;base64," + Convert.ToBase64String(byteImage);
@@ -223,7 +224,8 @@ namespace PAP.Site.Users
         }
         private void PrintPage(object o, PrintPageEventArgs e)
         {
-            System.Drawing.Image img = System.Drawing.Image.FromFile("C:\\Users\\Utilizador\\source\\repos\\PAP\\PAP.Site\\Content\\Imagens\\qrcode.png");
+            String path = AppDomain.CurrentDomain.BaseDirectory;
+            System.Drawing.Image img = System.Drawing.Image.FromFile(path + "Content\\Imagens\\qrcode.png");
             Point loc = new Point(100, 100);
             e.Graphics.DrawImage(img, loc);
             img.Dispose();

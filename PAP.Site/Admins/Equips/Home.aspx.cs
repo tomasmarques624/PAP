@@ -396,6 +396,13 @@ namespace PAP.Site.Admins
             {
                 String str = "<script>alertify.error('Alteração feita sem sucesso!');</script>";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                gvEquipList.EditIndex = -1;
+                DataBindGrid();
+            }
+            else if (ReturnCode == 2)
+            {
+                String str = "<script>alertify.error('Alteração feita sem sucesso!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
                 lbErro.Text = "Ja existe um equipamento com esta descrição.";
                 MPE_Erro.Show();
                 gvEquipList.EditIndex = -1;

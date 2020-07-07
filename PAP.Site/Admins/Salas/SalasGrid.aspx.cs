@@ -57,6 +57,13 @@ namespace PAP.Site.Admins
             {
                 String str = "<script>alertify.error('Alteração feita sem sucesso!');</script>";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+
+                DataBindGrid();
+            }
+            else if (ReturnCode == 2)
+            {
+                String str = "<script>alertify.error('Alteração feita sem sucesso!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
                 lbErro.Text = "Ja existe uma sala com este nome.";
                 MPE_Erro.Show();
                 gvSalaList.EditIndex = -1;

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.UI;
@@ -64,7 +65,7 @@ namespace PAP.Site.Users
 
         protected void gvUsers_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
-            Boolean a = false;
+            bool a = false;
             User user = null;
             try
             {
@@ -75,7 +76,7 @@ namespace PAP.Site.Users
             {
                 throw;
             }
-            if(a == true)
+            if (a == true)
             {
                 user.Username = e.NewValues["username"].ToString();
                 user.Email = e.NewValues["email"].ToString();
@@ -85,7 +86,21 @@ namespace PAP.Site.Users
                 {
                     String str = "<script>alertify.error('Alteração feita sem sucesso!');</script>";
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                }
+                else if (ReturnCode == 2)
+                {
+                    String str = "<script>alertify.error('Alteração feita sem sucesso!');</script>";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
                     lbErro.Text = "Ja existe um utilizador com este username.";
+                    MPE_Erro.Show();
+                    gvUsers.EditIndex = -1;
+                    DataBindGrid();
+                }
+                else if (ReturnCode == 3)
+                {
+                    String str = "<script>alertify.error('Alteração feita sem sucesso!');</script>";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                    lbErro.Text = "Ja existe um utilizador com este email.";
                     MPE_Erro.Show();
                     gvUsers.EditIndex = -1;
                     DataBindGrid();
@@ -272,27 +287,50 @@ namespace PAP.Site.Users
 
         protected void btEnviar_Click(object sender, EventArgs e)
         {
-            User user = UserDAO.GetUserByID(Convert.ToInt32(id_user.Value));
-            MailMessage mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress("likedat6969@gmail.com");
-            mailMessage.To.Add(user.Email);
-            mailMessage.Subject = tbxAssunto.Text;
-            mailMessage.Body = "<h3>G.E.T</h3><br/>" + tbxMensagem.Text;
-            mailMessage.IsBodyHtml = true;
+            bool b = false;
+            try
+            {
+                using (var client = new WebClient())
+                using (client.OpenRead("http://google.com/generate_204"))
+                    b = true;
+            }
+            catch
+            {
+                b = false;
+            }
+            if (b == true)
+            {
+                User user = UserDAO.GetUserByID(Convert.ToInt32(id_user.Value));
+                MailMessage mailMessage = new MailMessage();
+                mailMessage.From = new MailAddress("likedat6969@gmail.com");
+                mailMessage.To.Add(user.Email);
+                mailMessage.Subject = tbxAssunto.Text;
+                mailMessage.Body = "<h3>G.E.T</h3><br/>" + tbxMensagem.Text;
+                mailMessage.IsBodyHtml = true;
 
-            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
-            smtpClient.EnableSsl = true;
-            smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-            smtpClient.UseDefaultCredentials = false;
-            smtpClient.Credentials = new System.Net.NetworkCredential("likedat6969@gmail.com", "teste123456");
-            smtpClient.Send(mailMessage);
+                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                smtpClient.EnableSsl = true;
+                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtpClient.UseDefaultCredentials = false;
+                smtpClient.Credentials = new System.Net.NetworkCredential("likedat6969@gmail.com", "teste123456");
+                smtpClient.Send(mailMessage);
 
-            MPE_Contactar.Hide();
-            String str = "<script>alertify.success('Email enviado com sucesso!');</script>";
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
-            tbxMensagem.Text = "";
-            tbxAssunto.Text = "";
-            
+                MPE_Contactar.Hide();
+                String str = "<script>alertify.success('Email enviado com sucesso!');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                tbxMensagem.Text = "";
+                tbxAssunto.Text = "";
+            }
+            else
+            {
+                MPE_Contactar.Enabled = false;
+                pnlContactar.Visible = false;
+                tbxMensagem.Text = "";
+                tbxAssunto.Text = "";
+                String str1 = "<script>alertify.error('Sem ligação! Email não enviado.');</script>";
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str1, false);
+            }
+
         }
     }
 }

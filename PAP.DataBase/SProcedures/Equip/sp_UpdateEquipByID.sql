@@ -13,7 +13,16 @@ BEGIN
 	END
 	ELSE
 	BEGIN
-		update tblEquip set descri = @descri where id_equip = @id_equip
-		SELECT 1 AS ReturnCode
+		DECLARE @count1 int
+		SELECT @count1 = COUNT(*) FROM tblEquip WHERE descri = @descri and id_equip <> @id_equip
+		IF(@count1=0)
+		BEGIN
+			update tblEquip set descri = @descri where id_equip = @id_equip
+			SELECT 1 AS ReturnCode
+		end
+		else
+		begin
+			SELECT 2 AS ReturnCode
+		End
 	END
 END
