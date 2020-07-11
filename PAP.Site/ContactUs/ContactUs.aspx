@@ -40,6 +40,8 @@
             <br />
             <h3>Gestor de Equipamento Tecnológico</h3>
             <p>Contacte-nos para resolver algum problema ou sugerir algo.</p>
+            <p></p>
+            <img src="../Content/Imagens/teste.png" />
         </div>
     </div>
     <div class="main" runat="server">

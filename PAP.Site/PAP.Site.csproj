@@ -212,6 +212,7 @@
     <Content Include="Content\Imagens\Reservas.png" />
     <Content Include="Content\Imagens\Salas.png" />
     <Content Include="Content\Imagens\Setas.png" />
+    <Content Include="Content\Imagens\teste.png" />
     <Content Include="Content\Imagens\Users.png" />
     <Content Include="Global.asax" />
     <Content Include="Authentication\Home.aspx" />

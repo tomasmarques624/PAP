@@ -37,7 +37,9 @@
              <h1>G.E.T</h1>
              <br />
              <h3>Gestor de Equipamento Tecnológico</h3>
-            <p>Introduza a sua nova password.</p>
+             <p>Introduza a sua nova password.</p>
+             <p></p>
+            <img src="../Content/Imagens/teste.png" />
          </div>
       </div>
       <div class="main" runat="server">

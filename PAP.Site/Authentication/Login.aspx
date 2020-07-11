@@ -38,6 +38,8 @@
             <br />
             <h3>Gestor de Equipamento Tecnológico</h3>
             <p>Faça Login para aceder à aplicação.</p>
+            <p></p>
+            <img src="../Content/Imagens/teste.png" />
         </div>
     </div>
     <div class="main" runat="server">
