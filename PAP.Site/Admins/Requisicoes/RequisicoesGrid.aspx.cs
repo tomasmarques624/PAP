@@ -518,8 +518,9 @@ namespace PAP.Site.Admins
             Button btUser = (Button)gvReqList.Rows[index].FindControl("btUser");
             String username = btUser.Text;
             User user = UserDAO.GetUserByUsername(username);
-            lbNomeUser.Text = "<b>Nome : </b>" + username + "\n";
+            lbUsername.Text = "<b>Username : </b>" + username + "\n";
             lbEmail.Text = "<b>Email : </b>" + user.Email + "\n";
+            lbNomeUser.Text = "<b>Nome : </b>" + user.Nome + "\n";
             MPE_User.Show();
         }
 

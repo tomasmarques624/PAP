@@ -8,7 +8,7 @@ AS
 BEGIN
 	DECLARE @count int
 
-	SELECT @count = COUNT(*) FROM tblRequisicoes WHERE data_requisicao BETWEEN @data_requisicao and @data_requisicao_final
+	SELECT @count = COUNT(*) FROM tblRequisicoes WHERE id_equip=@id_equip and data_requisicao BETWEEN @data_requisicao and @data_requisicao_final
 
 	IF(@count<>0)
 	BEGIN
@@ -17,7 +17,7 @@ BEGIN
 	ELSE
 	BEGIN
 		DECLARE @count1 int
-		SELECT @count1 = COUNT(*) FROM tblRequisicoes WHERE data_requisicao_final BETWEEN @data_requisicao and @data_requisicao_final
+		SELECT @count1 = COUNT(*) FROM tblRequisicoes WHERE id_equip=@id_equip and data_requisicao_final BETWEEN @data_requisicao and @data_requisicao_final
 		IF(@count1<>0)
 		BEGIN
 			SELECT -1 AS ReturnCode

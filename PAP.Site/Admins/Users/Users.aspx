@@ -10,9 +10,10 @@
     <div id="content-page" style="margin-left: 20px">
         <h2>Utilizadores</h2>
         <h5>Filtros</h5>
-        <asp:RadioButtonList ID="rblPesq" runat="server" RepeatDirection="Horizontal" OnSelectedIndexChanged="rblPesq_SelectedIndexChanged" AutoPostBack="true">
+        <asp:RadioButtonList ID="rblPesq" runat="server" RepeatDirection="Horizontal" OnSelectedIndexChanged="rblPesq_SelectedIndexChanged" AutoPostBack="true" Width="230px">
             <asp:ListItem Text="Username" Value="1" Selected="True" />
             <asp:ListItem Text="Email" Value="2" />
+            <asp:ListItem Text="Nome" Value="3" />
         </asp:RadioButtonList>
         <asp:TextBox ID="tbxPesq" runat="server" Text="" CssClass="form-control" Width="351px" OnTextChanged="tbxPesq_TextChanged" AutoPostBack="true" />
         <p></p>
@@ -29,7 +30,11 @@
             </Columns>
 
             <Columns>
-                <asp:BoundField DataField="username" HeaderText="Nome do Utilizador" />
+                <asp:BoundField DataField="username" HeaderText="Username" />
+            </Columns>
+
+            <Columns>
+                <asp:BoundField DataField="nome" HeaderText="Nome do Utilizador" />
             </Columns>
 
             <Columns>
@@ -37,15 +42,22 @@
             </Columns>
 
             <Columns>
-                <asp:TemplateField HeaderText="Privilégios de Administrador">
+                <asp:TemplateField>
+                    <HeaderTemplate>
+                        <asp:Label Text="Privilégios de Administrador" runat="server"  Width="250px" />
+                    </HeaderTemplate>
                     <ItemTemplate>
-                        <asp:CheckBox runat="server" ID="chbxAdmin" Text=" Administrador" />
+                        <asp:CheckBox runat="server" ID="chbxAdmin" />
+                        <label>Administrador</label>
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
 
             <Columns>
-                <asp:TemplateField HeaderText="Eliminar Utilizador">
+                <asp:TemplateField >
+                    <HeaderTemplate>
+                        <asp:Label Text="Eliminar Utilizador" runat="server" Width="200px"  />
+                    </HeaderTemplate>
                     <ItemTemplate>
                         <asp:CheckBox runat="server" ID="chbxEliminar" />
                         <label>Eliminar</label>
@@ -54,7 +66,10 @@
             </Columns>
 
             <Columns>
-                <asp:TemplateField HeaderText="Desbloquear Utilizador">
+                <asp:TemplateField >
+                    <HeaderTemplate>
+                        <asp:Label Text=" Desbloquear Utilizador " runat="server" Width="220px" />
+                    </HeaderTemplate>
                     <ItemTemplate>
                         <asp:CheckBox runat="server" ID="chbxDesbloquear" />
                         <label>Bloqueado</label>
@@ -70,6 +85,14 @@
                 <asp:TemplateField HeaderText="Contactar">
                     <ItemTemplate>
                         <asp:LinkButton ID="lkContactar" runat="server" Text="Contactar" OnClick="lkContactar_Click" CausesValidation="false"/>
+                    </ItemTemplate>
+                </asp:TemplateField>
+            </Columns>
+
+            <Columns>
+                <asp:TemplateField HeaderText="Foto">
+                    <ItemTemplate>
+                        <asp:LinkButton ID="lkFoto" runat="server" Text="Ver Foto" OnClick="lkFoto_Click" CausesValidation="false"/>
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
@@ -131,5 +154,17 @@
         <br />
         <asp:Button ID="btEnviar" CssClass="btn btn-primary" runat="server" Text="Enviar" OnClick="btEnviar_Click" />
         <asp:Button ID="btCancelarContactar" Text="Cancelar" runat="server" CssClass="btn btn-secondary" CausesValidation="False" OnClick="btCancelarContactar_Click" />
+    </asp:Panel>
+
+    <!-- Modal Foto -->
+    <asp:Button ID="btFoto" runat="server" Style="display: none;" />
+    <cc1:ModalPopupExtender ID="MPE_Foto" runat="server" BehaviorID="MPE_Foto"
+        DynamicServicePath="" TargetControlID="btFoto" PopupControlID="pnlFoto"
+        CancelControlID="btFechar" BackgroundCssClass="popupbg">
+    </cc1:ModalPopupExtender>
+    <asp:Panel ID="pnlFoto" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
+        <asp:Image runat="server" ID="imgFoto" Height="350px" Width="330px" />
+        <p></p>
+        <asp:Button ID="btFechar" Text="Fechar" runat="server" CssClass="btn btn-secondary" CausesValidation="False" />
     </asp:Panel>
 </asp:Content>

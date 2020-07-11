@@ -33,6 +33,15 @@ namespace PAP.Site.Admins
         protected global::System.Web.UI.WebControls.TextBox tbxUsername;
 
         /// <summary>
+        /// tbxNome control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbxNome;
+
+        /// <summary>
         /// tbxEmail control.
         /// </summary>
         /// <remarks>
@@ -58,6 +67,15 @@ namespace PAP.Site.Admins
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbxConfirmPassword;
+
+        /// <summary>
+        /// fluFoto control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fluFoto;
 
         /// <summary>
         /// btRegistar control.

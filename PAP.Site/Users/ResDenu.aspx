@@ -9,6 +9,8 @@
     <link href="../Content/bootstrap.min.css" rel="stylesheet" />
     <link href="../Content/CustomStyles/LoginRegisterStyles/loginregister.css" rel="stylesheet" />
     <link href="../Content/CustomStyles/LibraryStyles/custom_style.css" rel="stylesheet" />
+    <link href="../Content/alertifyjs/alertify.css" rel="stylesheet" />
+    <script src="../Scripts/alertify.js"></script>
 </head>
 <body>
     <form runat="server">
@@ -23,18 +25,26 @@
             <a class="navbar-brand" href="HomeUser.aspx">G.E.T</a>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item" id="navLinkHome" runat="server">
-                        <a class="nav-link" href="EquipGrid.aspx">Equipamentos</a>
+                    <li class="nav-item " id="navLinkHome" runat="server">
+                        <a class="nav-link " href="EquipGrid.aspx">Equipamentos<span class="sr-only"></span></a>
                     </li>
                     <li class="nav-item active" id="navLinkDenuncias" runat="server">
-                        <a class="nav-link" href="#">Reservas & Denuncias<span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="#">Reservas & Denuncias</a>
                     </li>
+
                 </ul>
-                <span class="navbar-text">Bem vindo(a) <%= Session["username"].ToString() %>
-                </span>
-            </div>
-            <div style="padding-left: 1rem">
-                <asp:Button ID="button1" Text="Logout" CssClass="btn btn-secondary" runat="server" OnClick="buttonLogout_Click" CausesValidation="False" />
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown" id="Li2" runat="server">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbardrop4" data-toggle="dropdown"><%= Session["username"].ToString() %>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="nav-link" href="ProfileUser.aspx" style="color: dimgrey;">Perfil</a>
+                                <asp:Button ID="buttonLogout" Text="Logout" CssClass="btn btn-link" runat="server" ForeColor="DimGray" OnClick="buttonLogout_Click" CausesValidation="False" />
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
         <div>
@@ -42,7 +52,7 @@
                 <h2>Reservas</h2>
                 <h5>Filtros</h5>
                 <asp:Label ID="lbPesq" runat="server" Text="Pesquisar por:"></asp:Label>
-                <asp:RadioButtonList ID="rblPesq" runat="server" RepeatDirection="Horizontal" OnSelectedIndexChanged="rblPesq_SelectedIndexChanged" AutoPostBack="true">
+                <asp:RadioButtonList ID="rblPesq" runat="server" RepeatDirection="Horizontal" OnSelectedIndexChanged="rblPesq_SelectedIndexChanged" AutoPostBack="true" Width="330px">
                     <asp:ListItem Text="Data Inicial" Value="1" Selected="True" />
                     <asp:ListItem Text="Data Final" Value="2" />
                     <asp:ListItem Text="Equipamento" Value="3" />
@@ -62,19 +72,19 @@
                     </Columns>
 
                     <Columns>
-                        <asp:BoundField DataField="data_requisicao" HeaderText="Data Inicial da Reserva" DataFormatString="{0:MM/dd/yyyy}" />
+                        <asp:BoundField DataField="data_requisicao" HeaderText="Data Inicial da Reserva" DataFormatString="{0:MM/dd/yyyy}" HeaderStyle-Width="200px"/>
                     </Columns>
 
                     <Columns>
-                        <asp:BoundField DataField="data_requisicao_final" HeaderText="Data Final da Reserva" DataFormatString="{0:MM/dd/yyyy}" />
+                        <asp:BoundField DataField="data_requisicao_final" HeaderText="Data Final da Reserva" DataFormatString="{0:MM/dd/yyyy}" HeaderStyle-Width="200px"/>
                     </Columns>
 
                     <Columns>
                         <asp:TemplateField>
                             <HeaderTemplate>
-                                <asp:Label Text="Estado" runat="server" />
+                                <asp:Label Text="Estado" runat="server" Width="100px"/>
+                                <asp:ImageButton runat="server" ImageUrl="../Content/Imagens/Setas.png" Width="15" Height="15" ID="OrdEstado" OnClick="OrdEstado_Click" />
                                 &nbsp;
-                        <asp:ImageButton runat="server" ImageUrl="../Content/Imagens/Setas.png" Width="15" Height="15" ID="OrdEstado" OnClick="OrdEstado_Click" />
                             </HeaderTemplate>
                             <ItemTemplate>
                                 <asp:Label runat="server" ID="lbEstado" />
@@ -83,7 +93,7 @@
                     </Columns>
 
                     <Columns>
-                        <asp:TemplateField HeaderText="Equipamento">
+                        <asp:TemplateField HeaderText="Equipamento" HeaderStyle-Width="150px">
                             <ItemTemplate>
                                 <asp:Label runat="server" ID="lbEquip" />
                             </ItemTemplate>
@@ -91,7 +101,7 @@
                     </Columns>
 
                     <Columns>
-                        <asp:TemplateField HeaderText="Denunciar Equipamento">
+                        <asp:TemplateField HeaderText="Denunciar Equipamento" HeaderStyle-Width="150px">
                             <ItemTemplate>
                                 <asp:LinkButton ID="lkDenu" runat="server" Text="Denunciar" OnClick="lkDenu_Click" CausesValidation="false" />
                             </ItemTemplate>
@@ -99,7 +109,7 @@
                     </Columns>
 
                     <Columns>
-                        <asp:TemplateField HeaderText="Cancelar Requisicao">
+                        <asp:TemplateField HeaderText="Cancelar Requisicao" HeaderStyle-Width="150px">
                             <ItemTemplate>
                                 <asp:LinkButton runat="server" ID="btCancelar" Text="X" CssClass="btn btn-danger" CausesValidation="false" OnClick="btCancelar_Click" />
                             </ItemTemplate>
@@ -108,12 +118,13 @@
                 </asp:GridView>
             </div>
         </div>
+
         <div>
             <div id="content-page" style="margin-left: 20px">
                 <h2>Denuncias</h2>
                 <h5>Filtros</h5>
                 <asp:Label ID="Label1" runat="server" Text="Pesquisar por:"></asp:Label>
-                <asp:RadioButtonList ID="rblPesqDenu" runat="server" RepeatDirection="Horizontal" AutoPostBack="true">
+                <asp:RadioButtonList ID="rblPesqDenu" runat="server" RepeatDirection="Horizontal" AutoPostBack="true" Width="260px">
                     <asp:ListItem Text="Problema" Value="1" Selected="True" />
                     <asp:ListItem Text="Data" Value="2" />
                     <asp:ListItem Text="Equipamento" Value="3" />
@@ -131,17 +142,17 @@
                         <asp:BoundField DataField="id_denuncia" ReadOnly="true" HeaderText="ID" />
                     </Columns>
                     <Columns>
-                        <asp:BoundField DataField="problema" HeaderText="Problema" />
+                        <asp:BoundField DataField="problema" HeaderText="Problema" HeaderStyle-Width="150px" />
                     </Columns>
                     <Columns>
-                        <asp:BoundField DataField="data_denuncia" HeaderText="Data da Denuncia" DataFormatString="{0:MM/dd/yyyy}" />
+                        <asp:BoundField DataField="data_denuncia" HeaderText="Data da Denuncia" DataFormatString="{0:MM/dd/yyyy}" HeaderStyle-Width="200px"  />
                     </Columns>
                     <Columns>
                         <asp:TemplateField>
                             <HeaderTemplate>
-                                <asp:Label Text="Estado" runat="server" />
+                                <asp:Label Text="Estado" runat="server" Width="125px" />
+                                <asp:ImageButton runat="server" ImageUrl="../Content/Imagens/Setas.png" Width="15" Height="15" ID="OrdEstadoDenu" OnClick="OrdEstadoDenu_Click" />
                                 &nbsp;
-                        <asp:ImageButton runat="server" ImageUrl="../Content/Imagens/Setas.png" Width="15" Height="15" ID="OrdEstadoDenu" OnClick="OrdEstadoDenu_Click" />
                             </HeaderTemplate>
                             <ItemTemplate>
                                 <asp:Label runat="server" ID="lbEstadoD" />
@@ -149,7 +160,7 @@
                         </asp:TemplateField>
                     </Columns>
                     <Columns>
-                        <asp:TemplateField HeaderText="Equipamento">
+                        <asp:TemplateField HeaderText="Equipamento" HeaderStyle-Width="125px">
                             <ItemTemplate>
                                 <asp:Label runat="server" ID="lbEquipD" />
                             </ItemTemplate>
@@ -170,10 +181,10 @@
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
-                     <EmptyDataTemplate>no Records Found</EmptyDataTemplate>
                 </asp:GridView>
             </div>
         </div>
+
         <!-- Modal Remover -->
         <asp:Button ID="btRemover" runat="server" Style="display: none;" />
         <cc1:ModalPopupExtender ID="MPE_Rem" runat="server" BehaviorID="btRemover_ModalPopupExtender"
@@ -261,5 +272,8 @@
             <asp:Button ID="btFechar" Text="Fechar" runat="server" CssClass="btn btn-secondary" CausesValidation="False" />
         </asp:Panel>
     </form>
+    <script src="../Scripts/jquery-3.5.1.min.js"></script>
+    <script src="../Scripts/popper.min.js"></script>
+    <script src="../Scripts/bootstrap.min.js"></script>
 </body>
 </html>

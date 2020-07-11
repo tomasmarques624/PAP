@@ -75,9 +75,13 @@ namespace PAP.Site.Users
                     if (returncode == -1)
                     {
                         lbMensagem.Text = "Ja existe uma reserva deste equipamento para essa data.";
+                        MPE_NewReq.Show();
+                        str = "<script>alertify.error('Inserção feita sem sucesso!');</script>";
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
                     }
                     else
                     {
+                        MPE_NewReq.Hide();
                         str = "<script>alertify.success('Inserção feita com sucesso!');</script>";
                         Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
                     }
@@ -109,9 +113,13 @@ namespace PAP.Site.Users
                         if (returncode == -1)
                         {
                             lbMensagem.Text = "Ja existe uma reserva deste equipamento para essas datas.";
+                            MPE_NewReq.Show();
+                            str = "<script>alertify.error('Inserção feita sem sucesso!');</script>";
+                            Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
                         }
                         else
                         {
+                            MPE_NewReq.Hide();
                             str = "<script>alertify.success('Inserção feita com sucesso!');</script>";
                             Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
                         }
@@ -119,10 +127,12 @@ namespace PAP.Site.Users
                     else
                     {
                         lbMensagem.Text = "A data final tem de ser superior à inicial.";
+                        MPE_NewReq.Show();
+                        str = "<script>alertify.error('Inserção feita sem sucesso!');</script>";
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
                     }
                 }
             }
-            MPE_NewReq.Hide();
             btSimReq.CausesValidation = false;
             rfvData.Enabled = false;
             rfvDataIni.Enabled = false;
@@ -135,6 +145,7 @@ namespace PAP.Site.Users
             rfvData.Enabled = false;
             rfvDataIni.Enabled = false;
             rfvDataFin.Enabled = false;
+            lbMensagem.Text = "";
             DataBindGrid();
         }
 

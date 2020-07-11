@@ -10,7 +10,7 @@
     <link href="../Content/CustomStyles/LoginRegisterStyles/loginregister.css" rel="stylesheet" />
     <link href="../Content/CustomStyles/LibraryStyles/custom_style.css" rel="stylesheet" />
     <link href="../Content/alertifyjs/alertify.css" rel="stylesheet" />
-    <script src="../../Scripts/alertify.js"></script>
+    <script src="../Scripts/alertify.js"></script>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -24,17 +24,25 @@
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active" id="navLinkHome" runat="server">
-                        <a class="nav-link" href="#">Equipamentos<span class="sr-only">(current)</span></a>
+                        <a class="nav-link " href="#">Equipamentos<span class="sr-only"></span></a>
                     </li>
                     <li class="nav-item" id="navLinkDenuncias" runat="server">
                         <a class="nav-link" href="ResDenu.aspx">Reservas & Denuncias</a>
                     </li>
+
                 </ul>
-                <span class="navbar-text">Bem vindo(a) <%= Session["username"].ToString() %>
-                </span>
-            </div>
-            <div style="padding-left: 1rem">
-                <asp:Button ID="button1" Text="Logout" CssClass="btn btn-secondary" runat="server" OnClick="buttonLogout_Click" CausesValidation="False" />
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown" id="Li2" runat="server">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbardrop4" data-toggle="dropdown"><%= Session["username"].ToString() %>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="nav-link" href="ProfileUser.aspx" style="color: dimgrey;">Perfil</a>
+                                <asp:Button ID="buttonLogout" Text="Logout" CssClass="btn btn-link" runat="server" ForeColor="DimGray" OnClick="buttonLogout_Click" CausesValidation="False" />
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
         
@@ -43,7 +51,7 @@
                 <h2>Inventário</h2>
                 <h5>Filtros</h5>
                 <asp:Label ID="lbPesq" runat="server" Text="Pesquisar por:"></asp:Label>
-                <asp:RadioButtonList ID="rblPesq" runat="server" RepeatDirection="Horizontal" OnSelectedIndexChanged="rblPesq_SelectedIndexChanged" AutoPostBack="true">
+                <asp:RadioButtonList ID="rblPesq" runat="server" RepeatDirection="Horizontal" OnSelectedIndexChanged="rblPesq_SelectedIndexChanged" AutoPostBack="true" Width="230px">
                     <asp:ListItem Text="Descrição" Value="1" Selected="True" />
                     <asp:ListItem Text="Categoria" Value="2" />
                     <asp:ListItem Text="Sala" Value="3" />
@@ -59,15 +67,15 @@
 
                     <Columns>
                         <asp:BoundField DataField="id_equip" ReadOnly="true" HeaderText="ID" />
-                        <asp:BoundField DataField="descri" HeaderText="Descrição" />
+                        <asp:BoundField DataField="descri" HeaderText="Descrição" HeaderStyle-Width="150px"/>
                     </Columns>
 
                     <Columns>
                         <asp:TemplateField>
                             <HeaderTemplate>
-                                <asp:Label Text="Categoria" runat="server" />
+                                <asp:Label Text="Categoria" runat="server" Width="125px"/>
+                                <asp:ImageButton runat="server" ImageUrl="../Content/Imagens/Setas.png" Width="15" Height="15" ID="ImageButton1" OnClick="ImageButton1_Click" />
                                 &nbsp;
-                        <asp:ImageButton runat="server" ImageUrl="../Content/Imagens/Setas.png" Width="15" Height="15" ID="ImageButton1" OnClick="ImageButton1_Click" />
                             </HeaderTemplate>
                             <ItemTemplate>
                                 <asp:Label runat="server" ID="lbCategoria" />
@@ -78,9 +86,9 @@
                     <Columns>
                         <asp:TemplateField>
                             <HeaderTemplate>
-                                <asp:Label Text="Sala" runat="server" />
+                                <asp:Label Text="Sala" runat="server" Width="125px"/>
+                                <asp:ImageButton Text="Sala" runat="server" ImageUrl="../Content/Imagens/Setas.png" Width="15" Height="15" ID="ImageButton2" OnClick="ImageButton2_Click" />
                                 &nbsp;
-                        <asp:ImageButton Text="Sala" runat="server" ImageUrl="../Content/Imagens/Setas.png" Width="15" Height="15" ID="ImageButton2" OnClick="ImageButton2_Click" />
                             </HeaderTemplate>
                             <ItemTemplate>
                                 <asp:Label runat="server" ID="lbSala" />
@@ -180,8 +188,8 @@
             <asp:Button ID="btFechar" Text="Fechar" runat="server" CssClass="btn btn-secondary" CausesValidation="False" />
         </asp:Panel>
     </form>
-    <script src="../../Scripts/jquery-3.5.1.min.js"></script>
-    <script src="../../Scripts/popper.min.js"></script>
-    <script src="../../Scripts/bootstrap.min.js"></script>
+    <script src="../Scripts/jquery-3.5.1.min.js"></script>
+    <script src="../Scripts/popper.min.js"></script>
+    <script src="../Scripts/bootstrap.min.js"></script>
 </body>
 </html>

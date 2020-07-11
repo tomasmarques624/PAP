@@ -25,6 +25,7 @@ namespace PAP.Site.Admins
                     Username = tbxUsername.Text,
                     Password = tbxPassword.Text,
                     Email = tbxEmail.Text,
+                    Nome = tbxNome.Text,
                     Role = 'U'
                 };
                 int returncode = UserDAO.RegisterUser(user);
@@ -37,12 +38,16 @@ namespace PAP.Site.Admins
                 }
                 else
                 {
+                    if (fluFoto.HasFile == true)
+                    {
+                        fluFoto.PostedFile.SaveAs(Server.MapPath("~/Content/Imagens/Users/") + user.Username + ".png");
+                    }
                     String str = "<script>alertify.success('Inserção feita com sucesso!');</script>";
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
 
                     btCancelar.Attributes.Add("onclick", "history.go(-4);location.reload();");
                     btCancelar.Text = "Voltar";
-
+                    tbxNome.Enabled = false;
                     tbxUsername.Enabled = false;
                     tbxPassword.Enabled = false;
                     tbxConfirmPassword.Enabled = false;

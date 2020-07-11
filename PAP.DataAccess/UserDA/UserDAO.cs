@@ -37,7 +37,8 @@ namespace PAP.DataAccess.UserDA
                                     id_User = Convert.ToInt32(dataReader["id_user"]),
                                     Username = dataReader["username"].ToString(),
                                     Email = dataReader["email"].ToString(),
-                                    isloocked = Convert.ToBoolean(dataReader["is_looked"])
+                                    isloocked = Convert.ToBoolean(dataReader["is_looked"]),
+                                    Nome = dataReader["nome"].ToString()
                                 });
                             }
                             return listUsers;
@@ -60,6 +61,7 @@ namespace PAP.DataAccess.UserDA
                     command.Parameters.AddWithValue("@id_user", user.id_User);
                     command.Parameters.AddWithValue("@username", user.Username);
                     command.Parameters.AddWithValue("@password", user.Password);
+                    command.Parameters.AddWithValue("@nome", user.Nome);
                     command.Parameters.AddWithValue("@email", user.Email);
                     command.Parameters.AddWithValue("@role", user.Role);
                     connection.Open();
@@ -168,6 +170,7 @@ namespace PAP.DataAccess.UserDA
                                     id_User = Convert.ToInt32(dataReader["id_user"]),
                                     Password = dataReader["password"].ToString(),
                                     Username = dataReader["username"].ToString(),
+                                    Nome = dataReader["nome"].ToString(),
                                     Email = dataReader["email"].ToString(),
                                     Role = dataReader["role"].ToString()[0],
                                     isloocked = Convert.ToBoolean(dataReader["is_looked"]),
@@ -212,6 +215,7 @@ namespace PAP.DataAccess.UserDA
                                     Password = dataReader["password"].ToString(),
                                     Username = dataReader["username"].ToString(),
                                     Email = dataReader["email"].ToString(),
+                                    Nome = dataReader["nome"].ToString(),
                                     Role = dataReader["role"].ToString()[0],
                                     isloocked = Convert.ToBoolean(dataReader["is_looked"]),
                                     nr_attempts = Convert.ToInt32(dataReader["nr_attempts"]),
@@ -249,7 +253,8 @@ namespace PAP.DataAccess.UserDA
                                 {
                                     id_User = Convert.ToInt32(dataReader["id_user"]),
                                     Username = dataReader["username"].ToString(),
-                                    Email = dataReader["email"].ToString()
+                                    Email = dataReader["email"].ToString(),
+                                    Nome = dataReader["nome"].ToString()
                                 };
                             }
                             return user;
@@ -284,6 +289,7 @@ namespace PAP.DataAccess.UserDA
                                 Username = dataReader["username"].ToString(),
                                 Password = dataReader["password"].ToString(),
                                 Email = dataReader["email"].ToString(),
+                                Nome = dataReader["nome"].ToString(),
                                 Role = dataReader["role"].ToString()[0],
                                 isloocked = Convert.ToBoolean(dataReader["is_looked"]),
                                 nr_attempts = Convert.ToInt32(dataReader["nr_attempts"]),
@@ -293,6 +299,44 @@ namespace PAP.DataAccess.UserDA
                         }
                         return null;
                     }
+                }
+            }
+        }
+
+        public static int VerifyPass(string username, string password)
+        {
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandText = "sp_VerifyPass";
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@username", username);
+                    command.Parameters.AddWithValue("@password", PasswordEncryptSHA256.GenerateSHA256String(password));
+                    connection.Open();
+                    int returncode = (int)command.ExecuteScalar();
+                    return returncode;
+                }
+            }
+        }
+
+        public static int UpdatePass(string username,string password)
+        {
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = ConfigurationManager.ConnectionStrings["PAP_DBCS"].ConnectionString;
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandText = "sp_UpdatePass";
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@username", username);
+                    command.Parameters.AddWithValue("@password", PasswordEncryptSHA256.GenerateSHA256String(password));
+                    connection.Open();
+                    int returncode = (int)command.ExecuteScalar();
+                    return returncode;
                 }
             }
         }

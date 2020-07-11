@@ -267,13 +267,13 @@ namespace PAP.Site.Admins
         protected global::System.Web.UI.WebControls.Panel pnlUser;
 
         /// <summary>
-        /// lbNomeUser control.
+        /// lbUsername control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbNomeUser;
+        protected global::System.Web.UI.WebControls.Label lbUsername;
 
         /// <summary>
         /// lbEmail control.
@@ -283,6 +283,15 @@ namespace PAP.Site.Admins
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbEmail;
+
+        /// <summary>
+        /// lbNomeUser control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbNomeUser;
 
         /// <summary>
         /// divContactar control.

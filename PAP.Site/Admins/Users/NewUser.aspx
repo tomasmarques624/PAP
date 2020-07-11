@@ -13,6 +13,11 @@
         <asp:RequiredFieldValidator runat="server" ErrorMessage="É necessário o username" Text="*" ControlToValidate="tbxUsername" ForeColor="Red"></asp:RequiredFieldValidator>
     </div>
     <div class="form-group" style="margin-left: 50px">
+        <label>Nome</label>
+        <asp:TextBox ID="tbxNome" CssClass="form-control" runat="server" Width="60%"></asp:TextBox>
+        <asp:RequiredFieldValidator runat="server" ErrorMessage="É necessário um nome" Text="*" ControlToValidate="tbxNome" ForeColor="Red"></asp:RequiredFieldValidator>
+    </div>
+    <div class="form-group" style="margin-left: 50px">
         <label>Email</label>
         <asp:TextBox ID="tbxEmail" CssClass="form-control" runat="server" Width="60%"></asp:TextBox>
         <asp:RequiredFieldValidator runat="server" ErrorMessage="É necessário o email" Text="*" ControlToValidate="tbxEmail" ForeColor="Red"></asp:RequiredFieldValidator>
@@ -29,11 +34,15 @@
         <asp:CompareValidator ErrorMessage="As passwords não são iguais!" ControlToValidate="tbxConfirmPassword"
             ControlToCompare="tbxPassword" Operator="Equal" Text="*" runat="server" ForeColor="Red" />
     </div>
-    <asp:ValidationSummary HeaderText="Erros" ForeColor="Red" runat="server" />
-    &nbsp&nbsp&nbsp
-
-    <br />
-    &nbsp&nbsp&nbsp
+    <div class="form-group" style="margin-left: 50px">
+        <label>Foto</label>
+        <asp:FileUpload CssClass="form-control-file" runat="server" ID="fluFoto"/>
+    </div>
+    <p></p>
+    <div class="form-group" style="margin-left: 50px">
+        <asp:ValidationSummary HeaderText="Erros" ForeColor="Red" runat="server"  />
+    </div>
+    <p></p>
     <div style="margin-left: 50px">
         <asp:Button Text="Adicionar" ID="btRegistar" CssClass="btn btn-primary" runat="server" OnClick="btRegistar_Click" />&nbsp
                   

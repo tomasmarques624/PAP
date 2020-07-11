@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -80,6 +81,7 @@ namespace PAP.Site.Users
             {
                 user.Username = e.NewValues["username"].ToString();
                 user.Email = e.NewValues["email"].ToString();
+                user.Nome = e.NewValues["nome"].ToString();
 
                 int ReturnCode = UserDAO.UpdateUser(user);
                 if (ReturnCode == -1)
@@ -227,9 +229,13 @@ namespace PAP.Site.Users
                         {
                             command.CommandText = "SELECT * FROM tblUsers WHERE username LIKE '" + tbxPesq.Text + "%';";
                         }
-                        else
+                        else if (rblPesq.SelectedValue == "2")
                         {
                             command.CommandText = "SELECT * FROM tblUsers WHERE email LIKE '" + tbxPesq.Text + "%';";
+                        }
+                        else
+                        {
+                            command.CommandText = "SELECT * FROM tblUsers WHERE nome LIKE '" + tbxPesq.Text + "%';";
                         }
 
                         connection.Open();
@@ -245,8 +251,9 @@ namespace PAP.Site.Users
                                     {
                                         id_User = Convert.ToInt32(dataReader["id_user"]),
                                         Username = dataReader["username"].ToString(),
+                                        Nome = dataReader["nome"].ToString(),
                                         Email = dataReader["email"].ToString(),
-                                        isloocked = Convert.ToBoolean(dataReader["is_looked"])
+                                        isloocked = Convert.ToBoolean(dataReader["is_looked"]) 
                                     });
                                 }
                             }
@@ -331,6 +338,28 @@ namespace PAP.Site.Users
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str1, false);
             }
 
+        }
+
+        protected void lkFoto_Click(object sender, EventArgs e)
+        {
+            LinkButton drp = (LinkButton)sender;
+
+            GridViewRow gv = (GridViewRow)drp.NamingContainer;
+
+            int index = gv.RowIndex;
+
+            int id_user = Convert.ToInt32(gvUsers.Rows[index].Cells[0].Text);
+            MPE_Foto.Show();
+            User user = UserDAO.GetUserByID(id_user);
+            string png = "/Content/Imagens/Users/" + user.Username + ".png";
+            if (File.Exists(Server.MapPath(png)))
+            {
+                imgFoto.ImageUrl = png;
+            }
+            else
+            {
+                imgFoto.ImageUrl = "../../Content/Imagens/ImgNotFound.png";
+            }
         }
     }
 }

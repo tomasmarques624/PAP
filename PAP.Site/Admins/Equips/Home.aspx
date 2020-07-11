@@ -18,7 +18,7 @@
         <h2>Inventario</h2>
         <h5>Filtros</h5>
         <asp:Label ID="lbPesq" runat="server" Text="Pesquisar por:"></asp:Label>
-        <asp:RadioButtonList ID="rblPesq" runat="server" RepeatDirection="Horizontal" OnSelectedIndexChanged="rblPesq_SelectedIndexChanged" AutoPostBack="true">
+        <asp:RadioButtonList ID="rblPesq" runat="server" RepeatDirection="Horizontal" OnSelectedIndexChanged="rblPesq_SelectedIndexChanged" AutoPostBack="true" Width="230px">
             <asp:ListItem Text="Descrição" Value="1" Selected="True" />
             <asp:ListItem Text="Categoria" Value="2" />
             <asp:ListItem Text="Sala" Value="3" />
@@ -36,15 +36,15 @@
             </Columns>
 
             <Columns>
-                <asp:BoundField DataField="descri" HeaderText="Descrição" />
+                <asp:BoundField DataField="descri" HeaderText="Descrição" HeaderStyle-Width="150px"/>
             </Columns>
 
             <Columns>
                 <asp:TemplateField>
                     <HeaderTemplate>
-                        <asp:Label Text="Categoria" runat="server" />
-                        &nbsp;
+                        <asp:Label Text="Categoria" runat="server" Width="125px"/>
                         <asp:ImageButton runat="server" ImageUrl="../../Content/Imagens/Setas.png" Width="15" Height="15" ID="OrdCat" OnClick="OrdCat_Click" />
+                        &nbsp;
                     </HeaderTemplate>
                     <ItemTemplate>
                         <asp:DropDownList ID="ddlCat" runat="server" CssClass="form-control" OnSelectedIndexChanged="ddlCat_SelectedIndexChanged" AutoPostBack="true">
@@ -56,9 +56,9 @@
             <Columns>
                 <asp:TemplateField>
                     <HeaderTemplate>
-                        <asp:Label Text="Sala" runat="server" />
-                        &nbsp;
+                        <asp:Label Text="Sala" runat="server" Width="125px"/>
                         <asp:ImageButton Text="Sala" runat="server" ImageUrl="../../Content/Imagens/Setas.png" Width="15" Height="15" ID="OrdSala" OnClick="OrdSala_Click" />
+                        &nbsp;
                     </HeaderTemplate>
                     <ItemTemplate>
                         <asp:DropDownList ID="ddlSala" runat="server" CssClass="form-control" OnSelectedIndexChanged="ddlSala_SelectedIndexChanged" AutoPostBack="true">
@@ -70,9 +70,9 @@
             <Columns>
                 <asp:TemplateField>
                     <HeaderTemplate>
-                        <asp:Label Text="Disponível" runat="server" />
-                        &nbsp;
+                        <asp:Label Text="Disponível" runat="server" Width="125px"/>
                         <asp:ImageButton runat="server" ImageUrl="../../Content/Imagens/Setas.png" Width="15" Height="15" ID="OrdDisp" OnClick="OrdDisp_Click" />
+                        &nbsp;
                     </HeaderTemplate>
                     <ItemTemplate>
                         <asp:CheckBox runat="server" ID="chbxDisponivel" OnCheckedChanged="chbxDisponivel_CheckedChanged" AutoPostBack="true" />
@@ -82,7 +82,7 @@
             </Columns>
 
             <Columns>
-                <asp:TemplateField HeaderText="Remover Equipamentos">
+                <asp:TemplateField HeaderText="Remover Equipamentos" HeaderStyle-Width="200px">
                     <ItemTemplate>
                         <asp:CheckBox runat="server" ID="chbxEliminar" />
                         <label> Remover</label>

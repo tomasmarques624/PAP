@@ -87,13 +87,22 @@ namespace PAP.Site.Users
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl navLinkDenuncias;
 
         /// <summary>
-        /// button1 control.
+        /// Li2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button button1;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Li2;
+
+        /// <summary>
+        /// buttonLogout control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button buttonLogout;
 
         /// <summary>
         /// lbPesq control.

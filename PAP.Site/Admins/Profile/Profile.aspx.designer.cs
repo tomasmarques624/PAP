@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PAP.Site.Users
+namespace PAP.Site.Admins
 {
 
 
-    public partial class Users
+    public partial class Profile
     {
 
         /// <summary>
@@ -24,211 +24,166 @@ namespace PAP.Site.Users
         protected global::System.Web.UI.ScriptManager ScriptManager1;
 
         /// <summary>
-        /// id_user control.
+        /// lbTitulo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField id_user;
+        protected global::System.Web.UI.WebControls.Label lbTitulo;
 
         /// <summary>
-        /// rblPesq control.
+        /// avatar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList rblPesq;
+        protected global::System.Web.UI.WebControls.Image avatar;
 
         /// <summary>
-        /// tbxPesq control.
+        /// lbUsername control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbxPesq;
+        protected global::System.Web.UI.WebControls.Label lbUsername;
 
         /// <summary>
-        /// btLimparFiltros control.
+        /// lbNome control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btLimparFiltros;
+        protected global::System.Web.UI.WebControls.Label lbNome;
 
         /// <summary>
-        /// gvUsers control.
+        /// lbEmail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvUsers;
+        protected global::System.Web.UI.WebControls.Label lbEmail;
 
         /// <summary>
-        /// btSalvar control.
+        /// lbPassword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btSalvar;
+        protected global::System.Web.UI.WebControls.Label lbPassword;
 
         /// <summary>
-        /// btCancelar control.
+        /// btAltPass control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btCancelar;
+        protected global::System.Web.UI.WebControls.Button btAltPass;
 
         /// <summary>
-        /// btRem control.
+        /// btPass control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btRem;
+        protected global::System.Web.UI.WebControls.Button btPass;
 
         /// <summary>
-        /// MPE_Rem control.
+        /// MPE_Pass control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::AjaxControlToolkit.ModalPopupExtender MPE_Rem;
+        protected global::AjaxControlToolkit.ModalPopupExtender MPE_Pass;
 
         /// <summary>
-        /// pnlRemover control.
+        /// pnlPass control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlRemover;
+        protected global::System.Web.UI.WebControls.Panel pnlPass;
 
         /// <summary>
-        /// lbUpdate control.
+        /// tbxPassAtual control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbUpdate;
+        protected global::System.Web.UI.WebControls.TextBox tbxPassAtual;
 
         /// <summary>
-        /// btSimRe control.
+        /// rfvPass control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btSimRe;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvPass;
 
         /// <summary>
-        /// btNaoRe control.
+        /// tbxPassNova control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btNaoRe;
+        protected global::System.Web.UI.WebControls.TextBox tbxPassNova;
 
         /// <summary>
-        /// btErro control.
+        /// rfvNewPass control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btErro;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvNewPass;
 
         /// <summary>
-        /// MPE_Erro control.
+        /// tbxPassConfirmar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::AjaxControlToolkit.ModalPopupExtender MPE_Erro;
+        protected global::System.Web.UI.WebControls.TextBox tbxPassConfirmar;
 
         /// <summary>
-        /// pnlErro control.
+        /// rfvConfirmPass control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlErro;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvConfirmPass;
 
         /// <summary>
-        /// lbErro control.
+        /// cvPass control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbErro;
+        protected global::System.Web.UI.WebControls.CompareValidator cvPass;
 
         /// <summary>
-        /// btOkErro control.
+        /// ValSum control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btOkErro;
-
-        /// <summary>
-        /// btContactarsUser control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btContactarsUser;
-
-        /// <summary>
-        /// MPE_Contactar control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::AjaxControlToolkit.ModalPopupExtender MPE_Contactar;
-
-        /// <summary>
-        /// pnlContactar control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlContactar;
-
-        /// <summary>
-        /// tbxAssunto control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbxAssunto;
-
-        /// <summary>
-        /// tbxMensagem control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbxMensagem;
+        protected global::System.Web.UI.WebControls.ValidationSummary ValSum;
 
         /// <summary>
         /// lbMensagem control.
@@ -240,66 +195,21 @@ namespace PAP.Site.Users
         protected global::System.Web.UI.WebControls.Label lbMensagem;
 
         /// <summary>
-        /// btEnviar control.
+        /// btSim control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btEnviar;
+        protected global::System.Web.UI.WebControls.Button btSim;
 
         /// <summary>
-        /// btCancelarContactar control.
+        /// btNao control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btCancelarContactar;
-
-        /// <summary>
-        /// btFoto control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btFoto;
-
-        /// <summary>
-        /// MPE_Foto control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::AjaxControlToolkit.ModalPopupExtender MPE_Foto;
-
-        /// <summary>
-        /// pnlFoto control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlFoto;
-
-        /// <summary>
-        /// imgFoto control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Image imgFoto;
-
-        /// <summary>
-        /// btFechar control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btFechar;
+        protected global::System.Web.UI.WebControls.Button btNao;
     }
 }

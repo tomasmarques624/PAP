@@ -1,6 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[sp_UpdateUserByID]
 	@id_user int,
 	@username varchar(50),
+	@nome varchar(20),
 	@password char(64),
 	@email varchar(64),
 	@role char(1)
@@ -24,7 +25,7 @@ BEGIN
 			SELECT @count2 = COUNT(*) FROM tblUsers WHERE email = @email and id_user <> @id_user
 			IF(@count2=0)
 			begin
-				update tblUsers set username=@username,password=@password,role=@role,email=@email where id_user=@id_user
+				update tblUsers set username=@username,password=@password,role=@role,email=@email,nome=@nome where id_user=@id_user
 				SELECT 1 AS ReturnCode
 			end
 			else

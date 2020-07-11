@@ -169,6 +169,7 @@
     <Content Include="Admins\Equips\Home.aspx" />
     <Content Include="Admins\Equips\NewEquip.aspx" />
     <Content Include="Admins\Home.aspx" />
+    <Content Include="Admins\Profile\Profile.aspx" />
     <Content Include="Admins\Salas\NewSala.aspx" />
     <Content Include="Admins\Users\NewUser.aspx" />
     <Content Include="Admins\Requisicoes\RequisicoesGrid.aspx" />
@@ -324,6 +325,7 @@
     <Content Include="Admins\Users\Users.aspx" />
     <Content Include="Users\EquipGrid.aspx" />
     <Content Include="Users\HomeUser.aspx" />
+    <Content Include="Users\ProfileUser.aspx" />
     <Content Include="Users\ResDenu.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -383,6 +385,13 @@
     </Compile>
     <Compile Include="Admins\Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admins\Profile\Profile.aspx.cs">
+      <DependentUpon>Profile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admins\Profile\Profile.aspx.designer.cs">
+      <DependentUpon>Profile.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admins\Salas\NewSala.aspx.cs">
       <DependentUpon>NewSala.aspx</DependentUpon>
@@ -472,6 +481,13 @@
     <Compile Include="Users\HomeUser.aspx.designer.cs">
       <DependentUpon>HomeUser.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Users\ProfileUser.aspx.cs">
+      <DependentUpon>ProfileUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Users\ProfileUser.aspx.designer.cs">
+      <DependentUpon>ProfileUser.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Users\ResDenu.aspx.cs">
       <DependentUpon>ResDenu.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -517,6 +533,7 @@
   <ItemGroup>
     <Folder Include="Content\Imagens\Denuncias\" />
     <Folder Include="Content\Imagens\Equips\" />
+    <Folder Include="Content\Imagens\Users\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />

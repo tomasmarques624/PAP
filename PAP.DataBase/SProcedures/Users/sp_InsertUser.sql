@@ -1,5 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[sp_InsertUser]
 	@username varchar(50),
+	@nome varchar(20),
 	@password char(64),
 	@email varchar(256),
 	@role char(1)
