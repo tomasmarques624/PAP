@@ -8,14 +8,24 @@ AS
 BEGIN
 	DECLARE @count int
 
-	SELECT @count = COUNT(*) FROM tblUsers WHERE username = @username or email = @email
+	SELECT @count = COUNT(*) FROM tblUsers WHERE username = @username
 	IF(@count<>0)
 	BEGIN
 		SELECT -1 AS ReturnCode
 	END
 	ELSE
 	BEGIN
-		insert into tblUsers (username,password,email,role) values (@username,@password,@email,@role)
-		SELECT 1 AS ReturnCode
+	DECLARE @count1 int
+		SELECT @count1 = COUNT(*) FROM tblUsers WHERE email = @email
+		IF(@count1<>0)
+		BEGIN
+			SELECT 2 AS ReturnCode
+		END
+		ELSE
+		BEGIN
+			insert into tblUsers (username,password,email,role,nome) values (@username,@password,@email,@role,@nome)
+			SELECT 1 AS ReturnCode
+		end
+		
 	END
 END

@@ -33,7 +33,13 @@ namespace PAP.Site.Admins
                 {
                     String str = "<script>alertify.error('Inserção feita sem sucesso!');</script>";
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
-                    lbErro.Text = "Ja existe uma sala com este nome.";
+                    lbErro.Text = "Ja existe um utilizador com este username.";
+                    MPE_Erro.Show();
+                }else if (returncode == 2)
+                {
+                    String str = "<script>alertify.error('Inserção feita sem sucesso!');</script>";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                    lbErro.Text = "Ja existe um utilizador com este email.";
                     MPE_Erro.Show();
                 }
                 else
@@ -53,6 +59,7 @@ namespace PAP.Site.Admins
                     tbxConfirmPassword.Enabled = false;
                     tbxEmail.Enabled = false;
                     btRegistar.Enabled = false;
+                    fluFoto.Enabled = false;
                 }
             }
         }

@@ -134,6 +134,7 @@ namespace PAP.DataAccess.UserDA
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@username", user.Username);
                     command.Parameters.AddWithValue("@password", PasswordEncryptSHA256.GenerateSHA256String(user.Password));
+                    command.Parameters.AddWithValue("@nome", user.Nome);
                     command.Parameters.AddWithValue("@email", user.Email);
                     command.Parameters.AddWithValue("@role", 'U');
                     connection.Open();
