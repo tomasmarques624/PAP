@@ -37,7 +37,7 @@ namespace PAP.Site.PwdMgmt
                 mailMessage.From = new MailAddress("likedat6969@gmail.com");
                 mailMessage.To.Add(tbxEmail.Text);
                 mailMessage.Subject = "Reposição de password";
-                mailMessage.Body = "Clique aqui para repor a sua password : https://localhost:44355/PwdMgmt/SetNewPassword.aspx?guid=" + guid;
+                mailMessage.Body = "Clique aqui para repor a sua password : http://localhost:44355/PwdMgmt/SetNewPassword.aspx?guid=" + guid;
                 mailMessage.IsBodyHtml = true;
                 SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
                 smtpClient.EnableSsl = true;

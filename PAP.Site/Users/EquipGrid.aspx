@@ -45,7 +45,7 @@
                 </div>
             </div>
         </nav>
-        
+
         <div>
             <div id="content-page" style="margin-left: 20px">
                 <h2>Inventário</h2>
@@ -67,13 +67,13 @@
 
                     <Columns>
                         <asp:BoundField DataField="id_equip" ReadOnly="true" HeaderText="ID" />
-                        <asp:BoundField DataField="descri" HeaderText="Descrição" HeaderStyle-Width="150px"/>
+                        <asp:BoundField DataField="descri" HeaderText="Descrição" HeaderStyle-Width="150px" />
                     </Columns>
 
                     <Columns>
                         <asp:TemplateField>
                             <HeaderTemplate>
-                                <asp:Label Text="Categoria" runat="server" Width="125px"/>
+                                <asp:Label Text="Categoria" runat="server" Width="125px" />
                                 <asp:ImageButton runat="server" ImageUrl="../Content/Imagens/Setas.png" Width="15" Height="15" ID="ImageButton1" OnClick="ImageButton1_Click" />
                                 &nbsp;
                             </HeaderTemplate>
@@ -86,7 +86,7 @@
                     <Columns>
                         <asp:TemplateField>
                             <HeaderTemplate>
-                                <asp:Label Text="Sala" runat="server" Width="125px"/>
+                                <asp:Label Text="Sala" runat="server" Width="125px" />
                                 <asp:ImageButton Text="Sala" runat="server" ImageUrl="../Content/Imagens/Setas.png" Width="15" Height="15" ID="ImageButton2" OnClick="ImageButton2_Click" />
                                 &nbsp;
                             </HeaderTemplate>
@@ -105,7 +105,7 @@
                     <Columns>
                         <asp:TemplateField HeaderText="Foto">
                             <ItemTemplate>
-                                <asp:LinkButton ID="lkFoto" runat="server" Text="Ver Foto" OnClick="lkFoto_Click" CausesValidation="False"/>
+                                <asp:LinkButton ID="lkFoto" runat="server" Text="Ver Foto" OnClick="lkFoto_Click" CausesValidation="False" />
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
@@ -126,7 +126,7 @@
                 <tr>
                     <td>N Dias da Reserva :</td>
                     <td>
-                        <asp:DropDownList ID="ddlNDias" runat="server" CssClass="form-control" OnSelectedIndexChanged="ddlNDias_SelectedIndexChanged">
+                        <asp:DropDownList ID="ddlNDias" runat="server" CssClass="form-control" OnSelectedIndexChanged="ddlNDias_SelectedIndexChanged" AutoPostBack="true">
                             <asp:ListItem Value="1">1</asp:ListItem>
                             <asp:ListItem Value="2">Varios</asp:ListItem>
                         </asp:DropDownList>
@@ -169,7 +169,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <asp:Button ID="btSimReq" Text="Inserir" runat="server" OnClick="btSimReq_Click" CssClass="btn btn-success" CausesValidation="False" />
+                        <asp:Button ID="btSimReq" Text="Reservar" runat="server" OnClick="btSimReq_Click" CssClass="btn btn-success" CausesValidation="False" />
                         <asp:Button ID="btNaoReq" Text="Cancelar" runat="server" CssClass="btn btn-danger" CausesValidation="False" OnClick="btNaoReq_Click" />
                     </td>
                 </tr>
@@ -187,6 +187,19 @@
             <p></p>
             <asp:Button ID="btFechar" Text="Fechar" runat="server" CssClass="btn btn-secondary" CausesValidation="False" />
         </asp:Panel>
+
+        <!-- Modal Erro -->
+        <asp:Button ID="btErro" runat="server" Style="display: none;" />
+        <cc1:ModalPopupExtender ID="MPE_Erro" runat="server" BehaviorID="MPE_Erro"
+            DynamicServicePath="" TargetControlID="btErro" PopupControlID="pnlErro"
+            CancelControlID="btOkErro" BackgroundCssClass="popupbg">
+        </cc1:ModalPopupExtender>
+        <asp:Panel ID="pnlErro" runat="server" Width="600px" Style="background: white; border: 3px solid gray; border-radius: 7px; padding: 10px">
+            <asp:Label ID="lbErro" Text="" runat="server" ForeColor="Red" />
+            <br />
+            <asp:Button ID="btOkErro" Text="Ok" runat="server" CssClass="btn btn-info" CausesValidation="False"/>
+        </asp:Panel>
+
     </form>
     <script src="../Scripts/jquery-3.5.1.min.js"></script>
     <script src="../Scripts/popper.min.js"></script>

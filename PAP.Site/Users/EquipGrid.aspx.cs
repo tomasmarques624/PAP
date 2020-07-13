@@ -55,84 +55,133 @@ namespace PAP.Site.Users
             Equip equip = EquipDAO.GetEquipByID(Convert.ToInt32(id_equip.Value));
             if (ddlNDias.SelectedValue == "1")
             {
-                User user = UserDAO.GetUserByEmail(Session["email"].ToString());
-                Requisicoes req = new Requisicoes()
+                DateTime today = DateTime.Today;
+                if (Convert.ToDateTime(tbxDataReserva.Text) >= today)
                 {
-                    id_equip = Convert.ToInt32(id_equip.Value),
-                    data_requisicao = Convert.ToDateTime(tbxDataReserva.Text),
-                    data_requisicao_final = Convert.ToDateTime(tbxDataReserva.Text),
-                    estado = false,
-                    id_user = user.id_User
-                };
-                if (equip.disp == false)
-                {
-                    str = "<script>alertify.error('Inserção feita sem sucesso!');</script>";
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
-                }
-                else
-                {
-                    int returncode = RequisicoesDAO.InsertReq(req);
-                    if (returncode == -1)
+                    User user = UserDAO.GetUserByEmail(Session["email"].ToString());
+                    Requisicoes req = new Requisicoes()
                     {
-                        lbMensagem.Text = "Ja existe uma reserva deste equipamento para essa data.";
-                        MPE_NewReq.Show();
+                        id_equip = Convert.ToInt32(id_equip.Value),
+                        data_requisicao = Convert.ToDateTime(tbxDataReserva.Text),
+                        data_requisicao_final = Convert.ToDateTime(tbxDataReserva.Text),
+                        estado = false,
+                        id_user = user.id_User
+                    };
+                    if (equip.disp == false)
+                    {
                         str = "<script>alertify.error('Inserção feita sem sucesso!');</script>";
                         Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                        MPE_NewReq.Hide();
+                        tbxDataReqFin.Text = "";
+                        tbxDataReqIni.Text = "";
+                        tbxDataReserva.Text = "";
+                        MPE_Erro.Show();
+                        lbErro.Text = "O equipamento não se encontra disponível.";
                     }
                     else
                     {
-                        MPE_NewReq.Hide();
-                        str = "<script>alertify.success('Inserção feita com sucesso!');</script>";
-                        Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
-                    }
-                }
-            }
-            else
-            {
-                if (equip.disp == false)
-                {
-                    str = "<script>alertify.error('Inserção feita sem sucesso!');</script>";
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
-                }
-                else
-                {
-                    var dataIni = Convert.ToDateTime(tbxDataReqIni.Text);
-                    var dataFin = Convert.ToDateTime(tbxDataReqFin.Text);
-                    if (dataIni < dataFin)
-                    {
-                        User user = UserDAO.GetUserByEmail(Session["email"].ToString());
-                        Requisicoes req = new Requisicoes()
-                        {
-                            id_equip = Convert.ToInt32(id_equip.Value),
-                            data_requisicao = Convert.ToDateTime(tbxDataReqIni.Text),
-                            data_requisicao_final = Convert.ToDateTime(tbxDataReqFin.Text),
-                            estado = false,
-                            id_user = user.id_User
-                        };
                         int returncode = RequisicoesDAO.InsertReq(req);
                         if (returncode == -1)
                         {
-                            lbMensagem.Text = "Ja existe uma reserva deste equipamento para essas datas.";
-                            MPE_NewReq.Show();
                             str = "<script>alertify.error('Inserção feita sem sucesso!');</script>";
                             Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                            MPE_NewReq.Hide();
+                            tbxDataReqFin.Text = "";
+                            tbxDataReqIni.Text = "";
+                            tbxDataReserva.Text = "";
+                            MPE_Erro.Show();
+                            lbErro.Text = "Ja existe uma reserva deste equipamento para essa(s) data(s).";
                         }
                         else
                         {
-                            MPE_NewReq.Hide();
                             str = "<script>alertify.success('Inserção feita com sucesso!');</script>";
                             Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
                         }
                     }
-                    else
+                }
+                else
+                {
+                    str = "<script>alertify.error('Inserção feita sem sucesso!');</script>";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                    MPE_NewReq.Hide();
+                    tbxDataReqFin.Text = "";
+                    tbxDataReqIni.Text = "";
+                    tbxDataReserva.Text = "";
+                    MPE_Erro.Show();
+                    lbErro.Text = "A data tem de ser superior à data de hoje.";
+                }
+
+            }
+            else
+            {
+                DateTime today = DateTime.Today;
+                if (Convert.ToDateTime(tbxDataReqIni.Text) >= today && Convert.ToDateTime(tbxDataReqFin.Text) >= today)
+                {
+                    if (equip.disp == false)
                     {
-                        lbMensagem.Text = "A data final tem de ser superior à inicial.";
-                        MPE_NewReq.Show();
                         str = "<script>alertify.error('Inserção feita sem sucesso!');</script>";
                         Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                        tbxDataReqFin.Text = "";
+                        tbxDataReqIni.Text = "";
+                        tbxDataReserva.Text = "";
+                        MPE_Erro.Show();
+                        lbErro.Text = "O equipamento não se encontra disponível.";
+                    }
+                    else
+                    {
+                        var dataIni = Convert.ToDateTime(tbxDataReqIni.Text);
+                        var dataFin = Convert.ToDateTime(tbxDataReqFin.Text);
+                        if (dataIni < dataFin)
+                        {
+                            User user = UserDAO.GetUserByEmail(Session["email"].ToString());
+                            Requisicoes req = new Requisicoes()
+                            {
+                                id_equip = Convert.ToInt32(id_equip.Value),
+                                data_requisicao = Convert.ToDateTime(tbxDataReqIni.Text),
+                                data_requisicao_final = Convert.ToDateTime(tbxDataReqFin.Text),
+                                estado = false,
+                                id_user = user.id_User
+                            };
+                            int returncode = RequisicoesDAO.InsertReq(req);
+                            if (returncode == -1)
+                            {
+                                str = "<script>alertify.error('Inserção feita sem sucesso!');</script>";
+                                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                                MPE_NewReq.Hide();
+                                tbxDataReqFin.Text = "";
+                                tbxDataReqIni.Text = "";
+                                tbxDataReserva.Text = "";
+                                MPE_Erro.Show();
+                                lbErro.Text = "Ja existe uma reserva deste equipamento para essa(s) data(s).";
+                            }
+                            else
+                            {
+                                str = "<script>alertify.success('Inserção feita com sucesso!');</script>";
+                                Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                            }
+                        }
+                        else
+                        {
+                            lbMensagem.Text = "A data final tem de ser superior à inicial.";
+                        }
                     }
                 }
+                else
+                {
+                    str = "<script>alertify.error('Inserção feita sem sucesso!');</script>";
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Script", str, false);
+                    MPE_NewReq.Hide();
+                    tbxDataReqFin.Text = "";
+                    tbxDataReqIni.Text = "";
+                    tbxDataReserva.Text = "";
+                    MPE_Erro.Show();
+                    lbErro.Text = "As datas têm de ser superiores à data de hoje.";
+                }
             }
+            MPE_NewReq.Hide();
+            tbxDataReqFin.Text = "";
+            tbxDataReqIni.Text = "";
+            tbxDataReserva.Text = "";
             btSimReq.CausesValidation = false;
             rfvData.Enabled = false;
             rfvDataIni.Enabled = false;
@@ -170,6 +219,7 @@ namespace PAP.Site.Users
                 tbxDataReqFin.Visible = true;
                 tbxDataReqIni.Visible = true;
             }
+            MPE_NewReq.Show();
         }
 
         protected void lkReservar_Click(object sender, EventArgs e)
